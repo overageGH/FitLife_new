@@ -36,4 +36,7 @@ return [
     'profile' => 'Profils',
     'my_profile' => 'Mans profils',
     'food' => 'Ēdiens',
+    'meals' => 'Maltītes',
+    'water' => 'Ūdens',
+    'sleep' => 'Miegs',
 ];

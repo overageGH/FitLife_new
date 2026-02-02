@@ -84,4 +84,18 @@ class CalendarController extends Controller
 
         return response()->json($events);
     }
+
+    // Delete an event
+    public function destroy($id)
+    {
+        $calendar = Calendar::findOrFail($id);
+
+        if ($calendar->user_id !== Auth::id()) {
+            return response()->json(['success' => false, 'message' => 'Unauthorized'], 403);
+        }
+
+        $calendar->delete();
+
+        return response()->json(['success' => true]);
+    }
 }

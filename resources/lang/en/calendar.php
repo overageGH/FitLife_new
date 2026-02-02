@@ -55,4 +55,39 @@ return [
     'type_crossfit' => 'CrossFit',
     'type_walking' => 'Walking',
     'type_meditation' => 'Meditation',
+    'type_custom' => 'Custom',
+
+    // Custom type
+    'custom_type_name' => 'Custom Type Name',
+    'custom_type_placeholder' => 'Enter your activity type...',
+
+    // New UI elements
+    'this_month_stats' => 'This Month Stats',
+    'total_events' => 'Total Events',
+    'completed' => 'Completed',
+    'workouts' => 'Workouts',
+    'day_streak' => 'Day Streak',
+    'event_types' => 'Event Types',
+    'quick_add' => 'Quick Add',
+    'upcoming_events' => 'Upcoming Events',
+    'add_first_event' => 'Add your first event',
+    'no_events_today' => 'No events for this day',
+    'no_upcoming' => 'No upcoming events',
+    'cancel' => 'Cancel',
+    'delete' => 'Delete',
+    'delete_confirm' => 'Are you sure you want to delete this event? This action cannot be undone.',
+
+    // Month names
+    'january' => 'January',
+    'february' => 'February',
+    'march' => 'March',
+    'april' => 'April',
+    'may' => 'May',
+    'june' => 'June',
+    'july' => 'July',
+    'august' => 'August',
+    'september' => 'September',
+    'october' => 'October',
+    'november' => 'November',
+    'december' => 'December',
 ];

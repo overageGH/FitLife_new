@@ -71,4 +71,13 @@ return [
     'verify_email_message' => 'Paldies par reģistrēšanos! Pirms sākat, lūdzu, apstipriniet savu e-pasta adresi, noklikšķinot uz saites, ko tikko nosūtījām. Ja neesat saņēmis e-pastu, mēs ar prieku nosūtīsim vēl vienu.',
     'verification_link_sent' => 'Jauna verifikācijas saite ir nosūtīta uz e-pasta adresi, ko norādījāt reģistrācijas laikā.',
     'resend_verification_email' => 'Atkārtoti nosūtīt verifikācijas e-pastu',
+    
+    // Additional keys
+    'have_account' => 'Jau ir konts?',
+    'agree_terms_prefix' => 'Es piekrītu',
+    'terms' => 'Lietošanas noteikumiem',
+    'and' => 'un',
+    'privacy' => 'Privātuma politikai',
+    'forgot_password_text' => 'Aizmirsāt paroli? Nav problēmu.',
+    'remember_password' => 'Atceraties paroli?',
 ];

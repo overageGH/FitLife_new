@@ -14,7 +14,7 @@
         <div class="stat-card">
             <div class="stat-card-header">
                 <div class="stat-card-icon calories">
-                    <svg viewBox="0 0 24 24"><path d="M11 21c0-5.5-6-9-6-13.5C5 4 8.6 2 12 2s7 2 7 5.5C19 12 13 15.5 13 21h-2z"/></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
                 </div>
             </div>
             <div class="stat-card-value">{{ number_format($totalCalories ?? 0) }}</div>
@@ -31,7 +31,7 @@
         <div class="stat-card">
             <div class="stat-card-header">
                 <div class="stat-card-icon water">
-                    <svg viewBox="0 0 24 24"><path d="M12 2c-5 6-9 10-9 14a9 9 0 0018 0c0-4-4-8-9-14z"/></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
                 </div>
             </div>
             <div class="stat-card-value">{{ number_format($totalWater ?? 0) }}</div>
@@ -48,7 +48,7 @@
         <div class="stat-card">
             <div class="stat-card-header">
                 <div class="stat-card-icon sleep">
-                    <svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 109 9c0-.5 0-1-.1-1.5a5.5 5.5 0 01-7.4-7.4A9 9 0 0012 3z"/></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
                 </div>
             </div>
             <div class="stat-card-value">{{ number_format($totalSleep ?? 0, 1) }}{{ __('dashboard.h') }}</div>
@@ -65,7 +65,7 @@
         <div class="stat-card">
             <div class="stat-card-header">
                 <div class="stat-card-icon goals">
-                    <svg viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-1 15l-5-5 1.4-1.4 3.6 3.6 7.6-7.6L20 8l-9 9z"/></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
                 </div>
             </div>
             @php $completedGoals = $goals->filter(fn($g) => $g->progressPercent() >= 100)->count(); @endphp
@@ -210,36 +210,34 @@
         <!-- Sidebar -->
         <div class="dashboard-sidebar">
             <!-- Profile Card -->
-            <div class="dash-card">
-                <div class="dash-card-body profile-card">
-                    <img src="{{ Auth::user()->avatar ? asset('storage/' . Auth::user()->avatar) : asset('storage/logo/defaultPhoto.jpg') }}" 
-                         alt="{{ Auth::user()->name }}" 
-                         class="profile-card-avatar">
-                    <div class="profile-card-name">{{ Auth::user()->name }}</div>
-                    <div class="profile-card-username">{{ '@' . Auth::user()->username }}</div>
-                    
-                    @php $bio = Auth::user()->biography; @endphp
-                    <div class="profile-stats-grid">
-                        <div class="profile-stat-item">
-                            <div class="profile-stat-value">{{ $bio?->age ?? '—' }}</div>
-                            <div class="profile-stat-label">{{ __('dashboard.age') }}</div>
-                        </div>
-                        <div class="profile-stat-item">
-                            <div class="profile-stat-value">{{ $bio?->weight ? $bio->weight . ' kg' : '—' }}</div>
-                            <div class="profile-stat-label">{{ __('dashboard.weight') }}</div>
-                        </div>
-                        <div class="profile-stat-item">
-                            <div class="profile-stat-value">{{ $bio?->height ? $bio->height . ' cm' : '—' }}</div>
-                            <div class="profile-stat-label">{{ __('dashboard.height') }}</div>
-                        </div>
-                        <div class="profile-stat-item">
-                            <div class="profile-stat-value">{{ $goals->count() }}</div>
-                            <div class="profile-stat-label">{{ __('dashboard.goals') }}</div>
-                        </div>
+            <div class="profile-card">
+                <img src="{{ Auth::user()->avatar ? asset('storage/' . Auth::user()->avatar) : asset('storage/logo/defaultPhoto.jpg') }}" 
+                     alt="{{ Auth::user()->name }}" 
+                     class="profile-card-avatar">
+                <div class="profile-card-name">{{ Auth::user()->name }}</div>
+                <div class="profile-card-username">{{ '@' . Auth::user()->username }}</div>
+                
+                @php $bio = Auth::user()->biography; @endphp
+                <div class="profile-stats-grid">
+                    <div class="profile-stat-item">
+                        <div class="profile-stat-value">{{ $bio?->age ?? '—' }}</div>
+                        <div class="profile-stat-label">{{ __('dashboard.age') }}</div>
                     </div>
-                    
-                    <a href="{{ route('profile.edit') }}" class="profile-card-btn">{{ __('dashboard.edit_profile') }}</a>
+                    <div class="profile-stat-item">
+                        <div class="profile-stat-value">{{ $bio?->weight ? $bio->weight . ' kg' : '—' }}</div>
+                        <div class="profile-stat-label">{{ __('dashboard.weight') }}</div>
+                    </div>
+                    <div class="profile-stat-item">
+                        <div class="profile-stat-value">{{ $bio?->height ? $bio->height . ' cm' : '—' }}</div>
+                        <div class="profile-stat-label">{{ __('dashboard.height') }}</div>
+                    </div>
+                    <div class="profile-stat-item">
+                        <div class="profile-stat-value">{{ $goals->count() }}</div>
+                        <div class="profile-stat-label">{{ __('dashboard.goals') }}</div>
+                    </div>
                 </div>
+                
+                <a href="{{ route('profile.edit') }}" class="profile-card-btn">{{ __('dashboard.edit_profile') }}</a>
             </div>
 
             <!-- Friends -->

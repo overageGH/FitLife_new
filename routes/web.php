@@ -130,6 +130,7 @@ Route::prefix('biography')->group(function () {
         Route::get('/', [CalendarController::class, 'index'])->name('activity-calendar');
         Route::post('/', [CalendarController::class, 'store'])->name('calendar.store');
         Route::patch('/{calendar}', [CalendarController::class, 'update'])->name('calendar.update');
+        Route::delete('/{calendar}', [CalendarController::class, 'destroy'])->name('calendar.destroy');
         Route::get('/events', [CalendarController::class, 'getEvents'])->name('calendar.events');
     });
 });

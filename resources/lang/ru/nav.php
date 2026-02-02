@@ -11,7 +11,7 @@ return [
     'profile_settings' => 'Настройки профиля',
     'logout' => 'Выход',
     'member' => 'Участник',
-    'admin' => 'Администратор',
+    'admin' => 'Панель администратора',
     'water_tracker' => 'Трекер воды',
     'sleep_tracker' => 'Трекер сна',
     'food_tracker' => 'Трекер питания',
@@ -36,4 +36,7 @@ return [
     'profile' => 'Профиль',
     'my_profile' => 'Мой профиль',
     'food' => 'Еда',
+    'meals' => 'Питание',
+    'water' => 'Вода',
+    'sleep' => 'Сон',
 ];

@@ -2,31 +2,25 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>{{ __('welcome.page_title') }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>FitLife - Transform Your Body, Transform Your Life</title>
     <link rel="icon" href="{{ asset('favicon.PNG') }}" type="image/png">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #0a0a0a;
-            --text: #f8fafc;
-            --accent: #22c55e;
-            --muted: #94a3b8;
-            --card-bg: #141414;
-            --border: #2a2a2a;
-            --radius: 12px;
-            --shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-            --transition: 0.3s ease;
-            --highlight: #16a34a;
-            --danger: #ef4444;
-            --success: #22c55e;
-            --focus: #4ade80;
-            --hover-bg: #1f1f1f;
+            --bg-dark: #0a0a0a;
+            --bg-card: #111111;
+            --bg-elevated: #1a1a1a;
+            --primary: #22c55e;
+            --primary-glow: rgba(34, 197, 94, 0.4);
+            --secondary: #06b6d4;
+            --accent: #f97316;
+            --text: #ffffff;
+            --text-muted: #a1a1aa;
+            --border: #27272a;
+            --gradient-1: linear-gradient(135deg, #22c55e 0%, #06b6d4 100%);
+            --gradient-2: linear-gradient(135deg, #f97316 0%, #ef4444 100%);
         }
-
-        /* Remove light theme - dark only */
 
         * {
             margin: 0;
@@ -34,474 +28,592 @@
             box-sizing: border-box;
         }
 
-        html, body {
-            width: 100%;
-            min-height: 100vh;
-            overflow-x: hidden;
+        html {
             scroll-behavior: smooth;
-            font-family: 'Inter', sans-serif;
-            background: var(--bg);
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--bg-dark);
             color: var(--text);
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
 
-        ::-webkit-scrollbar-track {
-            background: var(--border);
-            border-radius: 5px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--accent);
-            border-radius: 5px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--highlight);
-        }
-
-        header {
-            background: var(--card-bg);
-            padding: 1.5rem 4rem;
-            border-bottom: 1px solid var(--border);
+        /* ═══════════════════════════════════════════════════════════════════
+           NAVIGATION
+        ═══════════════════════════════════════════════════════════════════ */
+        nav {
             position: fixed;
-            width: 100%;
             top: 0;
+            left: 0;
+            right: 0;
             z-index: 1000;
+            padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: var(--transition);
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
         }
 
         .logo {
-            font-size: 1.75rem;
-            font-weight: 600;
-            color: var(--accent);
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
+            text-decoration: none;
         }
 
-        .logo img {
-            width: 50px;
-            height: auto;
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
         }
 
-        .menu-toggle {
+        .logo-text {
             font-size: 1.5rem;
-            color: var(--accent);
-            cursor: pointer;
-            background: none;
-            border: none;
-            display: none;
+            font-weight: 700;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 2.5rem;
+            list-style: none;
         }
 
         .nav-links a {
-            color: var(--text);
+            color: var(--text-muted);
             text-decoration: none;
             font-weight: 500;
-            position: relative;
-            transition: var(--transition);
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -4px;
-            left: 0;
-            background-color: var(--accent);
-            transition: var(--transition);
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
+            font-size: 0.95rem;
+            transition: color 0.3s;
         }
 
         .nav-links a:hover {
-            color: var(--accent);
+            color: var(--primary);
         }
 
-        .auth-buttons {
+        .nav-buttons {
             display: flex;
             gap: 1rem;
         }
 
-        .button {
+        .btn {
             padding: 0.75rem 1.5rem;
-            border-radius: var(--radius);
+            border-radius: 8px;
             font-weight: 600;
+            font-size: 0.9rem;
             text-decoration: none;
-            transition: var(--transition);
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-ghost:hover {
+            background: var(--bg-elevated);
+            border-color: var(--primary);
+        }
+
+        .btn-primary {
+            background: var(--gradient-1);
+            color: var(--bg-dark);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px var(--primary-glow);
+        }
+
+        .mobile-menu {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════
+           HERO SECTION
+        ═══════════════════════════════════════════════════════════════════ */
+        .hero {
+            min-height: 100vh;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            box-shadow: var(--shadow);
+            justify-content: center;
+            padding: 8rem 2rem 4rem;
+            position: relative;
+            overflow: hidden;
         }
 
-        .button.login {
-            background: var(--accent);
-            color: var(--bg);
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, var(--primary-glow) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(6, 182, 212, 0.2) 0%, transparent 50%);
+            pointer-events: none;
         }
 
-        .button.signup {
-            background: var(--highlight);
-            color: var(--bg);
-        }
-
-        .button:hover {
-            transform: translateY(-2px);
-            background: var(--hover-bg);
-            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
-        }
-
-        .button:focus {
-            outline: 2px solid var(--focus);
-            outline-offset: 2px;
-        }
-
-        .hero {
-            background: linear-gradient(135deg, var(--card-bg) 0%, var(--border) 100%);
-            padding: 8rem 2rem 5rem;
+        .hero-content {
+            max-width: 900px;
             text-align: center;
             position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .hero-badge span {
+            color: var(--primary);
+            font-weight: 600;
         }
 
         .hero h1 {
-            font-size: 3.5rem;
+            font-size: clamp(2.5rem, 8vw, 5rem);
             font-weight: 700;
-            color: var(--text);
+            line-height: 1.1;
             margin-bottom: 1.5rem;
-            animation: slideIn 0.5s ease-out;
+        }
+
+        .hero h1 .gradient {
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .hero p {
-            font-size: 1.2rem;
-            color: var(--muted);
+            font-size: 1.25rem;
+            color: var(--text-muted);
             max-width: 600px;
-            margin: 0 auto 2rem;
-            animation: slideIn 0.7s ease-out;
+            margin: 0 auto 2.5rem;
         }
 
-        .hero .call-to-action {
-            background: var(--accent);
-            color: var(--bg);
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-lg {
             padding: 1rem 2rem;
-            border-radius: var(--radius);
+            font-size: 1rem;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            margin-top: 4rem;
+            padding-top: 4rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════
+           FEATURES SECTION
+        ═══════════════════════════════════════════════════════════════════ */
+        .features {
+            padding: 6rem 2rem;
+            background: var(--bg-card);
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 4rem;
+        }
+
+        .section-tag {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 100px;
+            color: var(--primary);
+            font-size: 0.85rem;
             font-weight: 600;
-            text-decoration: none;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            animation: slideIn 0.9s ease-out;
+            margin-bottom: 1rem;
         }
 
-        .hero .call-to-action:hover {
-            background: var(--highlight);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
         }
 
-        .section {
-            padding: 5rem 2rem;
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
             max-width: 1200px;
             margin: 0 auto;
         }
 
-        .section h2 {
-            font-size: 2.5rem;
-            font-weight: 600;
-            color: var(--text);
-            text-align: center;
-            margin-bottom: 1rem;
-        }
-
-        .section p {
-            font-size: 1.1rem;
-            color: var(--muted);
-            max-width: 600px;
-            margin: 0 auto 2rem;
-            text-align: center;
-        }
-
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
         .feature-card {
-            background: var(--card-bg);
-            border-radius: var(--radius);
+            background: var(--bg-elevated);
             border: 1px solid var(--border);
-            box-shadow: var(--shadow);
-            transition: var(--transition);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s;
+            position: relative;
             overflow: hidden;
         }
 
-        .feature-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            transition: var(--transition);
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-1);
+            transform: scaleX(0);
+            transition: transform 0.3s;
         }
 
         .feature-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            border-color: var(--primary);
         }
 
-        .feature-card:hover img {
-            transform: scale(1.05);
+        .feature-card:hover::before {
+            transform: scaleX(1);
         }
 
-        .feature-card .content {
-            padding: 1.5rem;
+        .feature-icon {
+            width: 56px;
+            height: 56px;
+            background: rgba(34, 197, 94, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
         }
 
         .feature-card h3 {
-            font-size: 1.5rem;
+            font-size: 1.25rem;
             font-weight: 600;
-            color: var(--accent);
             margin-bottom: 0.75rem;
         }
 
         .feature-card p {
-            font-size: 1rem;
-            color: var(--muted);
+            color: var(--text-muted);
+            font-size: 0.95rem;
         }
 
-        .testimonials {
-            background: var(--bg);
-            padding: 5rem 2rem;
+        /* ═══════════════════════════════════════════════════════════════════
+           HOW IT WORKS
+        ═══════════════════════════════════════════════════════════════════ */
+        .how-it-works {
+            padding: 6rem 2rem;
         }
 
-        .testimonial-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .testimonial-card {
-            background: var(--card-bg);
-            border-radius: var(--radius);
-            padding: 2rem;
-            border: 1px solid var(--border);
-            box-shadow: var(--shadow);
-            text-align: center;
-            transition: var(--transition);
-        }
-
-        .testimonial-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .testimonial-card i {
-            font-size: 2rem;
-            color: var(--accent);
-            margin-bottom: 1rem;
-        }
-
-        .testimonial-card p {
-            font-size: 1rem;
-            color: var(--muted);
-            font-style: italic;
-            margin-bottom: 1rem;
-        }
-
-        .testimonial-card .author {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--success);
-        }
-
-        .section#about {
-            padding: 5rem 2rem;
-        }
-
-        #lightbox {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.9);
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
-            z-index: 2000;
-        }
-
-        #lightbox[aria-hidden="false"] {
+        .steps {
             display: flex;
+            justify-content: center;
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            flex-wrap: wrap;
         }
 
-        .lightbox-content {
-            max-width: 90%;
-            width: 100%;
-            background: var(--card-bg);
-            border-radius: var(--radius);
-            padding: 1rem;
-            box-shadow: var(--shadow);
+        .step {
+            flex: 1;
+            min-width: 250px;
+            max-width: 300px;
+            text-align: center;
             position: relative;
         }
 
-        #lightbox-img {
-            width: 100%;
-            max-height: 80vh;
-            object-fit: contain;
-            border-radius: var(--radius);
-            border: 2px solid var(--accent);
-        }
-
-        .lightbox-close {
-            position: absolute;
-            top: 0.5rem;
-            right: 0.5rem;
-            background: none;
-            border: none;
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 1.5rem;
-            color: var(--accent);
-            cursor: pointer;
+            font-weight: 700;
+            color: var(--bg-dark);
+            margin: 0 auto 1.5rem;
         }
 
-        .lightbox-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: var(--accent);
-            color: var(--bg);
-            border: none;
-            padding: 0.75rem;
-            border-radius: var(--radius);
-            cursor: pointer;
+        .step h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
         }
 
-        .lightbox-nav.prev {
-            left: 0.5rem;
+        .step p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
         }
 
-        .lightbox-nav.next {
-            right: 0.5rem;
+        /* ═══════════════════════════════════════════════════════════════════
+           TESTIMONIALS
+        ═══════════════════════════════════════════════════════════════════ */
+        .testimonials {
+            padding: 6rem 2rem;
+            background: var(--bg-card);
         }
 
-        footer {
-            background: var(--card-bg);
-            padding: 3rem 2rem;
-            border-top: 1px solid var(--border);
-            text-align: center;
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
-        footer .logo {
-            font-size: 1.5rem;
+        .testimonial {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+        }
+
+        .testimonial-stars {
+            color: #fbbf24;
+            font-size: 1.2rem;
             margin-bottom: 1rem;
         }
 
-        footer p {
-            font-size: 0.9rem;
-            color: var(--muted);
-            margin-bottom: 0.5rem;
+        .testimonial-text {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            color: var(--text);
         }
 
-        footer .links {
+        .testimonial-author {
             display: flex;
-            justify-content: center;
+            align-items: center;
             gap: 1rem;
         }
 
-        footer .links a {
-            color: var(--accent);
-            font-weight: 500;
-            transition: var(--transition);
+        .testimonial-avatar {
+            width: 48px;
+            height: 48px;
+            background: var(--gradient-1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--bg-dark);
         }
 
-        footer .links a:hover {
-            color: var(--highlight);
-            text-decoration: underline;
+        .testimonial-info h4 {
+            font-weight: 600;
+            font-size: 1rem;
         }
 
-        @keyframes slideIn {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+        .testimonial-info span {
+            color: var(--text-muted);
+            font-size: 0.85rem;
         }
 
-        a:focus, button:focus, .feature-card img:focus {
-            outline: 2px solid var(--focus);
-            outline-offset: 2px;
-        }
-
-        .sr-only {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
+        /* ═══════════════════════════════════════════════════════════════════
+           CTA SECTION
+        ═══════════════════════════════════════════════════════════════════ */
+        .cta {
+            padding: 6rem 2rem;
+            text-align: center;
+            position: relative;
             overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            border: 0;
         }
 
-        @media (prefers-contrast: high) {
-            :root {
-                --accent: #33ff33;
-                --highlight: #66ff66;
-                --border: #000000;
-                --muted: #cccccc;
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--primary-glow) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .cta h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .cta p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════
+           FOOTER
+        ═══════════════════════════════════════════════════════════════════ */
+        footer {
+            padding: 4rem 2rem 2rem;
+            background: var(--bg-card);
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr repeat(3, 1fr);
+            gap: 4rem;
+        }
+
+        .footer-brand p {
+            color: var(--text-muted);
+            margin-top: 1rem;
+            max-width: 300px;
+        }
+
+        .footer-links h4 {
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--text);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 4rem auto 0;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            color: var(--bg-dark);
+            border-color: var(--primary);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════
+           RESPONSIVE
+        ═══════════════════════════════════════════════════════════════════ */
+        @media (max-width: 1024px) {
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
             }
         }
 
-        @media (prefers-reduced-motion: reduce) {
-            .feature-card, .testimonial-card, .hero h1, .hero p, .hero .call-to-action {
-                transition: none;
-                animation: none;
-            }
-        }
-
-        @media print {
-            #lightbox, header, .menu-toggle {
-                display: none;
-            }
-
-            .hero, .section, footer {
-                background: none;
-                border: none;
-            }
-
-            .feature-card img {
-                border: 1px solid #000;
-            }
-        }
-
-        /* Mobile and Tablet Optimizations */
         @media (max-width: 768px) {
-            header {
+            nav {
                 padding: 1rem;
-                flex-direction: row;
-                align-items: center;
-                justify-content: space-between;
-            }
-
-            .logo {
-                font-size: 1.5rem;
-            }
-
-            .logo img {
-                width: 40px;
-            }
-
-            .menu-toggle {
-                display: block;
             }
 
             .nav-links {
@@ -509,343 +621,365 @@
                 position: absolute;
                 top: 100%;
                 left: 0;
-                width: 100%;
-                background: var(--card-bg);
+                right: 0;
+                background: var(--bg-card);
                 flex-direction: column;
-                padding: 1rem;
+                padding: 1rem 2rem;
+                gap: 1rem;
                 border-bottom: 1px solid var(--border);
-                box-shadow: var(--shadow);
             }
 
             .nav-links.active {
                 display: flex;
             }
 
-            .nav-links a {
-                padding: 0.75rem;
-                font-size: 1rem;
-            }
-
-            .auth-buttons {
-                flex-direction: row;
-                gap: 0.5rem;
-            }
-
-            .button {
-                padding: 0.5rem 1rem;
-                font-size: 0.9rem;
-            }
-
-            .hero {
-                padding: 5rem 1rem 3rem;
-                min-height: 50vh;
+            .mobile-menu {
+                display: block;
             }
 
             .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-stats {
+                gap: 2rem;
+                flex-wrap: wrap;
+            }
+
+            .stat-value {
                 font-size: 2rem;
             }
 
-            .hero p {
-                font-size: 1rem;
-                max-width: 90%;
+            .features-grid,
+            .testimonials-grid {
+                grid-template-columns: 1fr;
             }
 
-            .hero .call-to-action {
-                padding: 0.75rem 1.5rem;
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
             }
 
-            .section {
-                padding: 3rem 1rem;
-            }
-
-            .section h2 {
-                font-size: 1.8rem;
-            }
-
-            .section p {
-                font-size: 0.9rem;
-                max-width: 90%;
-            }
-
-            .feature-grid, .testimonial-grid {
-                display: flex;
+            .footer-bottom {
                 flex-direction: column;
-                gap: 1.5rem;
-            }
-
-            .feature-card img {
-                height: 180px;
-            }
-
-            .feature-card h3 {
-                font-size: 1.4rem;
-            }
-
-            .feature-card p {
-                font-size: 0.9rem;
-            }
-
-            .testimonial-card {
-                padding: 1.5rem;
-            }
-
-            .testimonial-card i {
-                font-size: 1.5rem;
-            }
-
-            .testimonial-card p, .testimonial-card .author {
-                font-size: 0.9rem;
-            }
-
-            footer {
-                padding: 2rem 1rem;
-            }
-
-            footer .logo {
-                font-size: 1.3rem;
-            }
-
-            footer p {
-                font-size: 0.8rem;
-            }
-
-            footer .links a {
-                font-size: 0.9rem;
+                gap: 1rem;
+                text-align: center;
             }
         }
 
-        @media (max-width: 480px) {
-            .hero h1 {
-                font-size: 1.8rem;
-            }
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
 
-            .hero p {
-                font-size: 0.9rem;
-            }
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
 
-            .section h2 {
-                font-size: 1.6rem;
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
             }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-            .section p {
-                font-size: 0.8rem;
-            }
-
-            .feature-card h3 {
-                font-size: 1.2rem;
-            }
-
-            .feature-card p {
-                font-size: 0.8rem;
-            }
-
-            .testimonial-card p, .testimonial-card .author {
-                font-size: 0.8rem;
-            }
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out forwards;
         }
     </style>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Header scroll effect
-            window.addEventListener('scroll', () => {
-                const header = document.querySelector('header');
-            });
-
-            // Mobile menu toggle
-            const menuToggle = document.querySelector('.menu-toggle');
-            const navLinks = document.querySelector('.nav-links');
-
-            menuToggle.addEventListener('click', () => {
-                navLinks.classList.toggle('active');
-            });
-
-            // Close mobile menu on link click
-            document.querySelectorAll('.nav-links a').forEach(link => {
-                link.addEventListener('click', () => {
-                    navLinks.classList.remove('active');
-                });
-            });
-
-            // Lightbox for images
-            const images = document.querySelectorAll('.feature-card img');
-            const lightbox = document.querySelector('#lightbox');
-            const lightboxImg = document.querySelector('#lightbox-img');
-            const lightboxClose = document.querySelector('.lightbox-close');
-            const prevBtn = document.querySelector('.lightbox-nav.prev');
-            const nextBtn = document.querySelector('.lightbox-nav.next');
-            let currentIndex = 0;
-
-            images.forEach((img, index) => {
-                img.addEventListener('click', () => {
-                    currentIndex = index;
-                    lightboxImg.src = img.src;
-                    lightboxImg.alt = img.alt;
-                    lightbox.setAttribute('aria-hidden', 'false');
-                });
-            });
-
-            lightboxClose.addEventListener('click', () => {
-                lightbox.setAttribute('aria-hidden', 'true');
-            });
-
-            prevBtn.addEventListener('click', () => {
-                currentIndex = (currentIndex - 1 + images.length) % images.length;
-                lightboxImg.src = images[currentIndex].src;
-                lightboxImg.alt = images[currentIndex].alt;
-            });
-
-            nextBtn.addEventListener('click', () => {
-                currentIndex = (currentIndex + 1) % images.length;
-                lightboxImg.src = images[currentIndex].src;
-                lightboxImg.alt = images[currentIndex].alt;
-            });
-
-            lightbox.addEventListener('click', (e) => {
-                if (e.target === lightbox) {
-                    lightbox.setAttribute('aria-hidden', 'true');
-                }
-            });
-
-            // Prevent pinch zoom on iOS
-            document.addEventListener('gesturestart', (e) => {
-                e.preventDefault();
-            });
-        });
-    </script>
 </head>
-
 <body>
-    <header>
-        <div class="logo">
-            <img src="{{ asset('favicon.PNG') }}" alt="FitLife Logo">
+    <!-- Navigation -->
+    <nav>
+        <a href="/" class="logo">
+            <div class="logo-icon">F</div>
+            <span class="logo-text">FitLife</span>
+        </a>
+
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#features">Features</a></li>
+            <li><a href="#how-it-works">How It Works</a></li>
+            <li><a href="#testimonials">Reviews</a></li>
+        </ul>
+
+        <div class="nav-buttons">
+            @auth
+                <a href="{{ route('dashboard') }}" class="btn btn-primary">Dashboard</a>
+            @else
+                <a href="{{ route('login') }}" class="btn btn-ghost">Log In</a>
+                <a href="{{ route('register') }}" class="btn btn-primary">Get Started</a>
+            @endauth
         </div>
-        <button class="menu-toggle"><i class="fas fa-bars"></i></button>
-        <div class="nav-links">
-            <a href="#features">{{ __('welcome.nav_features') }}</a>
-            <a href="#testimonials">{{ __('welcome.nav_testimonials') }}</a>
-            <a href="#about">{{ __('welcome.nav_about') }}</a>
-        </div>
-        <div class="auth-buttons">
-            @if(Route::has('login'))
+
+        <button class="mobile-menu" id="mobileMenu">☰</button>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge fade-in-up">
+                🚀 <span>New</span> AI-powered workout recommendations
+            </div>
+            <h1 class="fade-in-up" style="animation-delay: 0.1s">
+                Your Journey to a<br>
+                <span class="gradient">Healthier You</span><br>
+                Starts Here
+            </h1>
+            <p class="fade-in-up" style="animation-delay: 0.2s">
+                Track workouts, monitor nutrition, set goals, and connect with a community 
+                of fitness enthusiasts. All in one powerful platform.
+            </p>
+            <div class="hero-buttons fade-in-up" style="animation-delay: 0.3s">
                 @auth
-                    <a href="{{ route('dashboard') }}" class="button login">
-                        <i class="fas fa-tachometer-alt"></i> {{ __('welcome.dashboard') }}
-                    </a>
+                    <a href="{{ route('dashboard') }}" class="btn btn-primary btn-lg">Go to Dashboard →</a>
                 @else
-                    <a href="{{ route('login') }}" class="button login">
-                        <i class="fas fa-sign-in-alt"></i> {{ __('welcome.log_in') }}
-                    </a>
-                    @if(Route::has('register'))
-                        <a href="{{ route('register') }}" class="button signup">
-                            <i class="fas fa-user-plus"></i> {{ __('welcome.sign_up') }}
-                        </a>
-                    @endif
+                    <a href="{{ route('register') }}" class="btn btn-primary btn-lg">Start Free Trial →</a>
+                    <a href="#features" class="btn btn-ghost btn-lg">Learn More</a>
                 @endauth
-            @endif
+            </div>
+            <div class="hero-stats fade-in-up" style="animation-delay: 0.4s">
+                <div class="stat">
+                    <div class="stat-value">{{ number_format(\App\Models\User::count()) }}+</div>
+                    <div class="stat-label">Active Users</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">{{ number_format(\App\Models\Goal::count()) }}+</div>
+                    <div class="stat-label">Goals Set</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">{{ number_format(\App\Models\Post::count()) }}+</div>
+                    <div class="stat-label">Community Posts</div>
+                </div>
+            </div>
         </div>
-    </header>
+    </section>
 
-    <main>
-        <h1 style="position:absolute; left:-9999px;">{{ __('welcome.hero_hidden_title') }}</h1>
-        <section class="hero">
-            <h1>{{ __('welcome.hero_title') }}</h1>
-            <p>{{ __('welcome.hero_subtitle') }}</p>
-        </section>
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="section-header">
+            <span class="section-tag">Features</span>
+            <h2>Everything You Need to Succeed</h2>
+            <p>Powerful tools designed to help you reach your fitness goals faster and smarter.</p>
+        </div>
 
-        <section class="section" id="features">
-            <h2>{{ __('welcome.features_title') }}</h2>
-            <p>{{ __('welcome.features_subtitle') }}</p>
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <img src="{{ asset('storage/WelcomePhoto/training.jpg') }}" alt="{{ __('welcome.feature_workouts_alt') }}" tabindex="0">
-                    <div class="content">
-                        <h3>{{ __('welcome.feature_workouts_title') }}</h3>
-                        <p>{{ __('welcome.feature_workouts_desc') }}</p>
-                    </div>
-                </div>
-                <div class="feature-card">
-                    <img src="{{ asset('storage/WelcomePhoto/nutrition.jpg') }}" alt="{{ __('welcome.feature_nutrition_alt') }}" tabindex="0">
-                    <div class="content">
-                        <h3>{{ __('welcome.feature_nutrition_title') }}</h3>
-                        <p>{{ __('welcome.feature_nutrition_desc') }}</p>
-                    </div>
-                </div>
-                <div class="feature-card">
-                    <img src="{{ asset('storage/WelcomePhoto/sleep.jpg') }}" alt="{{ __('welcome.feature_sleep_alt') }}" tabindex="0">
-                    <div class="content">
-                        <h3>{{ __('welcome.feature_sleep_title') }}</h3>
-                        <p>{{ __('welcome.feature_sleep_desc') }}</p>
-                    </div>
-                </div>
-                <div class="feature-card">
-                    <img src="{{ asset('storage/WelcomePhoto/community.jpg') }}" alt="{{ __('welcome.feature_community_alt') }}" tabindex="0">
-                    <div class="content">
-                        <h3>{{ __('welcome.feature_community_title') }}</h3>
-                        <p>{{ __('welcome.feature_community_desc') }}</p>
-                    </div>
-                </div>
-                <div class="feature-card">
-                    <img src="{{ asset('storage/WelcomePhoto/progress.jpg') }}" alt="{{ __('welcome.feature_progress_alt') }}" tabindex="0">
-                    <div class="content">
-                        <h3>{{ __('welcome.feature_progress_title') }}</h3>
-                        <p>{{ __('welcome.feature_progress_desc') }}</p>
-                    </div>
-                </div>
-                <div class="feature-card">
-                    <img src="{{ asset('storage/WelcomePhoto/goalsetting.jpg') }}" alt="{{ __('welcome.feature_goals_alt') }}" tabindex="0">
-                    <div class="content">
-                        <h3>{{ __('welcome.feature_goals_title') }}</h3>
-                        <p>{{ __('welcome.feature_goals_desc') }}</p>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3>Goal Tracking</h3>
+                <p>Set personalized fitness goals and track your progress with detailed analytics and insights.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🥗</div>
+                <h3>Nutrition Logging</h3>
+                <p>Log meals, track calories, and get nutritional breakdowns to fuel your body right.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💧</div>
+                <h3>Water Intake</h3>
+                <p>Stay hydrated with daily water tracking and smart reminders throughout the day.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">😴</div>
+                <h3>Sleep Analysis</h3>
+                <p>Monitor your sleep patterns and get recommendations for better recovery.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📸</div>
+                <h3>Progress Photos</h3>
+                <p>Document your transformation with secure photo storage and side-by-side comparisons.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">👥</div>
+                <h3>Community</h3>
+                <p>Connect with like-minded individuals, share achievements, and stay motivated together.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="section-header">
+            <span class="section-tag">How It Works</span>
+            <h2>Start in 3 Simple Steps</h2>
+            <p>Getting started with FitLife is quick and easy.</p>
+        </div>
+
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Create Account</h3>
+                <p>Sign up for free and set up your fitness profile in under 2 minutes.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Set Your Goals</h3>
+                <p>Define what you want to achieve - lose weight, build muscle, or stay active.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Track & Grow</h3>
+                <p>Log your activities, monitor progress, and watch yourself transform.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials" id="testimonials">
+        <div class="section-header">
+            <span class="section-tag">Testimonials</span>
+            <h2>Loved by Thousands</h2>
+            <p>See what our community members have to say about their journey.</p>
+        </div>
+
+        <div class="testimonials-grid">
+            <div class="testimonial">
+                <div class="testimonial-stars">★★★★★</div>
+                <p class="testimonial-text">"FitLife completely changed my approach to fitness. The goal tracking feature keeps me accountable, and the community support is incredible!"</p>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar">AK</div>
+                    <div class="testimonial-info">
+                        <h4>Alex Kim</h4>
+                        <span>Lost 30 lbs in 4 months</span>
                     </div>
                 </div>
             </div>
-        </section>
-
-        <section class="testimonials section" id="testimonials">
-            <h2>{{ __('welcome.testimonials_title') }}</h2>
-            <p>{{ __('welcome.testimonials_subtitle') }}</p>
-            <div class="testimonial-grid">
-                <div class="testimonial-card">
-                    <i class="fas fa-quote-left"></i>
-                    <p>{{ __('welcome.testimonial_1_text') }}</p>
-                    <div class="author">{{ __('welcome.testimonial_1_author') }}</div>
-                </div>
-                <div class="testimonial-card">
-                    <i class="fas fa-quote-left"></i>
-                    <p>{{ __('welcome.testimonial_2_text') }}</p>
-                    <div class="author">{{ __('welcome.testimonial_2_author') }}</div>
-                </div>
-                <div class="testimonial-card">
-                    <i class="fas fa-quote-left"></i>
-                    <p>{{ __('welcome.testimonial_3_text') }}</p>
-                    <div class="author">{{ __('welcome.testimonial_3_author') }}</div>
+            <div class="testimonial">
+                <div class="testimonial-stars">★★★★★</div>
+                <p class="testimonial-text">"The nutrition tracking is so easy to use. I finally understand what I'm putting into my body and how it affects my performance."</p>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar">SM</div>
+                    <div class="testimonial-info">
+                        <h4>Sarah Mitchell</h4>
+                        <span>Marathon Runner</span>
+                    </div>
                 </div>
             </div>
-        </section>
-
-        <section class="section" id="about">
-            <h2>{{ __('welcome.about_title') }}</h2>
-            <p>{{ __('welcome.about_text') }}</p>
-        </section>
-    </main>
-
-    <div id="lightbox" aria-hidden="true">
-        <div class="lightbox-content">
-            <img id="lightbox-img" src="" alt="">
-            <button class="lightbox-close"><i class="fas fa-times"></i></button>
-            <button class="lightbox-nav prev"><i class="fas fa-chevron-left"></i></button>
-            <button class="lightbox-nav next"><i class="fas fa-chevron-right"></i></button>
+            <div class="testimonial">
+                <div class="testimonial-stars">★★★★★</div>
+                <p class="testimonial-text">"I've tried many fitness apps, but FitLife is the only one that stuck. The progress photos feature is my favorite - seeing the transformation is so motivating!"</p>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar">JD</div>
+                    <div class="testimonial-info">
+                        <h4>James Davis</h4>
+                        <span>Gained 15 lbs muscle</span>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
+    </section>
 
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="cta-content">
+            <h2>Ready to Transform Your Life?</h2>
+            <p>Join thousands of people who have already started their fitness journey with FitLife. It's free to get started.</p>
+            @auth
+                <a href="{{ route('dashboard') }}" class="btn btn-primary btn-lg">Go to Dashboard →</a>
+            @else
+                <a href="{{ route('register') }}" class="btn btn-primary btn-lg">Get Started for Free →</a>
+            @endauth
+        </div>
+    </section>
+
+    <!-- Footer -->
     <footer>
-        <p>{{ __('welcome.footer_copyright', ['year' => date('Y')]) }}</p>
-        <div class="links">
-            <a href="{{ route('privacy-policy') }}">{{ __('welcome.footer_privacy') }}</a>
-            <a href="{{ route('terms-of-service') }}">{{ __('welcome.footer_terms') }}</a>
-            <a href="mailto:support@fitlife.com">{{ __('welcome.footer_contact') }}</a>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <a href="/" class="logo">
+                    <div class="logo-icon">F</div>
+                    <span class="logo-text">FitLife</span>
+                </a>
+                <p>Your all-in-one platform for tracking fitness, nutrition, and wellness goals.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Product</h4>
+                <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#testimonials">Reviews</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="{{ route('privacy-policy') }}">Privacy Policy</a></li>
+                    <li><a href="{{ route('terms-of-service') }}">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© {{ date('Y') }} FitLife. All rights reserved.</span>
+            <div class="social-links">
+                <a href="#" title="Twitter">𝕏</a>
+                <a href="#" title="Instagram">📷</a>
+                <a href="#" title="GitHub">⌨</a>
+            </div>
         </div>
     </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobileMenu').addEventListener('click', function() {
+            document.getElementById('navLinks').classList.toggle('active');
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+                // Close mobile menu if open
+                document.getElementById('navLinks').classList.remove('active');
+            });
+        });
+
+        // Add scroll effect to nav
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(10, 10, 10, 0.95)';
+            } else {
+                nav.style.background = 'rgba(10, 10, 10, 0.8)';
+            }
+        });
+
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.feature-card, .step, .testimonial').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
 </body>
 </html>

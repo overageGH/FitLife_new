@@ -235,17 +235,23 @@ document.addEventListener("DOMContentLoaded", () => {
                 throw new Error(data.message || 'Failed to toggle reaction');
             }
             
-            const parent = btn.closest(isComment ? '.comment-actions' : '.post-actions');
-            // Support both old (.like-btn) and new (.comment-btn.like) selectors
-            const likeBtn = parent.querySelector('.like-btn') || parent.querySelector('.comment-btn.like');
-            const dislikeBtn = parent.querySelector('.dislike-btn') || parent.querySelector('.comment-btn.dislike');
+            const parent = btn.closest(isComment ? '.comment-actions' : '.post-votes') || btn.closest('.post-actions');
+            // Support vote-btn, like-btn, and comment-btn selectors
+            const likeBtn = parent.querySelector('.vote-btn.upvote') || parent.querySelector('.like-btn') || parent.querySelector('.comment-btn.like');
+            const dislikeBtn = parent.querySelector('.vote-btn.downvote') || parent.querySelector('.dislike-btn') || parent.querySelector('.comment-btn.dislike');
             
-            likeBtn.classList.toggle('active', data.type === 'like');
-            dislikeBtn.classList.toggle('active', data.type === 'dislike');
+            if (likeBtn) likeBtn.classList.toggle('active', data.type === 'like');
+            if (dislikeBtn) dislikeBtn.classList.toggle('active', data.type === 'dislike');
             
-            // Support both old (.count-like) and new (span) selectors
-            const likeCountEl = likeBtn.querySelector('.count-like') || likeBtn.querySelector('span');
-            const dislikeCountEl = dislikeBtn.querySelector('.count-dislike') || dislikeBtn.querySelector('span');
+            // Support vote-count, count-like, and span selectors
+            const voteCountEl = parent.querySelector('.vote-count');
+            const likeCountEl = likeBtn?.querySelector('.count-like') || likeBtn?.querySelector('span');
+            const dislikeCountEl = dislikeBtn?.querySelector('.count-dislike') || dislikeBtn?.querySelector('span');
+            
+            // Update vote count (upvotes - downvotes)
+            if (voteCountEl) {
+                voteCountEl.textContent = (data.likeCount ?? 0) - (data.dislikeCount ?? 0);
+            }
             
             if (likeCountEl) likeCountEl.textContent = data.likeCount ?? 0;
             if (dislikeCountEl) dislikeCountEl.textContent = data.dislikeCount ?? 0;
@@ -262,9 +268,9 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log('Setting up reaction buttons on:', main);
         main.addEventListener('click', (e) => {
             console.log('Click detected on:', e.target);
-            // Support both old (.like-btn) and new (.comment-btn.like) selectors
-            const likeBtn = e.target.closest('.like-btn') || e.target.closest('.comment-btn.like');
-            const dislikeBtn = e.target.closest('.dislike-btn') || e.target.closest('.comment-btn.dislike');
+            // Support vote-btn, like-btn, and comment-btn selectors
+            const likeBtn = e.target.closest('.vote-btn.upvote') || e.target.closest('.like-btn') || e.target.closest('.comment-btn.like');
+            const dislikeBtn = e.target.closest('.vote-btn.downvote') || e.target.closest('.dislike-btn') || e.target.closest('.comment-btn.dislike');
             console.log('Like btn:', likeBtn, 'Dislike btn:', dislikeBtn);
             
             if (likeBtn) {
@@ -397,10 +403,14 @@ document.addEventListener("DOMContentLoaded", () => {
     // Sort buttons functionality
     const setupSortButtons = () => {
         const sortButtons = document.querySelectorAll('.sort-btn');
+        const postsFeed = document.querySelector('.posts-feed');
         if (sortButtons.length === 0) return;
         
         sortButtons.forEach(btn => {
-            btn.addEventListener('click', function() {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
                 // Remove active class from all
                 sortButtons.forEach(b => b.classList.remove('active'));
                 // Add to clicked
@@ -409,8 +419,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 // Get sort type from button text
                 const sortText = this.textContent.trim().toLowerCase();
                 let sortParam = 'newest';
-                if (sortText.includes('top')) sortParam = 'top';
-                else if (sortText.includes('hot')) sortParam = 'hot';
+                if (sortText.includes('top') || sortText.includes('топ')) sortParam = 'top';
+                else if (sortText.includes('hot') || sortText.includes('гор')) sortParam = 'hot';
                 
                 // Reload page with sort parameter
                 const url = new URL(window.location.href);
@@ -424,8 +434,9 @@ document.addEventListener("DOMContentLoaded", () => {
         const currentSort = urlParams.get('sort') || 'newest';
         sortButtons.forEach(btn => {
             const btnText = btn.textContent.trim().toLowerCase();
-            if (btnText.includes(currentSort) || 
-                (currentSort === 'newest' && btnText.includes('new'))) {
+            if ((currentSort === 'top' && (btnText.includes('top') || btnText.includes('топ'))) ||
+                (currentSort === 'hot' && (btnText.includes('hot') || btnText.includes('гор'))) ||
+                (currentSort === 'newest' && (btnText.includes('new') || btnText.includes('нов')))) {
                 btn.classList.add('active');
             } else {
                 btn.classList.remove('active');

@@ -36,4 +36,7 @@ return [
     'profile' => 'Profile',
     'my_profile' => 'My Profile',
     'food' => 'Food',
+    'meals' => 'Meals',
+    'water' => 'Water',
+    'sleep' => 'Sleep',
 ];

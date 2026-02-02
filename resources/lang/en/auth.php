@@ -71,4 +71,13 @@ return [
     'verify_email_message' => 'Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.',
     'verification_link_sent' => 'A new verification link has been sent to the email address you provided during registration.',
     'resend_verification_email' => 'Resend Verification Email',
+    
+    // Additional keys
+    'have_account' => 'Already have an account?',
+    'agree_terms_prefix' => 'I agree to the',
+    'terms' => 'Terms of Service',
+    'and' => 'and',
+    'privacy' => 'Privacy Policy',
+    'forgot_password_text' => 'Forgot your password? No problem.',
+    'remember_password' => 'Remember your password?',
 ];

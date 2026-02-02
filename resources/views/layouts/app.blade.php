@@ -9,7 +9,7 @@
     <link rel="icon" href="{{ asset('favicon.PNG') }}" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @yield('styles')
 </head>
@@ -29,66 +29,48 @@
             <!-- Main Navigation -->
             <nav class="header-nav">
                 <a href="{{ route('dashboard') }}" class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
-                    <svg viewBox="0 -960 960 960"><path d="M520-600v-240h320v240H520ZM120-440v-400h320v400H120Zm400 320v-400h320v400H520Zm-400 0v-240h320v240H120Z"/></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
                     <span>{{ __('nav.dashboard') }}</span>
                 </a>
 
                 <a href="{{ route('posts.index') }}" class="nav-item {{ request()->routeIs('posts.*') ? 'active' : '' }}">
-                    <svg viewBox="0 -960 960 960"><path d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Z"/></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                     <span>{{ __('nav.community') }}</span>
                 </a>
 
-                <!-- Trackers Dropdown -->
-                <div class="nav-dropdown">
-                    <div class="nav-item nav-dropdown-trigger">
-                        <svg viewBox="0 -960 960 960"><path d="M280-80v-366q-51-14-85.5-56T160-600v-280h80v280h40v-280h80v280h40v-280h80v280q0 56-34.5 98T360-446v366h-80Zm400 0v-320H560v-280q0-83 58.5-141.5T760-880v800h-80Z"/></svg>
-                        <span>{{ __('nav.trackers') }}</span>
-                    </div>
-                    <div class="nav-dropdown-menu">
-                        <a href="{{ route('activity-calendar') }}" class="nav-dropdown-item">
-                            <svg viewBox="0 -960 960 960"><path d="M200-80q-33 0-56.5-23.5T120-160v-560q0-33 23.5-56.5T200-800h40v-80h80v80h320v-80h80v80h40q33 0 56.5 23.5T840-720v560q0 33-23.5 56.5T760-80H200Z"/></svg>
-                            <span>{{ __('nav.calendar') }}</span>
-                        </a>
-                        <a href="{{ route('foods.index') }}" class="nav-dropdown-item">
-                            <svg viewBox="0 -960 960 960"><path d="M280-80v-366q-51-14-85.5-56T160-600v-280h80v280h40v-280h80v280h40v-280h80v280q0 56-34.5 98T360-446v366h-80Z"/></svg>
-                            <span>{{ __('nav.meal_tracker') }}</span>
-                        </a>
-                        <a href="{{ route('sleep.index') }}" class="nav-dropdown-item">
-                            <svg viewBox="0 -960 960 960"><path d="M480-120q-150 0-255-105T120-480q0-150 105-255t255-105q14 0 27.5 1t26.5 3q-41 29-65.5 75.5T444-660q0 90 63 153t153 63q55 0 101-24.5t75-65.5q2 13 3 26.5t1 27.5q0 150-105 255T480-120Z"/></svg>
-                            <span>{{ __('nav.sleep_tracker') }}</span>
-                        </a>
-                        <a href="{{ route('water.index') }}" class="nav-dropdown-item">
-                            <svg viewBox="0 -960 960 960"><path d="M480-80q-137 0-228.5-94T160-408q0-100 79.5-217.5T480-880q161 137 240.5 254.5T800-408q0 140-91.5 234T480-80Z"/></svg>
-                            <span>{{ __('nav.water_tracker') }}</span>
-                        </a>
-                    </div>
-                </div>
+                <a href="{{ route('activity-calendar') }}" class="nav-item {{ request()->routeIs('activity-calendar') ? 'active' : '' }}">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    <span>{{ __('nav.calendar') }}</span>
+                </a>
 
-                <!-- Progress Dropdown -->
-                <div class="nav-dropdown">
-                    <div class="nav-item nav-dropdown-trigger">
-                        <svg viewBox="0 -960 960 960"><path d="M120-120v-80l80-80v160h-80Zm160 0v-240l80-80v320h-80Zm160 0v-320l80 81v239h-80Zm160 0v-239l80-80v319h-80Zm160 0v-400l80-80v480h-80Z"/></svg>
-                        <span>{{ __('nav.progress') }}</span>
-                    </div>
-                    <div class="nav-dropdown-menu">
-                        <a href="{{ route('progress.index') }}" class="nav-dropdown-item">
-                            <svg viewBox="0 -960 960 960"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm40-80h480L570-480 450-320l-90-120-120 160Z"/></svg>
-                            <span>{{ __('nav.progress_photos') }}</span>
-                        </a>
-                        <a href="{{ route('goals.index') }}" class="nav-dropdown-item">
-                            <svg viewBox="0 -960 960 960"><path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z"/></svg>
-                            <span>{{ __('nav.goals') }}</span>
-                        </a>
-                        <a href="{{ route('calories.index') }}" class="nav-dropdown-item">
-                            <svg viewBox="0 -960 960 960"><path d="M320-240h60v-80h80v-60h-80v-80h-60v80h-80v60h80v80Zm200-30h200v-60H520v60Zm0-100h200v-60H520v60Z"/></svg>
-                            <span>{{ __('nav.calculator') }}</span>
-                        </a>
-                    </div>
-                </div>
+                <a href="{{ route('foods.index') }}" class="nav-item {{ request()->routeIs('foods.*') ? 'active' : '' }}">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+                    <span>{{ __('nav.meals') }}</span>
+                </a>
+
+                <a href="{{ route('water.index') }}" class="nav-item {{ request()->routeIs('water.*') ? 'active' : '' }}">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+                    <span>{{ __('nav.water') }}</span>
+                </a>
+
+                <a href="{{ route('sleep.index') }}" class="nav-item {{ request()->routeIs('sleep.*') ? 'active' : '' }}">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                    <span>{{ __('nav.sleep') }}</span>
+                </a>
+
+                <a href="{{ route('goals.index') }}" class="nav-item {{ request()->routeIs('goals.*') ? 'active' : '' }}">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+                    <span>{{ __('nav.goals') }}</span>
+                </a>
+
+                <a href="{{ route('progress.index') }}" class="nav-item {{ request()->routeIs('progress.*') ? 'active' : '' }}">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg>
+                    <span>{{ __('nav.progress') }}</span>
+                </a>
 
                 @if(Auth::user()->role === 'admin')
                 <a href="{{ route('admin.dashboard') }}" class="nav-item {{ request()->routeIs('admin.*') ? 'active' : '' }}">
-                    <svg viewBox="0 -960 960 960"><path d="M680-280q25 0 42.5-17.5T740-340q0-25-17.5-42.5T680-400q-25 0-42.5 17.5T620-340q0 25 17.5 42.5T680-280Zm0 120q31 0 57-14.5t42-38.5q-22-13-47-20t-52-7q-27 0-52 7t-47 20q16 24 42 38.5t57 14.5Z"/></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
                     <span>{{ __('nav.admin') }}</span>
                 </a>
                 @endif

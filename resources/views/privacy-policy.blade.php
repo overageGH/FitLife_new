@@ -2,39 +2,22 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>FitLife - Privacy Policy</title>
     <link rel="icon" href="{{ asset('favicon.PNG') }}" type="image/png">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #121212;
-            --text: #e5e5e5;
-            --accent: #00ff00;
-            --muted: #a0a0a0;
-            --card-bg: #1f1f1f;
-            --border: #333333;
-            --radius: 12px;
-            --shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-            --transition: 0.3s ease;
-            --highlight: #00cc00;
-            --danger: #ff5555;
-            --success: #00ff00;
-            --focus: #33ff33;
-            --hover-bg: #000000;
-        }
-
-        @media (prefers-color-scheme: light) {
-            :root {
-                --bg: #f4faff;
-                --text: #2c3e50;
-                --card-bg: #ffffff;
-                --border: #e0e0e0;
-                --muted: #7f8c8d;
-                --hover-bg: #f0f0f0;
-            }
+            --bg-dark: #0a0a0a;
+            --bg-card: #111111;
+            --bg-elevated: #1a1a1a;
+            --primary: #22c55e;
+            --primary-glow: rgba(34, 197, 94, 0.4);
+            --secondary: #06b6d4;
+            --text: #ffffff;
+            --text-muted: #a1a1aa;
+            --border: #27272a;
+            --gradient-1: linear-gradient(135deg, #22c55e 0%, #06b6d4 100%);
         }
 
         * {
@@ -43,300 +26,318 @@
             box-sizing: border-box;
         }
 
-        html, body {
-            width: 100%;
-            min-height: 100vh;
-            overflow-x: hidden;
+        html {
             scroll-behavior: smooth;
-            font-family: 'Inter', sans-serif;
-            background: var(--bg);
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--bg-dark);
             color: var(--text);
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
 
-        ::-webkit-scrollbar-track {
-            background: var(--border);
-            border-radius: 5px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--accent);
-            border-radius: 5px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--highlight);
-        }
-
-        header {
-            background: var(--card-bg);
-            padding: 1.5rem 4rem;
-            border-bottom: 1px solid var(--border);
+        /* Navigation */
+        nav {
             position: fixed;
-            width: 100%;
             top: 0;
+            left: 0;
+            right: 0;
             z-index: 1000;
+            padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: var(--transition);
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
         }
 
         .logo {
-            font-size: 1.75rem;
-            font-weight: 600;
-            color: var(--accent);
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
+            text-decoration: none;
         }
 
-        .logo img {
-            width: 50px;
-            height: auto;
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
         }
 
-        .menu-toggle {
+        .logo-text {
             font-size: 1.5rem;
-            color: var(--accent);
-            cursor: pointer;
-            background: none;
-            border: none;
-            display: none;
+            font-weight: 700;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 2.5rem;
+            list-style: none;
         }
 
         .nav-links a {
-            color: var(--text);
+            color: var(--text-muted);
             text-decoration: none;
             font-weight: 500;
-            position: relative;
-            transition: var(--transition);
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -4px;
-            left: 0;
-            background-color: var(--accent);
-            transition: var(--transition);
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
+            font-size: 0.95rem;
+            transition: color 0.3s;
         }
 
         .nav-links a:hover {
-            color: var(--accent);
+            color: var(--primary);
         }
 
-        .auth-buttons {
+        .nav-buttons {
             display: flex;
             gap: 1rem;
         }
 
-        .button {
+        .btn {
             padding: 0.75rem 1.5rem;
-            border-radius: var(--radius);
+            border-radius: 8px;
             font-weight: 600;
+            font-size: 0.9rem;
             text-decoration: none;
-            transition: var(--transition);
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-ghost:hover {
+            background: var(--bg-elevated);
+            border-color: var(--primary);
+        }
+
+        .btn-primary {
+            background: var(--gradient-1);
+            color: var(--bg-dark);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px var(--primary-glow);
+        }
+
+        .mobile-menu {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Header */
+        .page-header {
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, var(--primary-glow) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .page-header h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .page-header h1 .gradient {
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-header p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Content */
+        .content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem 4rem;
+        }
+
+        .content-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2.5rem;
+        }
+
+        .content-card h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+            color: var(--text);
+        }
+
+        .content-card h2:first-child {
+            margin-top: 0;
+        }
+
+        .content-card p {
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .content-card ul {
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+
+        .content-card li {
+            margin-bottom: 0.5rem;
+        }
+
+        .content-card strong {
+            color: var(--text);
+        }
+
+        .content-card a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .content-card a:hover {
+            opacity: 0.8;
+        }
+
+        /* Footer */
+        footer {
+            padding: 4rem 2rem 2rem;
+            background: var(--bg-card);
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr repeat(3, 1fr);
+            gap: 4rem;
+        }
+
+        .footer-brand p {
+            color: var(--text-muted);
+            margin-top: 1rem;
+            max-width: 300px;
+        }
+
+        .footer-links h4 {
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--text);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 4rem auto 0;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 8px;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            box-shadow: var(--shadow);
-        }
-
-        .button.login {
-            background: var(--accent);
-            color: var(--bg);
-        }
-
-        .button.signup {
-            background: var(--highlight);
-            color: var(--bg);
-        }
-
-        .button:hover {
-            transform: translateY(-2px);
-            background: var(--hover-bg);
-            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
-        }
-
-        .button:focus {
-            outline: 2px solid var(--focus);
-            outline-offset: 2px;
-        }
-
-        .content-section {
-            padding: 8rem 2rem 5rem;
-            max-width: 900px;
-            margin: 0 auto;
-            background: var(--card-bg);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            animation: slideIn 0.5s ease-out;
-        }
-
-        .content-section h1 {
-            font-size: 2.5rem;
-            font-weight: 600;
-            color: var(--accent);
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-
-        .content-section h2 {
-            font-size: 1.8rem;
-            font-weight: 600;
-            color: var(--text);
-            margin: 2rem 0 1rem;
-        }
-
-        .content-section p {
-            font-size: 1rem;
-            color: var(--muted);
-            margin-bottom: 1rem;
-        }
-
-        .content-section ul {
-            list-style: disc;
-            padding-left: 2rem;
-            margin-bottom: 1rem;
-            color: var(--muted);
-        }
-
-        .content-section li {
-            font-size: 1rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .content-section a {
-            color: var(--accent);
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .content-section a:hover {
-            color: var(--highlight);
-            text-decoration: underline;
-        }
-
-        footer {
-            background: var(--card-bg);
-            padding: 3rem 2rem;
-            border-top: 1px solid var(--border);
-            text-align: center;
-        }
-
-        footer .logo {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        footer p {
-            font-size: 0.9rem;
-            color: var(--muted);
-            margin-bottom: 0.5rem;
-        }
-
-        footer .links {
-            display: flex;
             justify-content: center;
-            gap: 1rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: all 0.3s;
         }
 
-        footer .links a {
-            color: var(--accent);
-            font-weight: 500;
-            transition: var(--transition);
+        .social-links a:hover {
+            background: var(--primary);
+            color: var(--bg-dark);
+            border-color: var(--primary);
         }
 
-        footer .links a:hover {
-            color: var(--highlight);
-            text-decoration: underline;
-        }
-
-        @keyframes slideIn {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        a:focus, button:focus {
-            outline: 2px solid var(--focus);
-            outline-offset: 2px;
-        }
-
-        .sr-only {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            border: 0;
-        }
-
-        @media (prefers-contrast: high) {
-            :root {
-                --accent: #33ff33;
-                --highlight: #66ff66;
-                --border: #000000;
-                --muted: #cccccc;
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
             }
         }
 
-        @media (prefers-reduced-motion: reduce) {
-            .content-section {
-                transition: none;
-                animation: none;
-            }
-        }
-
-        @media print {
-            header, footer, .menu-toggle {
-                display: none;
-            }
-
-            .content-section {
-                background: none;
-                box-shadow: none;
-                border: 1px solid #000;
-            }
-        }
-
-        /* Mobile and Tablet Optimizations */
         @media (max-width: 768px) {
-            header {
+            nav {
                 padding: 1rem;
-                flex-direction: row;
-                align-items: center;
-                justify-content: space-between;
-            }
-
-            .logo {
-                font-size: 1.5rem;
-            }
-
-            .logo img {
-                width: 40px;
-            }
-
-            .menu-toggle {
-                display: block;
             }
 
             .nav-links {
@@ -344,148 +345,74 @@
                 position: absolute;
                 top: 100%;
                 left: 0;
-                width: 100%;
-                background: var(--card-bg);
+                right: 0;
+                background: var(--bg-card);
                 flex-direction: column;
-                padding: 1rem;
+                padding: 1rem 2rem;
+                gap: 1rem;
                 border-bottom: 1px solid var(--border);
-                box-shadow: var(--shadow);
             }
 
             .nav-links.active {
                 display: flex;
             }
 
-            .nav-links a {
-                padding: 0.75rem;
-                font-size: 1rem;
+            .mobile-menu {
+                display: block;
             }
 
-            .auth-buttons {
-                flex-direction: row;
-                gap: 0.5rem;
+            .content-card {
+                padding: 1.5rem;
             }
 
-            .button {
-                padding: 0.5rem 1rem;
-                font-size: 0.9rem;
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
             }
 
-            .content-section {
-                padding: 5rem 1rem 3rem;
-            }
-
-            .content-section h1 {
-                font-size: 2rem;
-            }
-
-            .content-section h2 {
-                font-size: 1.5rem;
-            }
-
-            .content-section p, .content-section li {
-                font-size: 0.9rem;
-            }
-
-            footer {
-                padding: 2rem 1rem;
-            }
-
-            footer .logo {
-                font-size: 1.3rem;
-            }
-
-            footer p {
-                font-size: 0.8rem;
-            }
-
-            footer .links a {
-                font-size: 0.9rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .content-section h1 {
-                font-size: 1.8rem;
-            }
-
-            .content-section h2 {
-                font-size: 1.3rem;
-            }
-
-            .content-section p, .content-section li {
-                font-size: 0.8rem;
+            .footer-bottom {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
             }
         }
     </style>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Header scroll effect
-            window.addEventListener('scroll', () => {
-                const header = document.querySelector('header');
-            });
-
-            // Mobile menu toggle
-            const menuToggle = document.querySelector('.menu-toggle');
-            const navLinks = document.querySelector('.nav-links');
-
-            menuToggle.addEventListener('click', () => {
-                navLinks.classList.toggle('active');
-            });
-
-            // Close mobile menu on link click
-            document.querySelectorAll('.nav-links a').forEach(link => {
-                link.addEventListener('click', () => {
-                    navLinks.classList.remove('active');
-                });
-            });
-
-            // Prevent pinch zoom on iOS
-            document.addEventListener('gesturestart', (e) => {
-                e.preventDefault();
-            });
-        });
-    </script>
 </head>
-
 <body>
-    <header>
-        <div class="logo">
-            <img src="{{ asset('favicon.PNG') }}" alt="FitLife Logo">
-        </div>
-        <button class="menu-toggle"><i class="fas fa-bars"></i></button>
-        <div class="nav-links">
-            <a href="{{ route('welcome') }}">Home</a>
-            <a href="#features">Features</a>
-            <a href="#testimonials">Testimonials</a>
-            <a href="#about">About</a>
-        </div>
-        <div class="auth-buttons">
-            @if(Route::has('login'))
-                @auth
-                    <a href="{{ route('dashboard') }}" class="button login">
-                        <i class="fas fa-tachometer-alt"></i> Dashboard
-                    </a>
-                @else
-                    <a href="{{ route('login') }}" class="button login">
-                        <i class="fas fa-sign-in-alt"></i> Log In
-                    </a>
-                    @if(Route::has('register'))
-                        <a href="{{ route('register') }}" class="button signup">
-                            <i class="fas fa-user-plus"></i> Sign Up
-                        </a>
-                    @endif
-                @endauth
-            @endif
-        </div>
-    </header>
+    <!-- Navigation -->
+    <nav>
+        <a href="/" class="logo">
+            <div class="logo-icon">F</div>
+            <span class="logo-text">FitLife</span>
+        </a>
 
-    <main>
-        <section class="content-section">
-            <h1>Privacy Policy</h1>
-            <p>Last updated: October 22, 2025</p>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="{{ route('welcome') }}">Home</a></li>
+            <li><a href="{{ route('welcome') }}#features">Features</a></li>
+            <li><a href="{{ route('welcome') }}#testimonials">Reviews</a></li>
+        </ul>
 
+        <div class="nav-buttons">
+            @auth
+                <a href="{{ route('dashboard') }}" class="btn btn-primary">Dashboard</a>
+            @else
+                <a href="{{ route('login') }}" class="btn btn-ghost">Log In</a>
+                <a href="{{ route('register') }}" class="btn btn-primary">Get Started</a>
+            @endauth
+        </div>
+
+        <button class="mobile-menu" id="mobileMenu">☰</button>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <h1><span class="gradient">Privacy Policy</span></h1>
+        <p>Last updated: January 22, 2026</p>
+    </section>
+
+    <!-- Content -->
+    <main class="content">
+        <div class="content-card">
             <h2>1. Introduction</h2>
             <p>At FitLife, we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our website and services.</p>
 
@@ -532,7 +459,7 @@
             <h2>8. Third-Party Links</h2>
             <p>Our website may contain links to third-party sites. We are not responsible for their privacy practices.</p>
 
-            <h2>9. Children’s Privacy</h2>
+            <h2>9. Children's Privacy</h2>
             <p>Our services are not intended for individuals under 13. We do not knowingly collect data from children.</p>
 
             <h2>10. Changes to This Policy</h2>
@@ -540,16 +467,66 @@
 
             <h2>11. Contact Us</h2>
             <p>If you have questions about this Privacy Policy, please contact us at <a href="mailto:support@fitlife.com">support@fitlife.com</a>.</p>
-        </section>
+        </div>
     </main>
 
+    <!-- Footer -->
     <footer>
-        <p>© {{ date('Y') }} FitLife. All rights reserved.</p>
-        <div class="links">
-            <a href="{{ route('privacy-policy') }}">Privacy Policy</a>
-            <a href="{{ route('terms-of-service') }}">Terms of Service</a>
-            <a href="mailto:support@fitlife.com">Contact Us</a>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <a href="/" class="logo">
+                    <div class="logo-icon">F</div>
+                    <span class="logo-text">FitLife</span>
+                </a>
+                <p>Your all-in-one platform for tracking fitness, nutrition, and wellness goals.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Product</h4>
+                <ul>
+                    <li><a href="{{ route('welcome') }}#features">Features</a></li>
+                    <li><a href="{{ route('welcome') }}#how-it-works">How It Works</a></li>
+                    <li><a href="{{ route('welcome') }}#testimonials">Reviews</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="mailto:support@fitlife.com">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="{{ route('privacy-policy') }}">Privacy Policy</a></li>
+                    <li><a href="{{ route('terms-of-service') }}">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© {{ date('Y') }} FitLife. All rights reserved.</span>
+            <div class="social-links">
+                <a href="#" title="Twitter">𝕏</a>
+                <a href="#" title="Instagram">📷</a>
+                <a href="#" title="GitHub">⌨</a>
+            </div>
         </div>
     </footer>
+
+    <script>
+        document.getElementById('mobileMenu').addEventListener('click', function() {
+            document.getElementById('navLinks').classList.toggle('active');
+        });
+
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(10, 10, 10, 0.95)';
+            } else {
+                nav.style.background = 'rgba(10, 10, 10, 0.8)';
+            }
+        });
+    </script>
 </body>
 </html>

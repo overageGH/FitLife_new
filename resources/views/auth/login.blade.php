@@ -6,52 +6,441 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ __('auth.login') }} - FitLife</title>
     <link rel="icon" href="{{ asset('favicon.PNG') }}" type="image/png">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    @vite(['resources/css/app.css'])
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0a0a;
+            --bg-card: #111111;
+            --bg-elevated: #1a1a1a;
+            --primary: #22c55e;
+            --primary-glow: rgba(34, 197, 94, 0.4);
+            --secondary: #06b6d4;
+            --text: #ffffff;
+            --text-muted: #a1a1aa;
+            --border: #27272a;
+            --error: #ef4444;
+            --gradient-1: linear-gradient(135deg, #22c55e 0%, #06b6d4 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .nav-buttons span {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-ghost:hover {
+            background: var(--bg-elevated);
+            border-color: var(--primary);
+        }
+
+        .btn-primary {
+            background: var(--gradient-1);
+            color: var(--bg-dark);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px var(--primary-glow);
+        }
+
+        /* Main Container */
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6rem 2rem 2rem;
+            position: relative;
+        }
+
+        .auth-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 30% 30%, var(--primary-glow) 0%, transparent 50%),
+                radial-gradient(circle at 70% 70%, rgba(6, 182, 212, 0.2) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .auth-card {
+            width: 100%;
+            max-width: 420px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .auth-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-1);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .auth-header h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .auth-header h1 .gradient {
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .auth-header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Alerts */
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .alert-success {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            color: var(--primary);
+        }
+
+        .alert-error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: var(--error);
+        }
+
+        .alert-error ul {
+            margin: 0;
+            padding-left: 1.25rem;
+        }
+
+        .alert-error li {
+            margin-bottom: 0.25rem;
+        }
+
+        /* Form */
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-label-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-link {
+            font-size: 0.85rem;
+            color: var(--primary);
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .form-link:hover {
+            opacity: 0.8;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper svg {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            color: var(--text-muted);
+            pointer-events: none;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.875rem 1rem 0.875rem 2.75rem;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-glow);
+        }
+
+        .form-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .form-input.is-error {
+            border-color: var(--error);
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .password-toggle svg {
+            position: static;
+            transform: none;
+            width: 18px;
+            height: 18px;
+        }
+
+        .password-toggle:hover {
+            color: var(--text);
+        }
+
+        /* Checkbox */
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .checkbox-input {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--gradient-1);
+            border: none;
+            border-radius: 8px;
+            color: var(--bg-dark);
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 0.5rem;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px var(--primary-glow);
+        }
+
+        /* Footer */
+        .auth-footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .auth-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            margin-left: 0.25rem;
+        }
+
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Mobile */
+        @media (max-width: 480px) {
+            nav {
+                padding: 1rem;
+            }
+
+            .nav-buttons span {
+                display: none;
+            }
+
+            .auth-card {
+                padding: 1.5rem;
+            }
+
+            .auth-header h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
 </head>
-<body class="auth-layout">
-    <!-- Header -->
-    <header class="auth-navbar">
-        <a href="{{ url('/') }}" class="auth-navbar-brand">
-            <div class="auth-navbar-brand-icon">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M13.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM9.8 8.9L7 23h2.1l1.8-8 2.1 2v6h2v-7.5l-2.1-2 .6-3C14.8 12 16.8 13 19 13v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1L6 8.3V13h2V9.6l1.8-.7"/>
-                </svg>
-            </div>
-            <span class="auth-navbar-brand-text">FitLife</span>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="/" class="logo">
+            <div class="logo-icon">F</div>
+            <span class="logo-text">FitLife</span>
         </a>
-        <div class="auth-navbar-links">
+
+        <div class="nav-buttons">
             <span>{{ __('auth.no_account') }}</span>
-            <a href="{{ route('register') }}" class="auth-navbar-link">{{ __('auth.register') }}</a>
+            <a href="{{ route('register') }}" class="btn btn-primary">{{ __('auth.register') }}</a>
         </div>
-    </header>
+    </nav>
 
     <!-- Main Content -->
     <div class="auth-container">
         <div class="auth-card">
             <!-- Header -->
             <div class="auth-header">
-                <div class="auth-logo">
-                    <div class="auth-logo-icon">
-                        <svg viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M13.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM9.8 8.9L7 23h2.1l1.8-8 2.1 2v6h2v-7.5l-2.1-2 .6-3C14.8 12 16.8 13 19 13v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1L6 8.3V13h2V9.6l1.8-.7"/>
-                        </svg>
-                    </div>
-                </div>
-                <h1 class="auth-title">{{ __('auth.welcome_back') }}</h1>
-                <p class="auth-subtitle">{{ __('auth.login_subtitle') }}</p>
+                <div class="auth-icon">F</div>
+                <h1><span class="gradient">{{ __('auth.welcome_back') }}</span></h1>
+                <p>{{ __('auth.login_subtitle') }}</p>
             </div>
 
             <!-- Session Status -->
             @if (session('status'))
-                <div class="auth-status">
+                <div class="alert alert-success">
                     {{ session('status') }}
                 </div>
             @endif
 
             <!-- Errors -->
             @if ($errors->any())
-                <div class="auth-errors">
+                <div class="alert alert-error">
                     <ul>
                         @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
@@ -61,14 +450,14 @@
             @endif
 
             <!-- Form -->
-            <form method="POST" action="{{ route('login') }}" class="auth-form">
+            <form method="POST" action="{{ route('login') }}">
                 @csrf
 
                 <!-- Email -->
                 <div class="form-group">
                     <label for="email" class="form-label">{{ __('auth.email') }}</label>
-                    <div class="auth-input-wrapper">
-                        <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <div class="input-wrapper">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
                             <polyline points="22,6 12,13 2,6"/>
                         </svg>
@@ -93,8 +482,8 @@
                             <a href="{{ route('password.request') }}" class="form-link">{{ __('auth.forgot_password') }}</a>
                         @endif
                     </div>
-                    <div class="auth-input-wrapper">
-                        <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <div class="input-wrapper">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
                             <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
                         </svg>
@@ -107,7 +496,7 @@
                             required
                         >
                         <button type="button" class="password-toggle" onclick="togglePassword('password')">
-                            <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
                                 <circle cx="12" cy="12" r="3"/>
                             </svg>
@@ -119,12 +508,12 @@
                 <div class="form-group">
                     <label class="checkbox-label">
                         <input type="checkbox" name="remember" class="checkbox-input">
-                        <span class="checkbox-text">{{ __('auth.remember_me') }}</span>
+                        <span>{{ __('auth.remember_me') }}</span>
                     </label>
                 </div>
 
                 <!-- Submit -->
-                <button type="submit" class="auth-submit">
+                <button type="submit" class="submit-btn">
                     {{ __('auth.login') }}
                 </button>
             </form>
@@ -140,8 +529,30 @@
     <script>
         function togglePassword(inputId) {
             const input = document.getElementById(inputId);
-            input.type = input.type === 'password' ? 'text' : 'password';
+            const btn = input.nextElementSibling;
+            if (input.type === 'password') {
+                input.type = 'text';
+                btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+                    <line x1="1" y1="1" x2="23" y2="23"/>
+                </svg>`;
+            } else {
+                input.type = 'password';
+                btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                    <circle cx="12" cy="12" r="3"/>
+                </svg>`;
+            }
         }
+
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(10, 10, 10, 0.95)';
+            } else {
+                nav.style.background = 'rgba(10, 10, 10, 0.8)';
+            }
+        });
     </script>
 </body>
 </html>

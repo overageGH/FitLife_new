@@ -34,12 +34,12 @@ class PostController extends Controller
                 switch ($sort) {
                     case 'top':
                         // Sort by likes - dislikes
-                        $query->orderByRaw('(SELECT COUNT(*) FROM likes WHERE likes.likeable_id = posts.id AND likes.likeable_type = ? AND likes.type = ?) - (SELECT COUNT(*) FROM likes WHERE likes.likeable_id = posts.id AND likes.likeable_type = ? AND likes.type = ?) DESC', [Post::class, 'like', Post::class, 'dislike']);
+                        $query->orderByRaw('(SELECT COUNT(*) FROM likes WHERE likes.post_id = posts.id AND likes.type = ? AND likes.is_like = 1) - (SELECT COUNT(*) FROM likes WHERE likes.post_id = posts.id AND likes.type = ? AND likes.is_like = 0) DESC', ['post', 'post']);
                         break;
                     case 'hot':
-                        // Hot = recent + popular (posts from last 24h with most engagement)
-                        $query->where('created_at', '>=', now()->subDay())
-                              ->orderByRaw('(SELECT COUNT(*) FROM likes WHERE likes.likeable_id = posts.id AND likes.likeable_type = ?) + (SELECT COUNT(*) FROM comments WHERE comments.post_id = posts.id) DESC', [Post::class]);
+                        // Hot = recent + popular (posts from last 7 days with most engagement)
+                        $query->where('created_at', '>=', now()->subDays(7))
+                              ->orderByRaw('((SELECT COUNT(*) FROM likes WHERE likes.post_id = posts.id AND likes.type = ? AND likes.is_like = 1) + (SELECT COUNT(*) FROM comments WHERE comments.post_id = posts.id)) / (TIMESTAMPDIFF(HOUR, posts.created_at, NOW()) + 1) DESC', ['post']);
                         break;
                     case 'newest':
                     default:
