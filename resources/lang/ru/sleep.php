@@ -35,4 +35,11 @@ return [
     'status' => 'Статус',
     'success' => 'Успешно',
     'track_patterns' => 'Записывайте и отслеживайте режим сна',
+
+    // Additional
+    'todays_sleep' => 'Сон сегодня',
+    'recommended' => 'Рекомендуемое',
+    'remaining' => 'Осталось',
+    'goal_reached' => 'Цель достигнута!',
+    'hrs' => 'ч',
 ];

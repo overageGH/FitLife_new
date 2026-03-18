@@ -18,4 +18,8 @@ return [
     'close' => 'Закрыть',
     'previous' => 'Предыдущий',
     'next' => 'Следующий',
+
+    // Additional
+    'total_photos' => 'Всего фото',
+    'choose_file' => 'Выберите файл или перетащите',
 ];

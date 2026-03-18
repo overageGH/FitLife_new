@@ -52,32 +52,26 @@ class UserFactory extends Factory
 
     /**
      * Состояние для неактивного пользователя.
-     *
-     * @return static
      */
     public function unverified(): static
     {
-        return $this->state(fn(array $attributes) => [
+        return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
         ]);
     }
 
     /**
      * Состояние администратора.
-     *
-     * @return static
      */
     public function admin(): static
     {
-        return $this->state(fn(array $attributes) => [
+        return $this->state(fn (array $attributes) => [
             'is_admin' => true,
         ]);
     }
 
     /**
      * Состояние пользователя с профилем (био и аватар).
-     *
-     * @return static
      */
     public function withProfile(): static
     {
@@ -89,4 +83,3 @@ class UserFactory extends Factory
         });
     }
 }
-    

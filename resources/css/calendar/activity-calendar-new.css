@@ -7,43 +7,43 @@
    CSS VARIABLES
    ═══════════════════════════════════════════════════════════════════════════ */
 .calendar-page {
-    --cal-bg: #0a0a0a;
-    --cal-surface: #111111;
-    --cal-elevated: #1a1a1a;
-    --cal-border: #27272a;
-    --cal-border-hover: #3f3f46;
+    --cal-bg: var(--bg-base);
+    --cal-surface: var(--bg-glass-dark);
+    --cal-elevated: var(--bg-glass-light);
+    --cal-border: var(--border-default);
+    --cal-border-hover: var(--bg-hover);
     
-    --cal-primary: #22c55e;
+    --cal-primary: var(--primary);
     --cal-primary-glow: rgba(34, 197, 94, 0.3);
-    --cal-secondary: #06b6d4;
-    --cal-gradient: linear-gradient(135deg, #22c55e 0%, #06b6d4 100%);
+    --cal-secondary: var(--accent);
+    --cal-gradient: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
     
-    --cal-text: #fafafa;
-    --cal-text-secondary: #a1a1aa;
-    --cal-text-muted: #71717a;
+    --cal-text: var(--text-primary);
+    --cal-text-secondary: var(--text-secondary);
+    --cal-text-muted: var(--text-muted);
     
-    --cal-workout: #f97316;
-    --cal-running: #3b82f6;
-    --cal-yoga: #a855f7;
-    --cal-cycling: #06b6d4;
-    --cal-swimming: #0ea5e9;
-    --cal-weightlifting: #ef4444;
+    --cal-workout: var(--secondary);
+    --cal-running: var(--info);
+    --cal-yoga: var(--purple);
+    --cal-cycling: var(--accent);
+    --cal-swimming: var(--accent);
+    --cal-weightlifting: var(--danger);
     --cal-rest: #6366f1;
-    --cal-goal: #22c55e;
+    --cal-goal: var(--primary);
     --cal-hiking: #84cc16;
     --cal-boxing: #f43f5e;
     --cal-dance: #ec4899;
-    --cal-crossfit: #f59e0b;
+    --cal-crossfit: var(--warning);
     --cal-meditation: #8b5cf6;
     --cal-walking: #14b8a6;
     
-    --cal-danger: #ef4444;
-    --cal-success: #22c55e;
+    --cal-danger: var(--danger);
+    --cal-success: var(--primary);
     
-    --cal-radius-sm: 8px;
-    --cal-radius-md: 12px;
-    --cal-radius-lg: 16px;
-    --cal-radius-xl: 20px;
+    --cal-radius-sm: var(--radius-sm);
+    --cal-radius-md: var(--radius-md);
+    --cal-radius-lg: var(--radius-lg);
+    --cal-radius-xl: var(--radius-xl);
     
     --cal-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
     --cal-shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.5);
@@ -125,7 +125,7 @@
     font-size: 0.875rem;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all var(--transition-fast);
 }
 
 .today-btn:hover {
@@ -150,7 +150,7 @@
     font-size: 0.875rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all var(--transition-fast);
     box-shadow: 0 2px 12px var(--cal-primary-glow);
 }
 
@@ -222,7 +222,7 @@
     border-radius: var(--cal-radius-sm);
     color: var(--cal-text-secondary);
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all var(--transition-fast);
 }
 
 .mini-nav-btn:hover {
@@ -255,7 +255,7 @@
     color: var(--cal-text-secondary);
     border-radius: 6px;
     cursor: pointer;
-    transition: all 0.15s ease;
+    transition: all var(--transition-fast);
     position: relative;
 }
 
@@ -288,7 +288,7 @@
     width: 4px;
     height: 4px;
     background: var(--cal-primary);
-    border-radius: 50%;
+    border-radius: var(--radius-full);
 }
 
 .mini-calendar-grid .mini-day.today.has-event::after {
@@ -331,7 +331,7 @@
     border-radius: var(--cal-radius-md);
     padding: 0.75rem 0.5rem;
     text-align: center;
-    transition: all 0.2s ease;
+    transition: all var(--transition-fast);
     min-width: 0;
 }
 
@@ -380,7 +380,7 @@
     padding: 0.375rem 0.5rem;
     border-radius: var(--cal-radius-sm);
     cursor: pointer;
-    transition: all 0.15s ease;
+    transition: all var(--transition-fast);
 }
 
 .legend-item:hover {
@@ -441,7 +441,7 @@
     font-size: 0.6875rem;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all var(--transition-fast);
 }
 
 .quick-btn svg {
@@ -500,7 +500,7 @@
     border-radius: var(--cal-radius-md);
     color: var(--cal-text);
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all var(--transition-fast);
 }
 
 .nav-btn:hover {
@@ -558,7 +558,7 @@
     border-right: 1px solid var(--cal-border);
     border-bottom: 1px solid var(--cal-border);
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all var(--transition-fast);
     position: relative;
 }
 
@@ -586,7 +586,7 @@
 .calendar-day.today .day-number {
     background: var(--cal-gradient);
     color: #000;
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
     padding: 0.25rem 0.5rem;
     font-weight: 700;
 }
@@ -619,7 +619,7 @@
     font-weight: 500;
     color: #fff;
     cursor: pointer;
-    transition: all 0.15s ease;
+    transition: all var(--transition-fast);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -711,7 +711,7 @@
     background-repeat: no-repeat;
     background-position: right 8px center;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all var(--transition-fast);
 }
 
 .filter-select:focus {
@@ -757,7 +757,7 @@
     color: var(--cal-text-secondary);
     font-size: 0.8125rem;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all var(--transition-fast);
 }
 
 .add-first-event-btn:hover {
@@ -771,7 +771,7 @@
     border: 1px solid var(--cal-border);
     border-radius: var(--cal-radius-md);
     padding: 1rem;
-    transition: all 0.2s ease;
+    transition: all var(--transition-fast);
     position: relative;
     overflow: hidden;
 }
@@ -860,7 +860,7 @@
     border-radius: var(--cal-radius-sm);
     color: var(--cal-text-muted);
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all var(--transition-fast);
 }
 
 .event-action-btn:hover {
@@ -919,7 +919,7 @@
     border: 1px solid var(--cal-border);
     border-radius: var(--cal-radius-md);
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all var(--transition-fast);
 }
 
 .upcoming-item:hover {
@@ -969,7 +969,7 @@
 .upcoming-indicator {
     width: 8px;
     height: 8px;
-    border-radius: 50%;
+    border-radius: var(--radius-full);
     flex-shrink: 0;
 }
 
@@ -1002,7 +1002,7 @@
     z-index: 1000;
     opacity: 0;
     visibility: hidden;
-    transition: all 0.3s ease;
+    transition: all var(--transition-base);
     padding: 1rem;
 }
 
@@ -1020,7 +1020,7 @@
     max-height: 90vh;
     overflow-y: auto;
     transform: scale(0.95) translateY(20px);
-    transition: transform 0.3s ease;
+    transition: transform var(--transition-base);
     box-shadow: var(--cal-shadow-lg);
 }
 
@@ -1062,7 +1062,7 @@
     border-radius: var(--cal-radius-sm);
     color: var(--cal-text-muted);
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all var(--transition-fast);
 }
 
 .modal-close:hover {
@@ -1116,7 +1116,7 @@
     color: var(--cal-text);
     font-size: 0.9375rem;
     font-family: inherit;
-    transition: all 0.2s ease;
+    transition: all var(--transition-fast);
 }
 
 .form-group input[type="date"]:focus,
@@ -1263,7 +1263,7 @@
     background: var(--cal-elevated);
     border: 1px solid var(--cal-border);
     border-radius: var(--cal-radius-md);
-    animation: slideDown 0.2s ease;
+    animation: slideDown var(--transition-fast);
 }
 
 @keyframes slideDown {
@@ -1299,7 +1299,7 @@
     border-radius: var(--cal-radius-sm);
     color: var(--cal-text);
     font-size: 0.875rem;
-    transition: all 0.2s ease;
+    transition: all var(--transition-fast);
 }
 
 .custom-type-input input:focus {
@@ -1331,7 +1331,7 @@
     font-size: 0.875rem;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all var(--transition-fast);
 }
 
 .btn-cancel:hover {
@@ -1351,7 +1351,7 @@
     font-size: 0.875rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all var(--transition-fast);
 }
 
 .btn-save:hover {
@@ -1371,11 +1371,11 @@
     font-size: 0.875rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all var(--transition-fast);
 }
 
 .btn-delete:hover {
-    background: #dc2626;
+    background: var(--danger);
     transform: translateY(-2px);
 }
 
@@ -1420,7 +1420,7 @@
     border: 1px solid var(--cal-border);
     border-radius: var(--cal-radius-md);
     box-shadow: var(--cal-shadow);
-    animation: slideIn 0.3s ease;
+    animation: slideIn var(--transition-base);
     max-width: 350px;
 }
 
@@ -1636,7 +1636,7 @@
         width: 6px;
         height: 6px;
         background: var(--cal-primary);
-        border-radius: 50%;
+        border-radius: var(--radius-full);
     }
     
     .type-grid {
@@ -1673,7 +1673,7 @@
 }
 
 .fade-in {
-    animation: fadeIn 0.3s ease;
+    animation: fadeIn var(--transition-base);
 }
 
 @keyframes slideUp {
@@ -1688,5 +1688,5 @@
 }
 
 .slide-up {
-    animation: slideUp 0.3s ease;
+    animation: slideUp var(--transition-base);
 }

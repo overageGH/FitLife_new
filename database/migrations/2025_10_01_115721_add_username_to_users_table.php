@@ -1,18 +1,18 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
-use App\Models\User;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 
 return new class extends Migration
 {
     public function up(): void
     {
         // Добавляем username, если нет
-        if (!Schema::hasColumn('users', 'username')) {
+        if (! Schema::hasColumn('users', 'username')) {
             Schema::table('users', function (Blueprint $table) {
                 $table->string('username', 20)->nullable()->after('name');
             });
@@ -25,7 +25,7 @@ return new class extends Migration
             $username = $base;
             $counter = 1;
             while (User::where('username', $username)->exists()) {
-                $username = $base . $counter++;
+                $username = $base.$counter++;
             }
             $user->update(['username' => $username]);
         }
@@ -41,7 +41,7 @@ return new class extends Migration
 
             Schema::table('users', function (Blueprint $table) use ($hasUnique) {
                 $table->string('username', 20)->nullable(false)->change();
-                if (!$hasUnique) {
+                if (! $hasUnique) {
                     $table->unique('username');
                 }
             });
@@ -51,7 +51,7 @@ return new class extends Migration
                 return str_contains($index->name, 'users_username_unique');
             });
 
-            if (!$hasUnique) {
+            if (! $hasUnique) {
                 DB::statement('CREATE UNIQUE INDEX users_username_unique ON users(username)');
             }
         }

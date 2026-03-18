@@ -38,6 +38,13 @@ return [
     'calculate_calories' => 'Aprēķināt kalorijas',
     'meal_summary' => 'Ēdienreizes kopsavilkums',
     'total_calories' => 'Kopējās kalorijas',
+    'select_foods_desc' => 'Izvēlieties produktus un ievadiet daudzumu katrai ēdienreizei',
+    'your_latest_calculation' => 'Jūsu pēdējais aprēķins',
+    'history_desc' => 'Nesen reģistrētās ēdienreizes',
+    'meal_breakfast' => 'Brokastis',
+    'meal_lunch' => 'Pusdienas',
+    'meal_dinner' => 'Vakariņas',
+    'meal_snack' => 'Uzkoda',
 
     // Calorie Calculator page
     'calorie_calc_label' => 'FitLife Kaloriju kalkulators',

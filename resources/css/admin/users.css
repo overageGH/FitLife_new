@@ -219,7 +219,7 @@
 }
 
 .users-btn-primary:hover {
-    background: #0284c7;
+    background: var(--accent-dark);
 }
 
 .users-btn-secondary {

@@ -15,7 +15,7 @@ class CreateCalendarsTable extends Migration
             $table->enum('type', [
                 'workout', 'rest', 'goal', 'running', 'gym', 'yoga', 'cardio', 'stretching', 'cycling', 'swimming',
                 'weightlifting', 'pilates', 'hiking', 'boxing', 'dance', 'crossfit', 'walking', 'meditation',
-                'tennis', 'basketball', 'soccer', 'climbing', 'rowing', 'martial_arts', 'recovery'
+                'tennis', 'basketball', 'soccer', 'climbing', 'rowing', 'martial_arts', 'recovery',
             ]);
             $table->string('description')->nullable();
             $table->boolean('completed')->default(false);

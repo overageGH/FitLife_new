@@ -20,7 +20,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
             'admin' => \App\Http\Middleware\AdminMiddleware::class,
         ]);
-        
+
         $middleware->web(append: [
             \App\Http\Middleware\SetLocale::class,
         ]);

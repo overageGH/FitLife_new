@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div id="fitlife-container" role="application" aria-label="{{ __('water.title') }}">
+<div id="fitlife-container" class="water-page" role="application" aria-label="{{ __('water.title') }}">
     <main>
         <button id="mobile-toggle" aria-controls="sidebar" aria-expanded="false">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -16,45 +16,111 @@
             </div>
         </header>
 
-        <section aria-labelledby="kpi-heading">
-            <h3 id="kpi-heading">{{ __('water.todays_hydration') }}</h3>
-            <div class="result-card">
-                <div class="result-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#0000FF">
-                        <path d="M491-200q12-1 20.5-9.5T520-230q0-14-9-22.5t-23-7.5q-41 3-87-22.5T343-375q-2-11-10.5-18t-19.5-7q-14 0-23 10.5t-6 24.5q17 91 80 130t127 35ZM480-80q-137 0-228.5-94T160-408q0-100 79.5-217.5T480-880q161 137 240.5 254.5T800-408q0 140-91.5 234T480-80Zm0-80q104 0 172-70.5T720-408q0-73-60.5-165T480-774Q361-665 300.5-573T240-408q0 107 68 177.5T480-160Zm0-320Z" />
+        {{-- ═══ Top Grid: Progress + Quick Add ═══ --}}
+        <div class="water-top-grid">
+            {{-- Progress Ring Card --}}
+            <section class="water-progress-card" aria-labelledby="kpi-heading">
+                <h3 id="kpi-heading" class="sr-only">{{ __('water.todays_hydration') }}</h3>
+                <div class="water-ring-wrap">
+                    <svg class="water-ring" viewBox="0 0 160 160">
+                        <circle class="water-ring__bg" cx="80" cy="80" r="70" />
+                        <circle class="water-ring__fill" cx="80" cy="80" r="70"
+                            stroke-dasharray="{{ 2 * 3.14159 * 70 }}"
+                            stroke-dashoffset="{{ 2 * 3.14159 * 70 * (1 - min($todayTotal / max($dailyGoal, 1), 1)) }}"
+                            data-goal="{{ $dailyGoal }}"
+                            data-current="{{ $todayTotal }}" />
                     </svg>
+                    <div class="water-ring-label">
+                        <span class="water-ring-value count-up" data-target="{{ $todayTotal }}">0</span>
+                        <span class="water-ring-unit">{{ __('water.ml') }}</span>
+                    </div>
                 </div>
-                <div class="result-body">
-                    <h4>{{ __('water.total_water_today') }}</h4>
-                    <div class="value count-up" data-target="{{ $logs->sum('amount') ?? 0 }}">0</div>
-                    <div class="muted">{{ __('water.ml') }}</div>
+                <div class="water-progress-info">
+                    <div class="water-progress-row">
+                        <span class="water-progress-label">{{ __('water.daily_goal') }}</span>
+                        <span class="water-progress-val">{{ number_format($dailyGoal) }} {{ __('water.ml') }}</span>
+                    </div>
+                    <div class="water-progress-bar-wrap">
+                        <div class="water-progress-bar__fill" style="width: {{ min(100, ($todayTotal / max($dailyGoal, 1)) * 100) }}%"></div>
+                    </div>
+                    <div class="water-progress-row">
+                        <span class="water-progress-label">{{ __('water.remaining') }}</span>
+                        <span class="water-progress-val {{ $todayTotal >= $dailyGoal ? 'goal-done' : '' }}">
+                            @if($todayTotal >= $dailyGoal)
+                                ✓ {{ __('water.goal_reached') }}
+                            @else
+                                {{ number_format($dailyGoal - $todayTotal) }} {{ __('water.ml') }}
+                            @endif
+                        </span>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <section aria-labelledby="water-form-heading">
-            <h3 id="water-form-heading">{{ __('water.log_hydration') }}</h3>
-            <div class="water-card">
-                <h4>{{ __('water.add_water_intake') }}</h4>
-                <form action="{{ route('water.store') }}" method="POST" class="water-form">
+            {{-- Quick Add Card --}}
+            <section class="water-add-card" aria-labelledby="water-form-heading">
+                <h3 id="water-form-heading">{{ __('water.add_water_intake') }}</h3>
+
+                <div class="water-presets">
+                    @foreach([150, 250, 330, 500] as $preset)
+                        <form action="{{ route('water.store') }}" method="POST" class="water-preset-form">
+                            @csrf
+                            <input type="hidden" name="amount" value="{{ $preset }}">
+                            <button type="submit" class="water-preset-btn">
+                                <svg class="water-preset-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                    <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+                                </svg>
+                                <span class="water-preset-amount">{{ $preset }}</span>
+                                <span class="water-preset-unit">{{ __('water.ml') }}</span>
+                            </button>
+                        </form>
+                    @endforeach
+                </div>
+
+                <div class="water-divider">
+                    <span>{{ __('water.custom_amount') }}</span>
+                </div>
+
+                <form action="{{ route('water.store') }}" method="POST" class="water-custom-form">
                     @csrf
-                    <div class="form-group">
-                        <label for="amount">{{ __('water.amount_ml') }}</label>
-                        <input type="number" id="amount" name="amount" placeholder="{{ __('water.enter_amount') }}" required>
+                    <div class="water-custom-input-wrap">
+                        <input type="number" name="amount" placeholder="{{ __('water.enter_amount') }}" min="1" max="5000" required>
+                        <span class="water-custom-suffix">{{ __('water.ml') }}</span>
                     </div>
-                    <div class="form-group form-group-btn">
-                        <label>&nbsp;</label>
-                        <button type="submit" class="calculate-btn">{{ __('water.add_amount') }}</button>
-                    </div>
+                    <button type="submit" class="water-custom-btn">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+                        {{ __('water.add_amount') }}
+                    </button>
                 </form>
+            </section>
+        </div>
+
+        {{-- ═══ Today's Log ═══ --}}
+        @if($todayLogs->count() > 0)
+        <section class="water-today-section" aria-labelledby="today-heading">
+            <h3 id="today-heading">{{ __('water.today_intake') }}</h3>
+            <div class="water-today-pills">
+                @foreach($todayLogs as $log)
+                    <div class="water-pill">
+                        <svg class="water-pill-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+                        </svg>
+                        <span class="water-pill-amount">{{ $log->amount }} {{ __('water.ml') }}</span>
+                        <span class="water-pill-time">{{ $log->created_at->format('H:i') }}</span>
+                    </div>
+                @endforeach
             </div>
         </section>
+        @endif
 
+        {{-- ═══ History Table ═══ --}}
         <section id="history-section" aria-labelledby="history-heading">
             <h3 id="history-heading">{{ __('water.hydration_history') }}</h3>
-            @if($logs->isEmpty())
-                <div class="history-table">
-                    <div class="no-data">{{ __('water.no_logs_start') }}</div>
+            @if($historyLogs->isEmpty())
+                <div class="water-empty">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+                    </svg>
+                    <p>{{ __('water.no_logs_start') }}</p>
                 </div>
             @else
                 <table class="history-table">
@@ -65,10 +131,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($logs as $log)
+                        @foreach($historyLogs as $log)
                             <tr>
                                 <td>{{ $log->created_at->format('M d, Y H:i') }}</td>
-                                <td>{{ $log->amount }}</td>
+                                <td><span class="water-amount-badge">{{ $log->amount }} {{ __('water.ml') }}</span></td>
                             </tr>
                         @endforeach
                     </tbody>

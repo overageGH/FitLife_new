@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
 use App\Models\Comment;
 use App\Models\Like;
+use App\Models\Post;
 use App\Models\PostView;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,17 +20,17 @@ class PostController extends Controller
             $page = $request->input('page', 1);
             $sort = $request->input('sort', 'newest');
             $cacheKey = "posts_page_{$page}_sort_{$sort}";
-            
+
             $posts = Cache::remember($cacheKey, 60, function () use ($perPage, $sort) {
                 $query = Post::with(['user', 'comments' => function ($q) {
                     $q->whereNull('parent_id')->with(['replies.user', 'user', 'replies.replies.user', 'parent.user']);
                 }, 'likes'])
-                ->withCount([
-                    'likes as like_count' => fn($q) => $q->where('type', 'like'),
-                    'likes as dislike_count' => fn($q) => $q->where('type', 'dislike'),
-                    'allComments as comment_count'
-                ]);
-                
+                    ->withCount([
+                        'likes as like_count' => fn ($q) => $q->where('type', 'like'),
+                        'likes as dislike_count' => fn ($q) => $q->where('type', 'dislike'),
+                        'allComments as comment_count',
+                    ]);
+
                 switch ($sort) {
                     case 'top':
                         // Sort by likes - dislikes
@@ -39,14 +39,14 @@ class PostController extends Controller
                     case 'hot':
                         // Hot = recent + popular (posts from last 7 days with most engagement)
                         $query->where('created_at', '>=', now()->subDays(7))
-                              ->orderByRaw('((SELECT COUNT(*) FROM likes WHERE likes.post_id = posts.id AND likes.type = ? AND likes.is_like = 1) + (SELECT COUNT(*) FROM comments WHERE comments.post_id = posts.id)) / (TIMESTAMPDIFF(HOUR, posts.created_at, NOW()) + 1) DESC', ['post']);
+                            ->orderByRaw('((SELECT COUNT(*) FROM likes WHERE likes.post_id = posts.id AND likes.type = ? AND likes.is_like = 1) + (SELECT COUNT(*) FROM comments WHERE comments.post_id = posts.id)) / (TIMESTAMPDIFF(HOUR, posts.created_at, NOW()) + 1) DESC', ['post']);
                         break;
                     case 'newest':
                     default:
                         $query->latest();
                         break;
                 }
-                
+
                 return $query->paginate($perPage);
             });
 
@@ -61,8 +61,9 @@ class PostController extends Controller
 
             return view('posts.index', compact('posts'));
         } catch (\Exception $e) {
-            \Log::error('Failed to load posts: ' . $e->getMessage());
-            return back()->with('error', 'Failed to load posts: ' . $e->getMessage());
+            \Log::error('Failed to load posts: '.$e->getMessage());
+
+            return back()->with('error', 'Failed to load posts: '.$e->getMessage());
         }
     }
 
@@ -85,7 +86,7 @@ class PostController extends Controller
                 'views' => 0,
             ]);
 
-            Cache::forget('posts_page_1');
+            $this->clearPostsCache();
 
             if ($request->expectsJson()) {
                 return response()->json([
@@ -96,22 +97,24 @@ class PostController extends Controller
 
             return redirect()->route('posts.index')->with('success', __('toast.post_created'));
         } catch (\Illuminate\Validation\ValidationException $e) {
-            \Log::error('Post creation validation failed: ' . json_encode($e->errors()));
+            \Log::error('Post creation validation failed: '.json_encode($e->errors()));
             if ($request->expectsJson()) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Validation failed: ' . implode(', ', $e->errors()['photo'] ?? $e->errors()['video'] ?? ['Unknown error']),
+                    'message' => 'Validation failed: '.implode(', ', $e->errors()['photo'] ?? $e->errors()['video'] ?? ['Unknown error']),
                 ], 422);
             }
+
             return back()->withErrors($e->errors())->withInput();
         } catch (\Exception $e) {
-            \Log::error('Post creation failed: ' . $e->getMessage());
+            \Log::error('Post creation failed: '.$e->getMessage());
             if ($request->expectsJson()) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Failed to create post: ' . $e->getMessage(),
+                    'message' => 'Failed to create post: '.$e->getMessage(),
                 ], 500);
             }
+
             return back()->with('error', __('toast.post_create_error'))->withInput();
         }
     }
@@ -120,10 +123,11 @@ class PostController extends Controller
     {
         try {
             // Use Policy for authorization (allows admin or owner)
-            if (!Auth::user()->can('update', $post)) {
+            if (! Auth::user()->can('update', $post)) {
                 if ($request->expectsJson()) {
                     return response()->json(['success' => false, 'message' => 'Unauthorized'], 403);
                 }
+
                 return back()->with('error', 'Unauthorized');
             }
 
@@ -154,7 +158,7 @@ class PostController extends Controller
                 'media_type' => $mediaType,
             ]);
 
-            Cache::forget('posts_page_1');
+            $this->clearPostsCache();
 
             if ($request->expectsJson()) {
                 return response()->json([
@@ -170,22 +174,24 @@ class PostController extends Controller
 
             return redirect()->route('posts.index')->with('success', __('toast.post_updated'));
         } catch (\Illuminate\Validation\ValidationException $e) {
-            \Log::error('Post update validation failed: ' . json_encode($e->errors()));
+            \Log::error('Post update validation failed: '.json_encode($e->errors()));
             if ($request->expectsJson()) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Validation failed: ' . implode(', ', $e->errors()['photo'] ?? $e->errors()['video'] ?? ['Unknown error']),
+                    'message' => 'Validation failed: '.implode(', ', $e->errors()['photo'] ?? $e->errors()['video'] ?? ['Unknown error']),
                 ], 422);
             }
+
             return back()->withErrors($e->errors())->withInput();
         } catch (\Exception $e) {
-            \Log::error('Post update failed: ' . $e->getMessage());
+            \Log::error('Post update failed: '.$e->getMessage());
             if ($request->expectsJson()) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Failed to update post: ' . $e->getMessage(),
+                    'message' => 'Failed to update post: '.$e->getMessage(),
                 ], 500);
             }
+
             return back()->with('error', __('toast.post_update_error'))->withInput();
         }
     }
@@ -194,30 +200,32 @@ class PostController extends Controller
     {
         try {
             // Use Policy for authorization (allows admin or owner)
-            if (!Auth::user()->can('delete', $post)) {
+            if (! Auth::user()->can('delete', $post)) {
                 if ($request->expectsJson()) {
                     return response()->json(['success' => false, 'message' => 'Unauthorized'], 403);
                 }
+
                 return back()->with('error', 'Unauthorized');
             }
 
             $this->deleteMedia($post->media_path);
             $post->delete();
-            Cache::forget('posts_page_1');
+            $this->clearPostsCache();
 
             if ($request->expectsJson()) {
                 return response()->json(['success' => true, 'message' => 'Post deleted successfully'], 200);
             }
-            
+
             return redirect()->route('posts.index')->with('success', __('toast.post_deleted'));
         } catch (\Exception $e) {
-            \Log::error('Post deletion failed: ' . $e->getMessage());
+            \Log::error('Post deletion failed: '.$e->getMessage());
             if ($request->expectsJson()) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Failed to delete post: ' . $e->getMessage(),
+                    'message' => 'Failed to delete post: '.$e->getMessage(),
                 ], 500);
             }
+
             return back()->with('error', __('toast.post_delete_error'));
         }
     }
@@ -225,7 +233,7 @@ class PostController extends Controller
     public function toggleReaction(Request $request, Post $post)
     {
         try {
-            if (!Auth::check()) {
+            if (! Auth::check()) {
                 return response()->json(['success' => false, 'message' => 'Unauthorized'], 403);
             }
 
@@ -233,9 +241,9 @@ class PostController extends Controller
             $userId = Auth::id();
             $isLike = $request->input('type') === 'like';
             $existing = Like::where('post_id', $post->id)
-                            ->where('user_id', $userId)
-                            ->where('type', 'post')
-                            ->first();
+                ->where('user_id', $userId)
+                ->where('type', 'post')
+                ->first();
             $resultType = $request->input('type');
 
             if ($existing && $existing->is_like === $isLike) {
@@ -260,10 +268,11 @@ class PostController extends Controller
                 'dislikeCount' => $post->likes()->where('type', 'post')->where('is_like', false)->count(),
             ], 200);
         } catch (\Exception $e) {
-            \Log::error('Reaction toggle failed: ' . $e->getMessage());
+            \Log::error('Reaction toggle failed: '.$e->getMessage());
+
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to toggle reaction: ' . $e->getMessage(),
+                'message' => 'Failed to toggle reaction: '.$e->getMessage(),
             ], 500);
         }
     }
@@ -290,6 +299,7 @@ class PostController extends Controller
                         'comment' => $this->formatCommentForJson($existingComment),
                     ], 200);
                 }
+
                 return back()->with('success', __('toast.comment_added'));
             }
 
@@ -313,13 +323,14 @@ class PostController extends Controller
 
             return back()->with('success', __('toast.comment_added'));
         } catch (\Exception $e) {
-            \Log::error('Comment creation failed: ' . $e->getMessage());
+            \Log::error('Comment creation failed: '.$e->getMessage());
             if ($request->expectsJson()) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Failed to add comment: ' . $e->getMessage(),
+                    'message' => 'Failed to add comment: '.$e->getMessage(),
                 ], 500);
             }
+
             return back()->with('error', __('toast.comment_add_error'));
         }
     }
@@ -327,24 +338,24 @@ class PostController extends Controller
     public function incrementViews(Request $request, Post $post)
     {
         try {
-            if (!Auth::check()) {
+            if (! Auth::check()) {
                 return response()->json(['success' => false, 'message' => 'Unauthorized'], 403);
             }
 
             $userId = Auth::id();
-            
+
             // Check if user already viewed this post (using database, not cache)
             $alreadyViewed = PostView::where('post_id', $post->id)
-                                      ->where('user_id', $userId)
-                                      ->exists();
+                ->where('user_id', $userId)
+                ->exists();
 
-            if (!$alreadyViewed) {
+            if (! $alreadyViewed) {
                 // Record the view
                 PostView::create([
                     'post_id' => $post->id,
                     'user_id' => $userId,
                 ]);
-                
+
                 // Update cached view count
                 $post->views = PostView::where('post_id', $post->id)->count();
                 $post->save();
@@ -355,10 +366,11 @@ class PostController extends Controller
                 'views' => PostView::where('post_id', $post->id)->count(),
             ], 200);
         } catch (\Exception $e) {
-            \Log::error('View increment failed: ' . $e->getMessage());
+            \Log::error('View increment failed: '.$e->getMessage());
+
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to increment views: ' . $e->getMessage(),
+                'message' => 'Failed to increment views: '.$e->getMessage(),
             ], 500);
         }
     }
@@ -367,7 +379,7 @@ class PostController extends Controller
     {
         try {
             $postIds = $request->input('post_ids', []);
-            
+
             if (empty($postIds)) {
                 return response()->json(['views' => []], 200);
             }
@@ -386,7 +398,8 @@ class PostController extends Controller
 
             return response()->json(['views' => $result], 200);
         } catch (\Exception $e) {
-            \Log::error('Bulk views failed: ' . $e->getMessage());
+            \Log::error('Bulk views failed: '.$e->getMessage());
+
             return response()->json(['views' => []], 500);
         }
     }
@@ -395,7 +408,7 @@ class PostController extends Controller
     {
         try {
             $postIds = $request->input('post_ids', []);
-            
+
             if (empty($postIds)) {
                 return response()->json(['posts' => []], 200);
             }
@@ -411,7 +424,7 @@ class PostController extends Controller
                     'dislikes' => $post->likes()->where('type', 'post')->where('is_like', false)->count(),
                     'comments' => $post->allComments()->count(),
                     'content' => $post->content,
-                    'media_path' => $post->media_path ? asset('storage/' . $post->media_path) : null,
+                    'media_path' => $post->media_path ? asset('storage/'.$post->media_path) : null,
                     'media_type' => $post->media_type,
                     'updated_at' => $post->updated_at->toISOString(),
                     'user_liked' => $userId ? $post->isLikedBy($userId) : false,
@@ -421,7 +434,8 @@ class PostController extends Controller
 
             return response()->json(['posts' => $result], 200);
         } catch (\Exception $e) {
-            \Log::error('Bulk stats failed: ' . $e->getMessage());
+            \Log::error('Bulk stats failed: '.$e->getMessage());
+
             return response()->json(['posts' => []], 500);
         }
     }
@@ -429,14 +443,17 @@ class PostController extends Controller
     private function handleMediaUpload($photo, $video)
     {
         if ($photo) {
-            $filename = uniqid('post_') . '.' . $photo->getClientOriginalExtension();
+            $filename = uniqid('post_').'.'.$photo->getClientOriginalExtension();
             $path = $photo->storeAs('posts', $filename, 'public');
+
             return ['path' => $path, 'type' => 'image'];
         } elseif ($video) {
-            $filename = uniqid('post_') . '.' . $video->getClientOriginalExtension();
+            $filename = uniqid('post_').'.'.$video->getClientOriginalExtension();
             $path = $video->storeAs('posts', $filename, 'public');
+
             return ['path' => $path, 'type' => 'video'];
         }
+
         return ['path' => null, 'type' => null];
     }
 
@@ -450,6 +467,7 @@ class PostController extends Controller
     private function formatPostResponse($post)
     {
         $user = Auth::user();
+
         return [
             'id' => $post->id,
             'content' => $post->content,
@@ -505,6 +523,7 @@ class PostController extends Controller
     private function formatCommentForJson($comment)
     {
         $comment->load('parent.user');
+
         return [
             'id' => $comment->id,
             'content' => $comment->content,
@@ -525,5 +544,18 @@ class PostController extends Controller
             'can_update' => Auth::id() === $comment->user_id,
             'can_delete' => Auth::id() === $comment->user_id,
         ];
+    }
+
+    private function clearPostsCache(int $page = 1)
+    {
+        $sorts = ['newest', 'top', 'hot'];
+
+        // Forget specific keys used in index caching
+        foreach ($sorts as $sort) {
+            Cache::forget("posts_page_{$page}_sort_{$sort}");
+        }
+
+        // Backwards-compatibility: some places may use 'posts_page_1'
+        Cache::forget("posts_page_{$page}");
     }
 }

@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Log;
-use App\Models\User;
 use Illuminate\Validation\Rule;
 
 class ProfileController extends Controller
@@ -66,13 +65,14 @@ class ProfileController extends Controller
     public function updatePassword(Request $request)
     {
         // Rate limiting: максимум 5 попыток в минуту
-        $key = 'password_update_' . Auth::id();
+        $key = 'password_update_'.Auth::id();
         if (\Illuminate\Support\Facades\RateLimiter::tooManyAttempts($key, 5)) {
             $seconds = \Illuminate\Support\Facades\RateLimiter::availableIn($key);
+
             return redirect()->back()->withErrors(['current_password' => "Too many attempts. Try again in {$seconds} seconds."]);
         }
         \Illuminate\Support\Facades\RateLimiter::hit($key, 60);
-        
+
         $request->validate([
             'current_password' => 'required',
             'password' => 'required|min:8|confirmed',
@@ -80,7 +80,7 @@ class ProfileController extends Controller
 
         $user = Auth::user();
 
-        if (!Hash::check($request->current_password, $user->password)) {
+        if (! Hash::check($request->current_password, $user->password)) {
             return redirect()->back()->withErrors(['current_password' => 'Current password is incorrect.']);
         }
 

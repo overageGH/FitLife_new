@@ -295,7 +295,7 @@
 }
 
 .save-btn:hover {
-    background: #0284c7;
+    background: var(--accent-dark);
     transform: translateY(-1px);
 }
 

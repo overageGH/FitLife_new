@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Progress;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -13,6 +13,7 @@ class ProgressPhotoController extends Controller
     public function index()
     {
         $progressPhotos = Auth::user()->progress()->latest()->get();
+
         return view('progress.index', compact('progressPhotos'));
     }
 

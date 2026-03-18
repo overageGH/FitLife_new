@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Goal;
 use App\Models\GoalLog;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class GoalController extends Controller
@@ -13,6 +13,7 @@ class GoalController extends Controller
     public function index()
     {
         $goals = Goal::where('user_id', Auth::id())->get();
+
         return view('goals.index', compact('goals'));
     }
 
@@ -26,18 +27,18 @@ class GoalController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'type'         => 'required|string',
+            'type' => 'required|string',
             'target_value' => 'required|numeric|min:0',
-            'end_date'     => 'required|date|after:today',
-            'description'  => 'nullable|string|max:255',
+            'end_date' => 'required|date|after:today',
+            'description' => 'nullable|string|max:255',
         ]);
 
         Goal::create([
-            'user_id'       => Auth::id(),
-            'type'          => $request->type,
-            'target_value'  => $request->target_value,
-            'description'   => $request->description ?? '',
-            'end_date'      => $request->end_date,
+            'user_id' => Auth::id(),
+            'type' => $request->type,
+            'target_value' => $request->target_value,
+            'description' => $request->description ?? '',
+            'end_date' => $request->end_date,
             'current_value' => 0,
         ]);
 
@@ -50,7 +51,7 @@ class GoalController extends Controller
         if ($goal->user_id !== Auth::id()) {
             abort(403, 'Unauthorized');
         }
-        
+
         return view('goals.edit', compact('goal'));
     }
 
@@ -60,19 +61,19 @@ class GoalController extends Controller
         if ($goal->user_id !== Auth::id()) {
             abort(403, 'Unauthorized');
         }
-        
+
         $request->validate([
-            'type'         => 'required|string',
+            'type' => 'required|string',
             'target_value' => 'required|numeric|min:0',
-            'end_date'     => 'required|date',
-            'description'  => 'nullable|string|max:255',
+            'end_date' => 'required|date',
+            'description' => 'nullable|string|max:255',
         ]);
 
         $goal->update([
-            'type'          => $request->type,
-            'target_value'  => $request->target_value,
-            'description'   => $request->description ?? '',
-            'end_date'      => $request->end_date,
+            'type' => $request->type,
+            'target_value' => $request->target_value,
+            'description' => $request->description ?? '',
+            'end_date' => $request->end_date,
         ]);
 
         return redirect()->route('goals.index')->with('success', 'Goal updated successfully');
@@ -84,7 +85,7 @@ class GoalController extends Controller
         if ($goal->user_id !== Auth::id()) {
             abort(403, 'Unauthorized');
         }
-        
+
         $goal->delete();
 
         return redirect()->route('goals.index')->with('success', 'Goal deleted successfully');
@@ -97,7 +98,7 @@ class GoalController extends Controller
         if ($goal->user_id !== Auth::id()) {
             abort(403, 'Unauthorized');
         }
-        
+
         return view('goals.log', compact('goal'));
     }
 
@@ -108,7 +109,7 @@ class GoalController extends Controller
         if ($goal->user_id !== Auth::id()) {
             abort(403, 'Unauthorized');
         }
-        
+
         $request->validate([
             'value' => 'required|numeric|min:0',
         ]);
@@ -119,9 +120,9 @@ class GoalController extends Controller
         // Save progress log
         GoalLog::create([
             'goal_id' => $goal->id,
-            'value'   => $request->value,
-            'change'  => $change,
-            'date'    => now()->toDateString(),
+            'value' => $request->value,
+            'change' => $change,
+            'date' => now()->toDateString(),
         ]);
 
         // Update current goal value
@@ -130,7 +131,7 @@ class GoalController extends Controller
 
         // Trigger confetti if goal completed and not already shown
         $sessionKey = 'goal_'.$goal->id.'_completed';
-        if ($goal->current_value >= $goal->target_value && !session()->has($sessionKey)) {
+        if ($goal->current_value >= $goal->target_value && ! session()->has($sessionKey)) {
             session()->put($sessionKey, true);
             session()->flash('goal_completed', true);
         }

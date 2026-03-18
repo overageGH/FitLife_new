@@ -151,7 +151,7 @@
 }
 
 .calculate-btn:hover {
-    background: #d97706;
+    background: var(--warning);
     transform: translateY(-1px);
 }
 

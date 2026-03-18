@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════════════════
-   BIOGRAPHY STYLES - FitLife v2.0
+   BIOGRAPHY STYLES - FitLife v3.0
    Dark Sport Theme - Green Accent
    ═══════════════════════════════════════════════════════════════════════════ */
 
@@ -34,14 +34,23 @@
    ═══════════════════════════════════════════════════════════════════════════ */
 
 .success-msg {
-    background: rgba(34, 197, 94, 0.15);
-    border: 1px solid var(--primary);
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    background: rgba(34, 197, 94, 0.1);
+    border: 1px solid rgba(34, 197, 94, 0.3);
     color: var(--primary);
     padding: var(--space-4);
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-lg);
     margin-bottom: var(--space-5);
     font-size: var(--text-sm);
     font-weight: var(--font-medium);
+}
+
+.success-msg svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -53,22 +62,7 @@
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-xl);
     padding: var(--space-8);
-    max-width: 600px;
-}
-
-.biography-card h3 {
-    font-size: var(--text-xl);
-    font-weight: var(--font-bold);
-    color: var(--primary);
-    margin-bottom: var(--space-6);
-    display: flex;
-    align-items: center;
-    gap: var(--space-3);
-}
-
-.biography-card h3::before {
-    content: '👤';
-    font-size: var(--text-2xl);
+    max-width: 640px;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -78,9 +72,80 @@
 .biography-form {
     display: flex;
     flex-direction: column;
-    gap: var(--space-5);
+    gap: var(--space-6);
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   SECTIONS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.bio-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.bio-section + .bio-section {
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--border-subtle);
+}
+
+.bio-section-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    margin-bottom: var(--space-2);
+}
+
+.bio-section-icon {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-lg);
+    flex-shrink: 0;
+}
+
+.bio-section-icon svg {
+    width: 22px;
+    height: 22px;
+}
+
+.bio-section-icon--personal {
+    background: rgba(14, 165, 233, 0.15);
+}
+.bio-section-icon--personal svg {
+    stroke: var(--accent);
+}
+
+.bio-section-icon--physical {
+    background: rgba(249, 115, 22, 0.15);
+}
+.bio-section-icon--physical svg {
+    stroke: var(--secondary);
+}
+
+.bio-section-header h3 {
+    font-size: var(--text-lg);
+    font-weight: var(--font-bold);
+    color: var(--text-primary);
+    margin-bottom: var(--space-1);
+}
+
+.bio-section-desc {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+}
+
+/* Two-column row */
+.bio-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+}
+
+/* Form groups */
 .biography-form .form-group {
     display: flex;
     flex-direction: column;
@@ -119,6 +184,27 @@
     color: var(--text-muted);
 }
 
+/* Input with suffix */
+.input-with-suffix {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-with-suffix input {
+    width: 100%;
+    padding-right: var(--space-10) !important;
+}
+
+.input-suffix {
+    position: absolute;
+    right: var(--space-4);
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    font-weight: var(--font-medium);
+    pointer-events: none;
+}
+
 /* Select Styling */
 .biography-form .form-group select {
     appearance: none;
@@ -135,7 +221,7 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   SAVE BUTTON (Fixed huge SVG issue)
+   SAVE BUTTON
    ═══════════════════════════════════════════════════════════════════════════ */
 
 .save-btn {
@@ -165,7 +251,6 @@
     transform: translateY(0);
 }
 
-/* FIX: Constrain SVG icon size inside button */
 .save-btn svg {
     width: 20px;
     height: 20px;
@@ -178,6 +263,18 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+    .biography-card {
+        padding: var(--space-5);
+    }
+
+    .bio-row {
+        grid-template-columns: 1fr;
+    }
+}
    RESPONSIVE
    ═══════════════════════════════════════════════════════════════════════════ */
 

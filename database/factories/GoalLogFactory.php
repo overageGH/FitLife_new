@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Goal;
 use App\Models\GoalLog;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class GoalLogFactory extends Factory
 {

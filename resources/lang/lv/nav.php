@@ -19,13 +19,13 @@ return [
     'home' => 'Sākums',
     'menu' => 'Izvēlne',
     'toggle_menu' => 'Pārslēgt izvēlni',
-    
+
     // Sidebar sections
     'main' => 'Galvenais',
     'trackers' => 'Izsekotāji',
     'tools' => 'Rīki',
     'admin_panel' => 'Administratora panelis',
-    
+
     // Navigation items
     'community' => 'Kopiena',
     'meal_tracker' => 'Maltīšu izsekotājs',

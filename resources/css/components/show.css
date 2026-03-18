@@ -145,7 +145,7 @@
 }
 
 .friend-btn-accept:hover {
-    background: #0284c7;
+    background: var(--accent-dark);
 }
 
 .friend-btn-danger {

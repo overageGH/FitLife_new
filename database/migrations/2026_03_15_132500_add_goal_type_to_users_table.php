@@ -6,22 +6,30 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * Run the migrations.
+     */
     public function up(): void
     {
-        if (! Schema::hasColumn('users', 'role')) {
+        if (! Schema::hasTable('users')) {
+            return;
+        }
+
+        if (! Schema::hasColumn('users', 'goal_type')) {
             Schema::table('users', function (Blueprint $table) {
-                $table->enum('role', ['user', 'admin'])
-                    ->default('user')
-                    ->after('email_verified_at');
+                $table->string('goal_type')->nullable()->after('password');
             });
         }
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down(): void
     {
-        if (Schema::hasColumn('users', 'role')) {
+        if (Schema::hasTable('users') && Schema::hasColumn('users', 'goal_type')) {
             Schema::table('users', function (Blueprint $table) {
-                $table->dropColumn('role');
+                $table->dropColumn('goal_type');
             });
         }
     }

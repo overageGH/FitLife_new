@@ -23,15 +23,15 @@ class FriendController extends Controller
         }
 
         Friend::create([
-            'user_id'   => $me->id,
+            'user_id' => $me->id,
             'friend_id' => $user->id,
-            'status'    => 'pending',
+            'status' => 'pending',
         ]);
 
         return response()->json([
-            'status'       => 'Friend request sent!',
-            'action'       => 'request_sent',
-            'addAction'    => route('friends.store', $user),
+            'status' => 'Friend request sent!',
+            'action' => 'request_sent',
+            'addAction' => route('friends.store', $user),
             'removeAction' => route('friends.remove', $user),
         ], 201);
     }
@@ -40,11 +40,11 @@ class FriendController extends Controller
     public function accept(Request $request, User $user)
     {
         $friendRequest = Friend::where('user_id', $user->id)
-                              ->where('friend_id', Auth::id())
-                              ->where('status', 'pending')
-                              ->first();
+            ->where('friend_id', Auth::id())
+            ->where('status', 'pending')
+            ->first();
 
-        if (!$friendRequest) {
+        if (! $friendRequest) {
             return response()->json(['error' => 'No pending friend request found'], 404);
         }
 
@@ -52,14 +52,14 @@ class FriendController extends Controller
 
         // Create reciprocal friendship
         Friend::create([
-            'user_id'   => Auth::id(),
+            'user_id' => Auth::id(),
             'friend_id' => $user->id,
-            'status'    => 'accepted',
+            'status' => 'accepted',
         ]);
 
         return response()->json([
-            'status'       => 'Friend request accepted!',
-            'action'       => 'accepted',
+            'status' => 'Friend request accepted!',
+            'action' => 'accepted',
             'removeAction' => route('friends.remove', $user),
         ], 200);
     }
@@ -69,11 +69,11 @@ class FriendController extends Controller
     {
         $friendship = Friend::where(function ($query) use ($user) {
             $query->where('user_id', Auth::id())
-                  ->where('friend_id', $user->id)
-                  ->orWhere(function ($q) use ($user) {
-                      $q->where('user_id', $user->id)
+                ->where('friend_id', $user->id)
+                ->orWhere(function ($q) use ($user) {
+                    $q->where('user_id', $user->id)
                         ->where('friend_id', Auth::id());
-                  });
+                });
         })->where('status', 'accepted');
 
         if ($friendship->count() === 0) {
@@ -83,8 +83,8 @@ class FriendController extends Controller
         $friendship->delete();
 
         return response()->json([
-            'status'    => 'Friend removed',
-            'action'    => 'removed',
+            'status' => 'Friend removed',
+            'action' => 'removed',
             'addAction' => route('friends.store', $user),
         ], 200);
     }

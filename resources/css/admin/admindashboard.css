@@ -114,7 +114,7 @@
 }
 
 .admindashboard-btn-primary:hover {
-    background: #dc2626;
+    background: var(--danger);
     transform: translateY(-1px);
 }
 

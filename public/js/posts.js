@@ -718,13 +718,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     form.style.display = 'none';
                 }
                 const comments = document.getElementById(`comments-${postId}`);
+                const commentsListEl = comments ? comments.querySelector('.comments-list') : null;
                 if (!comments) {
                     console.error(`Comments container for post ${postId} not found`);
                     showAlert(t('comment_add_error', 'Failed to add comment'), 'error');
                     return;
                 }
                 const existingComment = document.getElementById(`comment-${data.comment.id}`);
-                if (!existingComment) {
+                    if (!existingComment) {
                     const comment = createCommentElement(data.comment, postId, csrfToken);
                     let parent;
                     if (data.comment.parent_id) {
@@ -744,7 +745,8 @@ document.addEventListener("DOMContentLoaded", () => {
                             }
                         }
                     } else {
-                        parent = comments;
+                        // Append to the server-rendered comments list if present, otherwise to the comments container
+                        parent = commentsListEl || comments;
                     }
                     parent.appendChild(comment);
                     attachCommentEventListeners(comment);

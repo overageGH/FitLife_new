@@ -25,7 +25,7 @@ return [
     'goal_updated' => 'Цель успешно обновлена',
     'goal_deleted' => 'Цель успешно удалена',
     'progress_logged' => 'Прогресс успешно записан',
-    
+
     // Index page
     'fitlife_goals' => 'FitLife Цели',
     'track_progress_subtitle' => 'Отслеживайте свой прогресс и оставайтесь мотивированными!',
@@ -35,7 +35,7 @@ return [
     'target' => 'Цель',
     'current' => 'Текущее',
     'no_goals_start_creating' => 'Целей пока нет. Начните создавать свои цели!',
-    
+
     // Create page
     'fitlife_create_goal' => 'FitLife Создать цель',
     'create_new_goal' => 'Создать новую цель',
@@ -49,14 +49,14 @@ return [
     'enter_target_value' => 'Введите целевое значение',
     'description_optional' => 'Описание (необязательно)',
     'add_description' => 'Добавить описание',
-    
+
     // Edit page
     'fitlife_edit_goal' => 'FitLife Редактировать цель',
     'update_goal_subtitle' => 'Обновите данные вашей цели',
     'update_goal' => 'Обновить цель',
     'cancel' => 'Отмена',
     'delete_confirm' => 'Вы уверены, что хотите удалить эту цель?',
-    
+
     // Log page
     'fitlife_log_progress' => 'FitLife Записать прогресс',
     'update_progress_for' => 'Обновите ваш прогресс для цели :type',
@@ -64,4 +64,9 @@ return [
     'todays_value' => 'Сегодняшнее значение',
     'enter_todays_value' => 'Введите сегодняшнее значение',
     'submit' => 'Отправить',
+
+    // Additional
+    'total_goals' => 'Всего целей',
+    'active_goals' => 'Активные',
+    'back_to_goals' => 'Назад к целям',
 ];

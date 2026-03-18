@@ -38,6 +38,13 @@ return [
     'calculate_calories' => 'Рассчитать калории',
     'meal_summary' => 'Итог приёма пищи',
     'total_calories' => 'Всего калорий',
+    'select_foods_desc' => 'Выберите продукты и укажите количество для каждого приёма пищи',
+    'your_latest_calculation' => 'Ваш последний расчёт',
+    'history_desc' => 'Недавно записанные приёмы пищи',
+    'meal_breakfast' => 'Завтрак',
+    'meal_lunch' => 'Обед',
+    'meal_dinner' => 'Ужин',
+    'meal_snack' => 'Перекус',
 
     // Calorie Calculator page
     'calorie_calc_label' => 'FitLife Калькулятор калорий',

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\WaterLog;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class WaterController extends Controller
@@ -11,11 +11,20 @@ class WaterController extends Controller
     // Show water intake history
     public function index()
     {
-        $logs = WaterLog::where('user_id', Auth::id())
-                        ->orderBy('created_at', 'desc')
-                        ->get();
+        $todayLogs = WaterLog::where('user_id', Auth::id())
+            ->whereDate('created_at', today())
+            ->orderBy('created_at', 'desc')
+            ->get();
 
-        return view('water.index', compact('logs'));
+        $historyLogs = WaterLog::where('user_id', Auth::id())
+            ->orderBy('created_at', 'desc')
+            ->take(20)
+            ->get();
+
+        $todayTotal = $todayLogs->sum('amount');
+        $dailyGoal = 2000;
+
+        return view('water.index', compact('todayLogs', 'historyLogs', 'todayTotal', 'dailyGoal'));
     }
 
     // Store new water intake

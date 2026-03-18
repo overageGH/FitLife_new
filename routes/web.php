@@ -1,19 +1,19 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\FoodController;
-use App\Http\Controllers\SleepController;
-use App\Http\Controllers\ProgressPhotoController;
-use App\Http\Controllers\GoalController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\WaterController;
-use App\Http\Controllers\CalorieCalculatorController;
 use App\Http\Controllers\BiographyController;
-use App\Http\Controllers\PostController;
-use App\Http\Controllers\CommentController;
-use App\Http\Controllers\FriendController;
 use App\Http\Controllers\CalendarController;
+use App\Http\Controllers\CalorieCalculatorController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FoodController;
+use App\Http\Controllers\FriendController;
+use App\Http\Controllers\GoalController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProgressPhotoController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\SleepController;
+use App\Http\Controllers\WaterController;
 use Illuminate\Support\Facades\Route;
 
 // Главная страница
@@ -22,16 +22,16 @@ Route::get('/', function () {
 })->name('welcome');
 
 // Политика конфиденциальности и условия
-Route::get('/privacy-policy', fn() => view('privacy-policy'))->name('privacy-policy');
-Route::get('/terms-of-service', fn() => view('terms-of-service'))->name('terms-of-service');
+Route::get('/privacy-policy', fn () => view('privacy-policy'))->name('privacy-policy');
+Route::get('/terms-of-service', fn () => view('terms-of-service'))->name('terms-of-service');
 
 // Authentication routes
 Route::middleware('web')->group(function () {
-    require __DIR__ . '/auth.php';
+    require __DIR__.'/auth.php';
 });
 
 // **Подключаем админку**
-require __DIR__ . '/admin.php';
+require __DIR__.'/admin.php';
 
 // Все маршруты для авторизованных пользователей
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -103,12 +103,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     // Биография
-Route::prefix('biography')->group(function () {
-    Route::get('/', [BiographyController::class, 'edit'])->name('biography.edit');
-    Route::post('/', [BiographyController::class, 'store'])->name('biography.store'); 
-    Route::patch('/', [BiographyController::class, 'update'])->name('biography.update');
-});
-
+    Route::prefix('biography')->group(function () {
+        Route::get('/', [BiographyController::class, 'edit'])->name('biography.edit');
+        Route::post('/', [BiographyController::class, 'store'])->name('biography.store');
+        Route::patch('/', [BiographyController::class, 'update'])->name('biography.update');
+    });
 
     // Посты и комментарии
     Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
@@ -134,4 +133,3 @@ Route::prefix('biography')->group(function () {
         Route::get('/events', [CalendarController::class, 'getEvents'])->name('calendar.events');
     });
 });
-

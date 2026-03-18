@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Calendar;
-use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CalendarController extends Controller
 {
@@ -37,10 +37,10 @@ class CalendarController extends Controller
             'event' => [
                 'id' => $event->id,
                 'start' => $event->date,
-                'title' => ucfirst($event->type) . ': ' . ($event->description ?? 'No description'),
+                'title' => ucfirst($event->type).': '.($event->description ?? 'No description'),
                 'type' => $event->type,
-                'completed' => $event->completed
-            ]
+                'completed' => $event->completed,
+            ],
         ]);
     }
 
@@ -75,10 +75,10 @@ class CalendarController extends Controller
                 return [
                     'id' => $event->id,
                     'start' => $event->date->toDateString(),
-                    'title' => ucfirst($event->type) . ': ' . ($event->description ?? 'No description'),
+                    'title' => ucfirst($event->type).': '.($event->description ?? 'No description'),
                     'type' => $event->type,
                     'description' => $event->description,
-                    'completed' => $event->completed
+                    'completed' => $event->completed,
                 ];
             });
 

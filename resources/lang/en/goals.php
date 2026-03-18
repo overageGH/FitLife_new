@@ -25,7 +25,7 @@ return [
     'goal_updated' => 'Goal updated successfully',
     'goal_deleted' => 'Goal deleted successfully',
     'progress_logged' => 'Progress logged successfully',
-    
+
     // Index page
     'fitlife_goals' => 'FitLife Goals',
     'track_progress_subtitle' => 'Track your daily progress and stay motivated!',
@@ -35,7 +35,7 @@ return [
     'target' => 'Target',
     'current' => 'Current',
     'no_goals_start_creating' => 'No goals set yet. Start creating your goals!',
-    
+
     // Create page
     'fitlife_create_goal' => 'FitLife Create Goal',
     'create_new_goal' => 'Create New Goal',
@@ -49,14 +49,14 @@ return [
     'enter_target_value' => 'Enter target value',
     'description_optional' => 'Description (optional)',
     'add_description' => 'Add a description',
-    
+
     // Edit page
     'fitlife_edit_goal' => 'FitLife Edit Goal',
     'update_goal_subtitle' => 'Update your goal details',
     'update_goal' => 'Update Goal',
     'cancel' => 'Cancel',
     'delete_confirm' => 'Are you sure you want to delete this goal?',
-    
+
     // Log page
     'fitlife_log_progress' => 'FitLife Log Progress',
     'update_progress_for' => 'Update your progress for :type goal',
@@ -64,4 +64,9 @@ return [
     'todays_value' => "Today's Value",
     'enter_todays_value' => "Enter today's value",
     'submit' => 'Submit',
+
+    // Additional
+    'total_goals' => 'Total Goals',
+    'active_goals' => 'Active',
+    'back_to_goals' => 'Back to Goals',
 ];

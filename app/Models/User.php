@@ -73,9 +73,9 @@ class User extends Authenticatable
     public function friends()
     {
         return $this->belongsToMany(User::class, 'friends', 'user_id', 'friend_id')
-                    ->wherePivot('status', 'accepted')
-                    ->withPivot('status')
-                    ->distinct();
+            ->wherePivot('status', 'accepted')
+            ->withPivot('status')
+            ->distinct();
     }
 
     public function sentFriendRequests()
@@ -111,17 +111,17 @@ class User extends Authenticatable
     public function hasPendingRequestTo(User $user): bool
     {
         return $this->sentFriendRequests()
-                    ->where('friend_id', $user->id)
-                    ->where('status', 'pending')
-                    ->exists();
+            ->where('friend_id', $user->id)
+            ->where('status', 'pending')
+            ->exists();
     }
 
     public function hasPendingRequestFrom(User $user): bool
     {
         return $this->receivedFriendRequests()
-                    ->where('user_id', $user->id)
-                    ->where('status', 'pending')
-                    ->exists();
+            ->where('user_id', $user->id)
+            ->where('status', 'pending')
+            ->exists();
     }
 
     public function hasRole(string $role): bool

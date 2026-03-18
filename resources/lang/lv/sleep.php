@@ -35,4 +35,11 @@ return [
     'status' => 'Statuss',
     'success' => 'Veiksmīgi',
     'track_patterns' => 'Reģistrējiet un izsekojiet sava miega paradumus',
+
+    // Additional
+    'todays_sleep' => 'Šodienas miegs',
+    'recommended' => 'Ieteicamais',
+    'remaining' => 'Atlikušais',
+    'goal_reached' => 'Mērķis sasniegts!',
+    'hrs' => 'st',
 ];

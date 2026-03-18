@@ -20,7 +20,7 @@
     display: flex;
     align-items: center;
     padding: 0 1.5rem;
-    transition: all 0.3s ease;
+    transition: all var(--transition-base);
 }
 
 .main-header.scrolled {
@@ -53,13 +53,13 @@
 .header-logo-icon {
     width: 38px;
     height: 38px;
-    background: linear-gradient(135deg, #22c55e 0%, #06b6d4 100%);
-    border-radius: 10px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    border-radius: var(--radius-sm);
     display: flex;
     align-items: center;
     justify-content: center;
     box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
-    transition: all 0.3s ease;
+    transition: all var(--transition-base);
 }
 
 .header-logo:hover .header-logo-icon {
@@ -76,7 +76,7 @@
 .header-logo-text {
     font-size: 1.375rem;
     font-weight: 700;
-    background: linear-gradient(135deg, #22c55e 0%, #06b6d4 100%);
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -99,12 +99,12 @@
     align-items: center;
     gap: 0.5rem;
     padding: 0.5rem 0.875rem;
-    color: #a1a1aa;
+    color: var(--text-secondary);
     text-decoration: none;
     font-size: 0.8125rem;
     font-weight: 500;
-    border-radius: 8px;
-    transition: all 0.2s ease;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
     position: relative;
     white-space: nowrap;
 }
@@ -114,15 +114,15 @@
     height: 18px;
     fill: currentColor;
     opacity: 0.7;
-    transition: all 0.2s ease;
+    transition: all var(--transition-fast);
 }
 
 .nav-item span {
-    transition: color 0.2s ease;
+    transition: color var(--transition-fast);
 }
 
 .nav-item:hover {
-    color: #fafafa;
+    color: var(--text-primary);
     background: rgba(255, 255, 255, 0.05);
 }
 
@@ -131,7 +131,7 @@
 }
 
 .nav-item.active {
-    color: #22c55e;
+    color: var(--primary);
     background: rgba(34, 197, 94, 0.1);
 }
 
@@ -147,7 +147,7 @@
     transform: translateX(-50%);
     width: 20px;
     height: 2px;
-    background: linear-gradient(90deg, #22c55e, #06b6d4);
+    background: linear-gradient(90deg, var(--primary), var(--accent));
     border-radius: 1px;
 }
 
@@ -170,10 +170,10 @@
     justify-content: center;
     background: transparent;
     border: none;
-    border-radius: 8px;
-    color: #a1a1aa;
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all var(--transition-fast);
 }
 
 .header-icon-btn svg {
@@ -184,7 +184,7 @@
 
 .header-icon-btn:hover {
     background: rgba(255, 255, 255, 0.05);
-    color: #fafafa;
+    color: var(--text-primary);
 }
 
 .header-icon-btn .badge {
@@ -193,11 +193,11 @@
     right: 4px;
     min-width: 16px;
     height: 16px;
-    background: linear-gradient(135deg, #22c55e 0%, #06b6d4 100%);
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
     color: white;
     font-size: 0.625rem;
     font-weight: 600;
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -219,9 +219,9 @@
     padding-right: 0.5rem;
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 10px;
+    border-radius: var(--radius-sm);
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all var(--transition-fast);
 }
 
 .user-menu-trigger:hover {
@@ -232,11 +232,11 @@
 .user-menu-avatar {
     width: 36px;
     height: 36px;
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
     object-fit: cover;
     border: 2px solid transparent;
     background: linear-gradient(#111, #111) padding-box,
-                linear-gradient(135deg, #22c55e, #06b6d4) border-box;
+                linear-gradient(135deg, var(--primary), var(--accent)) border-box;
 }
 
 .user-menu-info {
@@ -253,7 +253,7 @@
 .user-menu-name {
     font-size: 0.8125rem;
     font-weight: 600;
-    color: #fafafa;
+    color: var(--text-primary);
     line-height: 1.2;
 }
 
@@ -265,8 +265,8 @@
 .user-menu-arrow {
     width: 14px;
     height: 14px;
-    fill: #71717a;
-    transition: transform 0.2s ease;
+    fill: var(--text-muted);
+    transition: transform var(--transition-fast);
 }
 
 .user-menu.open .user-menu-arrow {
@@ -279,9 +279,9 @@
     top: calc(100% + 8px);
     right: 0;
     width: 260px;
-    background: #111111;
+    background: var(--bg-glass-dark);
     border: 1px solid rgba(34, 197, 94, 0.15);
-    border-radius: 12px;
+    border-radius: var(--radius-md);
     padding: 0;
     opacity: 0;
     visibility: hidden;
@@ -310,11 +310,11 @@
 .user-dropdown-avatar {
     width: 44px;
     height: 44px;
-    border-radius: 10px;
+    border-radius: var(--radius-sm);
     object-fit: cover;
     border: 2px solid transparent;
     background: linear-gradient(#111, #111) padding-box,
-                linear-gradient(135deg, #22c55e, #06b6d4) border-box;
+                linear-gradient(135deg, var(--primary), var(--accent)) border-box;
 }
 
 .user-dropdown-info {
@@ -325,7 +325,7 @@
 .user-dropdown-name {
     font-size: 0.9375rem;
     font-weight: 600;
-    color: #fafafa;
+    color: var(--text-primary);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -333,7 +333,7 @@
 
 .user-dropdown-email {
     font-size: 0.75rem;
-    color: #71717a;
+    color: var(--text-muted);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -352,13 +352,13 @@
     padding: 0.625rem 0.875rem;
     background: transparent;
     border: none;
-    border-radius: 8px;
-    color: #a1a1aa;
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
     text-decoration: none;
     font-size: 0.8125rem;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.15s ease;
+    transition: all var(--transition-fast);
     text-align: left;
 }
 
@@ -371,7 +371,7 @@
 
 .user-dropdown-item:hover {
     background: rgba(255, 255, 255, 0.05);
-    color: #fafafa;
+    color: var(--text-primary);
 }
 
 .user-dropdown-item:hover svg {
@@ -379,7 +379,7 @@
 }
 
 .user-dropdown-item.danger {
-    color: #ef4444;
+    color: var(--danger);
 }
 
 .user-dropdown-item.danger:hover {
@@ -403,8 +403,8 @@
     justify-content: center;
     background: transparent;
     border: none;
-    border-radius: 8px;
-    color: #a1a1aa;
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
     cursor: pointer;
 }
 
@@ -440,7 +440,7 @@
 .main-content {
     padding-top: 80px;
     min-height: 100vh;
-    background: #0a0a0a;
+    background: var(--bg-base);
 }
 
 .content-wrapper {

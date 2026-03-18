@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\{MealLog, Sleep, Progress, Goal, WaterLog, Calendar};
-use Illuminate\Support\Facades\Auth;
+use App\Models\Calendar;
+use App\Models\Goal;
+use App\Models\MealLog;
+use App\Models\Progress;
+use App\Models\Sleep;
+use App\Models\WaterLog;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -24,16 +29,16 @@ class DashboardController extends Controller
             ->get();
 
         return view('dashboard', [
-            'user'          => $user,
-            'biography'     => $user->biography,
-            'photos'        => Progress::where('user_id', $user->id)->latest()->get(),
-            'mealLogs'      => $this->getPaginatedLogs(MealLog::class, $user->id, 'meals'),
-            'sleepLogs'     => $this->getPaginatedLogs(Sleep::class, $user->id, 'sleep'),
-            'waterLogs'     => $this->getPaginatedLogs(WaterLog::class, $user->id, 'water'),
-            'goals'         => Goal::where('user_id', $user->id)->get(),
+            'user' => $user,
+            'biography' => $user->biography,
+            'photos' => Progress::where('user_id', $user->id)->latest()->get(),
+            'mealLogs' => $this->getPaginatedLogs(MealLog::class, $user->id, 'meals'),
+            'sleepLogs' => $this->getPaginatedLogs(Sleep::class, $user->id, 'sleep'),
+            'waterLogs' => $this->getPaginatedLogs(WaterLog::class, $user->id, 'water'),
+            'goals' => Goal::where('user_id', $user->id)->get(),
             'totalCalories' => MealLog::where('user_id', $user->id)->sum('calories'),
-            'totalSleep'    => Sleep::where('user_id', $user->id)->sum('duration'),
-            'totalWater'    => WaterLog::where('user_id', $user->id)->sum('amount'),
+            'totalSleep' => Sleep::where('user_id', $user->id)->sum('duration'),
+            'totalWater' => WaterLog::where('user_id', $user->id)->sum('amount'),
             'upcomingEvents' => $upcomingEvents,
         ]);
     }
@@ -62,7 +67,7 @@ class DashboardController extends Controller
         $logs = $this->getPaginatedLogs($model, Auth::id(), $pageName);
 
         if ($request->ajax()) {
-            return view($view, [$pageName . 'Logs' => $logs])->render();
+            return view($view, [$pageName.'Logs' => $logs])->render();
         }
 
         return redirect()->route('dashboard');

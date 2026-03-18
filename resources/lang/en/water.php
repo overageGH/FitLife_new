@@ -28,4 +28,5 @@ return [
     'no_logs_start' => 'No water logs yet. Start logging your hydration!',
     'water_added' => 'Water intake logged',
     'water_deleted' => 'Water log deleted',
+    'custom_amount' => 'Or enter custom amount',
 ];

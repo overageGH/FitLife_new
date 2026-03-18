@@ -18,6 +18,7 @@ class CommentController extends Controller
                 if ($request->expectsJson()) {
                     return response()->json(['success' => false, 'message' => 'Unauthorized'], 403);
                 }
+
                 return back()->with('error', 'Unauthorized');
             }
 
@@ -28,20 +29,21 @@ class CommentController extends Controller
             if ($request->expectsJson()) {
                 return response()->json([
                     'success' => true,
-                    'comment' => ['id' => $comment->id, 'content' => $comment->content]
+                    'comment' => ['id' => $comment->id, 'content' => $comment->content],
                 ], 200);
             }
 
             return back()->with('success', __('toast.comment_updated'));
 
         } catch (\Exception $e) {
-            \Log::error('Comment update failed: ' . $e->getMessage());
+            \Log::error('Comment update failed: '.$e->getMessage());
             if ($request->expectsJson()) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Failed to update comment, but it may have been saved.',
                 ], 200);
             }
+
             return back()->with('error', __('toast.comment_update_error'));
         }
     }
@@ -54,6 +56,7 @@ class CommentController extends Controller
                 if ($request->expectsJson()) {
                     return response()->json(['success' => false, 'message' => 'Unauthorized'], 403);
                 }
+
                 return back()->with('error', 'Unauthorized');
             }
 
@@ -63,17 +66,18 @@ class CommentController extends Controller
             if ($request->expectsJson()) {
                 return response()->json(['success' => true], 200);
             }
-            
+
             return back()->with('success', __('toast.comment_deleted'));
 
         } catch (\Exception $e) {
-            \Log::error('Comment deletion failed: ' . $e->getMessage());
+            \Log::error('Comment deletion failed: '.$e->getMessage());
             if ($request->expectsJson()) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Failed to delete comment, but it may have been removed.',
                 ], 200);
             }
+
             return back()->with('error', __('toast.comment_delete_error'));
         }
     }
@@ -82,7 +86,7 @@ class CommentController extends Controller
     public function toggleReaction(Request $request, Comment $comment)
     {
         try {
-            if (!Auth::check()) {
+            if (! Auth::check()) {
                 return response()->json(['success' => false, 'message' => 'Unauthorized'], 401);
             }
 
@@ -96,8 +100,8 @@ class CommentController extends Controller
             ];
 
             $existing = CommentLike::where('comment_id', $comment->id)
-                                   ->where('user_id', $userId)
-                                   ->first();
+                ->where('user_id', $userId)
+                ->first();
 
             if ($existing && $existing->type === $type) {
                 $existing->delete();
@@ -114,11 +118,9 @@ class CommentController extends Controller
                 Cache::increment($cacheKeys[$type]);
             }
 
-            $likeCount = Cache::remember($cacheKeys['like'], 60, fn() =>
-                $comment->likes()->where('type', 'like')->count()
+            $likeCount = Cache::remember($cacheKeys['like'], 60, fn () => $comment->likes()->where('type', 'like')->count()
             );
-            $dislikeCount = Cache::remember($cacheKeys['dislike'], 60, fn() =>
-                $comment->likes()->where('type', 'dislike')->count()
+            $dislikeCount = Cache::remember($cacheKeys['dislike'], 60, fn () => $comment->likes()->where('type', 'dislike')->count()
             );
 
             Cache::forget('posts_page_1');
@@ -131,7 +133,8 @@ class CommentController extends Controller
             ], 200);
 
         } catch (\Exception $e) {
-            \Log::error('Comment reaction toggle failed: ' . $e->getMessage());
+            \Log::error('Comment reaction toggle failed: '.$e->getMessage());
+
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to toggle comment reaction, but it may have applied.',

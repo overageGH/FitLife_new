@@ -20,7 +20,7 @@ return [
     'active_goals' => 'Активные цели',
     'total_posts' => 'Всего публикаций',
     'friends_count' => 'Друзей',
-    
+
     // Stats cards
     'calories_today' => 'Калории сегодня',
     'kcal' => 'ккал',
@@ -30,23 +30,23 @@ return [
     'h' => 'ч',
     'hours' => 'часов',
     'completed' => 'выполнено',
-    
+
     // Events
     'upcoming_events' => 'Предстоящие события',
     'no_upcoming_events' => 'Нет предстоящих событий',
     'add_event' => 'Добавить событие',
     'no_description' => 'Без описания',
-    
+
     // Goals
     'manage' => 'Управление',
     'no_goals_set' => 'Цели ещё не установлены',
     'create_goal' => 'Создать цель',
-    
+
     // Progress photos
     'progress_gallery' => 'Галерея прогресса',
     'no_progress_photos' => 'Нет фото прогресса',
     'add_photo' => 'Добавить фото',
-    
+
     // Profile
     'your_profile' => 'Ваш профиль',
     'full_name' => 'Полное имя',
@@ -57,7 +57,7 @@ return [
     'cm' => 'см',
     'kg' => 'кг',
     'edit_profile' => 'Редактировать профиль',
-    
+
     // Friends
     'friends' => 'Друзья',
     'find' => 'Найти',

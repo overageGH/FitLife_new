@@ -13,7 +13,7 @@ class Biography extends Model
         'age',
         'height',
         'weight',
-        'gender'
+        'gender',
     ];
 
     public function user(): BelongsTo

@@ -20,7 +20,7 @@ return [
     'active_goals' => 'Active Goals',
     'total_posts' => 'Total Posts',
     'friends_count' => 'Friends',
-    
+
     // Stats cards
     'calories_today' => 'Calories Today',
     'kcal' => 'kcal',
@@ -30,23 +30,23 @@ return [
     'h' => 'h',
     'hours' => 'hours',
     'completed' => 'completed',
-    
+
     // Events
     'upcoming_events' => 'Upcoming Events',
     'no_upcoming_events' => 'No upcoming events',
     'add_event' => 'Add Event',
     'no_description' => 'No description',
-    
+
     // Goals
     'manage' => 'Manage',
     'no_goals_set' => 'No goals set yet',
     'create_goal' => 'Create Goal',
-    
+
     // Progress photos
     'progress_gallery' => 'Progress Gallery',
     'no_progress_photos' => 'No progress photos yet',
     'add_photo' => 'Add Photo',
-    
+
     // Profile
     'your_profile' => 'Your Profile',
     'full_name' => 'Full Name',
@@ -57,7 +57,7 @@ return [
     'cm' => 'cm',
     'kg' => 'kg',
     'edit_profile' => 'Edit Profile',
-    
+
     // Friends
     'friends' => 'Friends',
     'find' => 'Find',

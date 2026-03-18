@@ -28,4 +28,5 @@ return [
     'no_logs_start' => 'Ierakstu vēl nav. Sāciet reģistrēt hidratāciju!',
     'water_added' => 'Ūdens pievienots',
     'water_deleted' => 'Ieraksts dzēsts',
+    'custom_amount' => 'Vai ievadiet pielāgotu daudzumu',
 ];

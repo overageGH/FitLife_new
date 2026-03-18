@@ -35,4 +35,11 @@ return [
     'status' => 'Status',
     'success' => 'Success',
     'track_patterns' => 'Log and track your sleep patterns',
+
+    // Additional
+    'todays_sleep' => "Today's Sleep",
+    'recommended' => 'Recommended',
+    'remaining' => 'Remaining',
+    'goal_reached' => 'Goal Reached!',
+    'hrs' => 'hrs',
 ];

@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════════════════
-   WATER TRACKER STYLES - FitLife v2.0
+   WATER TRACKER STYLES - FitLife v3.0
    Dark Sport Theme - Blue Accent
    ═══════════════════════════════════════════════════════════════════════════ */
 
@@ -37,112 +37,248 @@
     margin-bottom: var(--space-4);
 }
 
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    border: 0;
+}
+
 /* ═══════════════════════════════════════════════════════════════════════════
-   RESULT CARD (TODAY'S HYDRATION)
+   TOP GRID — Progress + Quick Add
    ═══════════════════════════════════════════════════════════════════════════ */
 
-.result-card {
-    display: flex;
-    align-items: center;
-    gap: var(--space-5);
-    background: var(--bg-surface);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-xl);
-    padding: var(--space-5);
+.water-top-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-6);
     margin-bottom: var(--space-6);
 }
 
-.result-icon {
-    width: 64px;
-    height: 64px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(14, 165, 233, 0.15);
-    border-radius: var(--radius-lg);
-    flex-shrink: 0;
-}
-
-.result-icon svg {
-    width: 32px;
-    height: 32px;
-    fill: var(--accent);
-}
-
-.result-body {
-    flex: 1;
-}
-
-.result-body h4 {
-    font-size: var(--text-sm);
-    font-weight: var(--font-medium);
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: var(--space-2);
-}
-
-.result-body .value {
-    font-size: var(--text-3xl);
-    font-weight: var(--font-bold);
-    color: var(--accent);
-}
-
-.result-body .muted {
-    font-size: var(--text-sm);
-    color: var(--text-muted);
-    margin-top: var(--space-1);
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   WATER CARD (FORM)
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-.water-card {
+/* ─── Progress Ring Card ─── */
+.water-progress-card {
     background: var(--bg-surface);
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-xl);
     padding: var(--space-6);
-    margin-bottom: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-5);
 }
 
-.water-card h4 {
-    font-size: var(--text-base);
+.water-ring-wrap {
+    position: relative;
+    width: 160px;
+    height: 160px;
+}
+
+.water-ring {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+
+.water-ring__bg {
+    fill: none;
+    stroke: var(--bg-elevated);
+    stroke-width: 10;
+}
+
+.water-ring__fill {
+    fill: none;
+    stroke: var(--accent);
+    stroke-width: 10;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1s ease;
+}
+
+.water-ring-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.water-ring-value {
+    font-size: var(--text-2xl);
+    font-weight: var(--font-bold);
+    color: var(--accent);
+    line-height: 1;
+}
+
+.water-ring-unit {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: var(--space-1);
+}
+
+.water-progress-info {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.water-progress-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.water-progress-label {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+}
+
+.water-progress-val {
+    font-size: var(--text-sm);
     font-weight: var(--font-semibold);
     color: var(--text-primary);
+}
+
+.water-progress-val.goal-done {
+    color: var(--primary);
+}
+
+.water-progress-bar-wrap {
+    width: 100%;
+    height: 6px;
+    background: var(--bg-elevated);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+
+.water-progress-bar__fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--primary));
+    border-radius: var(--radius-full);
+    transition: width 0.8s ease;
+}
+
+/* ─── Quick Add Card ─── */
+.water-add-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+}
+
+.water-add-card h3 {
     margin-bottom: var(--space-5);
 }
 
-/* Water Form */
-.water-form {
-    display: flex;
-    align-items: flex-end;
-    gap: var(--space-4);
+/* Preset Buttons */
+.water-presets {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3);
+    margin-bottom: var(--space-5);
 }
 
-.water-form .form-group {
+.water-preset-form {
+    display: contents;
+}
+
+.water-preset-btn {
     display: flex;
     flex-direction: column;
-    gap: var(--space-2);
+    align-items: center;
+    gap: var(--space-1);
+    padding: var(--space-4) var(--space-3);
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    color: var(--text-primary);
+}
+
+.water-preset-btn:hover {
+    background: rgba(14, 165, 233, 0.1);
+    border-color: var(--accent);
+    transform: translateY(-2px);
+}
+
+.water-preset-btn:active {
+    transform: translateY(0);
+}
+
+.water-preset-icon {
+    width: 24px;
+    height: 24px;
+    stroke: var(--accent);
+    opacity: 0.7;
+}
+
+.water-preset-btn:hover .water-preset-icon {
+    opacity: 1;
+}
+
+.water-preset-amount {
+    font-size: var(--text-lg);
+    font-weight: var(--font-bold);
+    color: var(--text-primary);
+    line-height: 1;
+}
+
+.water-preset-unit {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+/* Divider */
+.water-divider {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-4);
+}
+
+.water-divider::before,
+.water-divider::after {
+    content: "";
     flex: 1;
+    height: 1px;
+    background: var(--border-subtle);
 }
 
-.water-form .form-group-btn {
-    flex: 0 0 auto;
+.water-divider span {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
 }
 
-.water-form .form-group-btn label {
-    visibility: hidden;
+/* Custom Amount Form */
+.water-custom-form {
+    display: flex;
+    gap: var(--space-3);
+    align-items: stretch;
 }
 
-.water-form .form-group label {
-    font-size: var(--text-sm);
-    font-weight: var(--font-medium);
-    color: var(--text-secondary);
+.water-custom-input-wrap {
+    flex: 1;
+    position: relative;
 }
 
-.water-form .form-group input {
-    padding: var(--space-3) var(--space-4);
+.water-custom-input-wrap input {
+    width: 100%;
+    padding: var(--space-3) var(--space-10) var(--space-3) var(--space-4);
     background: var(--bg-elevated);
     border: 1px solid var(--border-default);
     border-radius: var(--radius-md);
@@ -150,21 +286,33 @@
     font-size: var(--text-sm);
     transition: border-color var(--transition-fast);
     height: 44px;
+    box-sizing: border-box;
 }
 
-.water-form .form-group input:focus {
+.water-custom-input-wrap input:focus {
     outline: none;
     border-color: var(--accent);
 }
 
-.water-form .form-group input::placeholder {
+.water-custom-input-wrap input::placeholder {
     color: var(--text-muted);
 }
 
-/* Calculate/Submit Button */
-.water-form .calculate-btn,
-.calculate-btn {
-    padding: var(--space-3) var(--space-6);
+.water-custom-suffix {
+    position: absolute;
+    right: var(--space-4);
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    pointer-events: none;
+}
+
+.water-custom-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-5);
     background: var(--accent);
     color: var(--bg-base);
     font-weight: var(--font-semibold);
@@ -172,14 +320,96 @@
     border: none;
     border-radius: var(--radius-md);
     cursor: pointer;
-    transition: background var(--transition-fast);
-    height: 44px;
+    transition: all var(--transition-fast);
     white-space: nowrap;
+    height: 44px;
 }
 
-.water-form .calculate-btn:hover,
-.calculate-btn:hover {
-    background: #0284c7;
+.water-custom-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+.water-custom-btn:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   TODAY'S PILLS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.water-today-section {
+    margin-bottom: var(--space-6);
+}
+
+.water-today-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+}
+
+.water-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-full);
+    transition: border-color var(--transition-fast);
+}
+
+.water-pill:hover {
+    border-color: rgba(14, 165, 233, 0.3);
+}
+
+.water-pill-icon {
+    width: 16px;
+    height: 16px;
+    stroke: var(--accent);
+    flex-shrink: 0;
+}
+
+.water-pill-amount {
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    color: var(--text-primary);
+}
+
+.water-pill-time {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   EMPTY STATE
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.water-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-4);
+    padding: var(--space-12) var(--space-6);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-xl);
+    text-align: center;
+}
+
+.water-empty svg {
+    width: 48px;
+    height: 48px;
+    stroke: var(--accent);
+    opacity: 0.4;
+}
+
+.water-empty p {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    max-width: 280px;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -224,11 +454,15 @@
     background: var(--bg-elevated);
 }
 
-.no-data {
-    text-align: center;
-    padding: var(--space-8);
-    color: var(--text-muted);
-    font-size: var(--text-sm);
+.water-amount-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--space-1) var(--space-3);
+    background: rgba(14, 165, 233, 0.1);
+    color: var(--accent);
+    font-weight: var(--font-semibold);
+    font-size: var(--text-xs);
+    border-radius: var(--radius-full);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -236,21 +470,16 @@
    ═══════════════════════════════════════════════════════════════════════════ */
 
 @media (max-width: 768px) {
-    .water-form {
-        flex-direction: column;
+    .water-top-grid {
+        grid-template-columns: 1fr;
     }
 
-    .water-form .form-group {
-        width: 100%;
+    .water-presets {
+        grid-template-columns: repeat(4, 1fr);
     }
 
-    .water-form .calculate-btn {
-        width: 100%;
-    }
-
-    .result-card {
-        flex-direction: column;
-        text-align: center;
+    .water-today-pills {
+        gap: var(--space-2);
     }
 
     .history-table {
@@ -268,7 +497,29 @@
         font-size: var(--text-xl);
     }
 
-    .water-card {
+    .water-presets {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .water-custom-form {
+        flex-direction: column;
+    }
+
+    .water-custom-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .water-ring-wrap {
+        width: 130px;
+        height: 130px;
+    }
+
+    .water-progress-card {
+        padding: var(--space-4);
+    }
+
+    .water-add-card {
         padding: var(--space-4);
     }
 }

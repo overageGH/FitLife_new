@@ -1,29 +1,7 @@
 // DOMContentLoaded
 document.addEventListener('DOMContentLoaded', () => {
-    // Sidebar Toggle for Mobile
-    const mobileToggle = document.getElementById('mobile-toggle');
-    const sidebar = document.getElementById('sidebar');
-
-    mobileToggle.addEventListener('click', () => {
-        const isOpen = sidebar.classList.toggle('active');
-        mobileToggle.setAttribute('aria-expanded', isOpen);
-    });
-
-    document.addEventListener('click', e => {
-        if (!sidebar.classList.contains('active') || sidebar.contains(e.target) || mobileToggle.contains(e.target)) return;
-        sidebar.classList.remove('active');
-        mobileToggle.setAttribute('aria-expanded', 'false');
-    });
-
-    document.addEventListener('keydown', e => {
-        if (e.key === 'Escape' && sidebar.classList.contains('active')) {
-            sidebar.classList.remove('active');
-            mobileToggle.setAttribute('aria-expanded', 'false');
-        }
-    });
-
-    // Food Selection and Calorie Calculation
     const foodCalories = window.foodCalories || {};
+    const t = window.translations || { kcal: 'kcal', total: 'Total', selectFood: 'Select Food', gMl: 'g/ml', removeItem: 'Remove food item' };
 
     function updateCaloriePreview(item) {
         const select = item.querySelector('.food-select');
@@ -33,14 +11,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const quantity = parseFloat(quantityInput.value) || 0;
         const calories = food ? Math.round((foodCalories[food] || 0) * quantity / 100) : 0;
 
-        preview.textContent = `${calories} kcal`;
+        preview.textContent = `${calories} ${t.kcal}`;
         preview.dataset.calories = calories;
 
-        const mealCard = item.closest('.meal-card');
-        const totalPreview = mealCard.querySelector('.total-calories');
-        const items = mealCard.querySelectorAll('.meal-item');
+        const meal = item.closest('.mt-meal');
+        const totalPreview = meal.querySelector('.total-calories');
+        const items = meal.querySelectorAll('.meal-item');
         const totalCalories = Array.from(items).reduce((sum, i) => sum + parseInt(i.querySelector('.calorie-preview').dataset.calories || 0), 0);
-        totalPreview.textContent = `Total: ${totalCalories} kcal`;
+        totalPreview.textContent = `${t.total}: ${totalCalories} ${t.kcal}`;
         totalPreview.dataset.totalCalories = totalCalories;
     }
 
@@ -51,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         select.addEventListener('change', () => {
             input.style.display = select.value ? 'block' : 'none';
-            removeBtn.style.display = item.parentElement.children.length > 1 ? 'block' : 'none';
+            removeBtn.style.display = item.parentElement.children.length > 1 ? 'flex' : 'none';
             updateCaloriePreview(item);
         });
 
@@ -69,24 +47,22 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.meal-item').forEach(attachMealItemListeners);
 
     // Add Food Item
-    document.querySelectorAll('.add-food-btn').forEach(btn => {
+    document.querySelectorAll('.mt-add-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             const meal = btn.dataset.meal;
-            const container = btn.previousElementSibling;
+            const container = btn.closest('.mt-meal').querySelector('.mt-meal__items');
             const count = container.querySelectorAll('.meal-item').length;
             const div = document.createElement('div');
-            div.classList.add('meal-item');
+            div.classList.add('mt-meal__item', 'meal-item');
 
-            let selectHTML = `<select class="food-select" name="meals[${meal}][${count}][food]" aria-label="Select food for ${meal}">
-                <option value="">Select Food</option>${window.foodOptionsHTML || ''}</select>`;
-
-            div.innerHTML = selectHTML + `
-                <input type="number" class="quantity-input" name="meals[${meal}][${count}][quantity]" placeholder="g/ml" style="display:none;" min="0" step="1" aria-label="Quantity for ${meal} food">
-                <div class="calorie-preview" data-calories="0">0 kcal</div>
-                <button type="button" class="remove-food-btn" style="display:block;" aria-label="Remove food item">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                        <path d="M6 18L18 6M6 6l12 12"/>
-                    </svg>
+            div.innerHTML = `
+                <select class="mt-select food-select" name="meals[${meal}][${count}][food]" aria-label="${t.selectFood}">
+                    ${window.foodOptionsHTML || ''}
+                </select>
+                <input type="number" class="mt-input quantity-input" name="meals[${meal}][${count}][quantity]" placeholder="${t.gMl}" style="display:none;" min="0" step="1">
+                <div class="mt-cal-preview calorie-preview" data-calories="0">0 ${t.kcal}</div>
+                <button type="button" class="mt-remove-btn remove-food-btn" style="display:flex;" aria-label="${t.removeItem}">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
                 </button>`;
 
             container.appendChild(div);
@@ -94,13 +70,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Form Submission and Validation
+    // Form Submission
     const mealForm = document.getElementById('meal-form');
     const calculateBtn = document.getElementById('calculate-btn');
 
     mealForm.addEventListener('submit', async e => {
         e.preventDefault();
-        document.querySelectorAll('.error-message').forEach(e => e.remove());
+        document.querySelectorAll('.error-message').forEach(el => el.remove());
 
         const formData = new FormData(mealForm);
         const mealsData = {};
@@ -120,12 +96,16 @@ document.addEventListener('DOMContentLoaded', () => {
             mealsData[meal].forEach((item, index) => {
                 if (item.food && (!item.quantity || parseFloat(item.quantity) <= 0)) {
                     valid = false;
-                    const mealCard = document.querySelector(`.meal-card[data-meal-block="${meal}"]`);
-                    const mealItem = mealCard.querySelectorAll('.meal-item')[index];
-                    const error = document.createElement('div');
-                    error.className = 'error-message';
-                    error.textContent = 'Quantity must be a positive number';
-                    mealItem.appendChild(error);
+                    const mealEl = document.querySelector(`.mt-meal__items[data-meal="${meal}"]`);
+                    if (mealEl) {
+                        const mealItem = mealEl.querySelectorAll('.meal-item')[index];
+                        if (mealItem) {
+                            const error = document.createElement('div');
+                            error.className = 'error-message';
+                            error.textContent = 'Quantity must be a positive number';
+                            mealItem.appendChild(error);
+                        }
+                    }
                 }
             });
         });
@@ -137,32 +117,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Optimistic UI Update
         const historyTbody = document.querySelector('.history-table tbody');
-        const noDataRow = historyTbody.querySelector('.no-data');
-        if (noDataRow) noDataRow.remove();
+        if (historyTbody) {
+            const noDataRow = historyTbody.querySelector('.no-data');
+            if (noDataRow) noDataRow.remove();
 
-        Object.keys(mealsData).forEach(meal => {
-            mealsData[meal].forEach(item => {
-                if (item.food && item.quantity) {
-                    const calories = Math.round((foodCalories[item.food] || 0) * parseFloat(item.quantity) / 100);
-                    const row = document.createElement('tr');
-                    row.classList.add('optimistic');
-                    row.innerHTML = `
-                        <td>${new Date().toLocaleString('en-US', { month: 'short', day: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</td>
-                        <td>${meal}</td>
-                        <td>${item.food}</td>
-                        <td>${item.quantity} g/ml</td>
-                        <td>${calories} kcal</td>`;
-                    historyTbody.insertBefore(row, historyTbody.firstChild);
-                }
+            Object.keys(mealsData).forEach(meal => {
+                mealsData[meal].forEach(item => {
+                    if (item.food && item.quantity) {
+                        const calories = Math.round((foodCalories[item.food] || 0) * parseFloat(item.quantity) / 100);
+                        const row = document.createElement('tr');
+                        row.classList.add('optimistic');
+                        row.innerHTML = `
+                            <td>${new Date().toLocaleString('en-US', { month: 'short', day: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</td>
+                            <td>${meal}</td>
+                            <td>${item.food}</td>
+                            <td>${item.quantity} ${t.gMl}</td>
+                            <td>${calories} ${t.kcal}</td>`;
+                        historyTbody.insertBefore(row, historyTbody.firstChild);
+                    }
+                });
             });
-        });
+        }
 
         calculateBtn.disabled = true;
-        calculateBtn.innerHTML = `
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                <path d="M12 2v20M5 12h14"/>
-            </svg>
-            Calculating...`;
+        const origHTML = calculateBtn.innerHTML;
+        calculateBtn.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg> ...`;
 
         try {
             const response = await axios.post(mealForm.action, formData, {
@@ -170,17 +149,20 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             if (response.data.success) {
-                showNotification('Meals logged successfully!', 'success');
-                document.getElementById('history-section').innerHTML = response.data.historyHtml;
+                showNotification(response.data.message || 'Meals logged successfully!', 'success');
+                const historySection = document.getElementById('history-section');
+                if (response.data.historyHtml && historySection) {
+                    historySection.innerHTML = response.data.historyHtml;
+                }
                 mealForm.reset();
                 document.querySelectorAll('.quantity-input').forEach(input => input.style.display = 'none');
                 document.querySelectorAll('.remove-food-btn').forEach(btn => btn.style.display = 'none');
                 document.querySelectorAll('.calorie-preview').forEach(preview => {
-                    preview.textContent = '0 kcal';
+                    preview.textContent = `0 ${t.kcal}`;
                     preview.dataset.calories = '0';
                 });
                 document.querySelectorAll('.total-calories').forEach(total => {
-                    total.textContent = 'Total: 0 kcal';
+                    total.textContent = `${t.total}: 0 ${t.kcal}`;
                     total.dataset.totalCalories = '0';
                 });
                 attachPaginationListeners();
@@ -193,46 +175,17 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('.optimistic').forEach(row => row.remove());
         } finally {
             calculateBtn.disabled = false;
-            calculateBtn.innerHTML = `
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-                    <path d="M12 2v20M5 12h14"/>
-                </svg>
-                Calculate Calories`;
+            calculateBtn.innerHTML = origHTML;
         }
     });
-
-    // Filter Form Handling
-    const filterForm = document.getElementById('filter-form');
-    if (filterForm) {
-        filterForm.addEventListener('submit', async e => {
-            e.preventDefault();
-            const formData = new FormData(filterForm);
-            const url = new URL(window.foodsIndexUrl || '');
-            formData.forEach((value, key) => {
-                if (value) url.searchParams.append(key, value);
-            });
-
-            try {
-                const response = await axios.get(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(response.data, 'text/html');
-                const newHistorySection = doc.getElementById('history-section');
-                if (newHistorySection) {
-                    document.getElementById('history-section').innerHTML = newHistorySection.innerHTML;
-                    attachPaginationListeners();
-                }
-            } catch (error) {
-                showNotification('Error filtering meals', 'error');
-            }
-        });
-    }
 
     // Notification Display
     function showNotification(message, type) {
         const notification = document.getElementById('notification');
+        if (!notification) return;
         notification.textContent = message;
-        notification.className = `notification ${type} show`;
-        setTimeout(() => notification.className = 'notification', 3000);
+        notification.className = `mt-notification ${type}`;
+        setTimeout(() => { notification.className = 'mt-notification'; }, 4000);
     }
 
     // AJAX Pagination
@@ -244,16 +197,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const url = link.getAttribute('href');
                 const historySection = document.getElementById('history-section');
-                const scrollPosition = window.scrollY;
+                const scrollY = window.scrollY;
 
                 try {
                     const response = await axios.get(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
                     const parser = new DOMParser();
                     const doc = parser.parseFromString(response.data, 'text/html');
-                    const newHistorySection = doc.getElementById('history-section');
-                    if (newHistorySection) {
-                        historySection.innerHTML = newHistorySection.innerHTML;
-                        window.scrollTo(0, scrollPosition);
+                    const newSection = doc.getElementById('history-section');
+                    if (newSection && historySection) {
+                        historySection.innerHTML = newSection.innerHTML;
+                        window.scrollTo(0, scrollY);
                         attachPaginationListeners();
                     }
                 } catch (error) {

@@ -109,7 +109,7 @@
     z-index: 1001;
     width: 300px;
     max-width: 85vw;
-    background: #141414;
+    background: var(--bg-surface);
     border-right: 1px solid rgba(255, 255, 255, 0.06);
     transform: translateX(-100%);
     transition: transform 0.3s ease;

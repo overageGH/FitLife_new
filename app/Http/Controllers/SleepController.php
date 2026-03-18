@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Sleep;
-use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SleepController extends Controller
 {
@@ -13,15 +13,19 @@ class SleepController extends Controller
     public function index()
     {
         $query = Sleep::where('user_id', Auth::id());
-        
-        // Получаем среднее через SQL (оптимизация)
-        $average = (clone $query)->avg('duration');
-        
-        $sleeps = $query->orderBy('date', 'desc')
-                        ->orderBy('start_time', 'desc')
-                        ->get();
 
-        return view('sleep.index', compact('sleeps', 'average'));
+        $average = (clone $query)->avg('duration');
+
+        $sleeps = $query->orderBy('date', 'desc')
+            ->orderBy('start_time', 'desc')
+            ->get();
+
+        $today = Carbon::today()->toDateString();
+        $todaySleeps = $sleeps->filter(fn ($s) => $s->date === $today);
+        $todayDuration = round($todaySleeps->sum('duration'), 1);
+        $recommendedHours = 8;
+
+        return view('sleep.index', compact('sleeps', 'average', 'todaySleeps', 'todayDuration', 'recommendedHours'));
     }
 
     // Store new sleep record

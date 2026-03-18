@@ -13,6 +13,8 @@ abstract class TestCase extends BaseTestCase
     {
         parent::setUp();
 
+        $this->withoutVite();
+
         // Прогоняем миграции перед каждым тестом
         $this->artisan('migrate');
     }

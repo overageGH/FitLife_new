@@ -38,6 +38,13 @@ return [
     'calculate_calories' => 'Calculate Calories',
     'meal_summary' => 'Your Meal Summary',
     'total_calories' => 'Total Calories',
+    'select_foods_desc' => 'Select foods and enter quantities for each meal',
+    'your_latest_calculation' => 'Your latest meal calculation',
+    'history_desc' => 'Your recently logged meals',
+    'meal_breakfast' => 'Breakfast',
+    'meal_lunch' => 'Lunch',
+    'meal_dinner' => 'Dinner',
+    'meal_snack' => 'Snack',
 
     // Calorie Calculator page
     'calorie_calc_label' => 'FitLife Calorie Calculator',

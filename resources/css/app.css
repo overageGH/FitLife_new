@@ -7,6 +7,9 @@
 @import 'layout/header.css';
 @import 'layout/mobile-nav.css';
 
+/* ===== SHARED BASE COMPONENTS ===== */
+@import 'base.css';
+
 /* ===== PAGE-SPECIFIC STYLES ===== */
 @import 'auth/auth.css';
 @import 'welcome/welcome.css';
@@ -67,6 +70,10 @@
     --info: #3b82f6;
     --info-light: #60a5fa;
     --info-bg: rgba(59, 130, 246, 0.15);
+    
+    --purple: #a855f7;
+    --purple-light: #c084fc;
+    --purple-bg: rgba(168, 85, 247, 0.15);
     
     /* ─── Background System (Pure Dark) ─── */
     --bg-base: #0a0a0a;

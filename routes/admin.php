@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminPanelController;
+use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/dashboard', [AdminPanelController::class, 'index'])->name('admin.dashboard');
@@ -19,4 +19,3 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
 
     Route::get('/statistics', [AdminPanelController::class, 'statistics'])->name('admin.statistics');
 });
-

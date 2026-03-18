@@ -20,7 +20,7 @@ return [
     'active_goals' => 'Aktīvie mērķi',
     'total_posts' => 'Kopā ierakstu',
     'friends_count' => 'Draugi',
-    
+
     // Stats cards
     'calories_today' => 'Kalorijas šodien',
     'kcal' => 'kcal',
@@ -30,23 +30,23 @@ return [
     'h' => 'h',
     'hours' => 'stundas',
     'completed' => 'pabeigti',
-    
+
     // Events
     'upcoming_events' => 'Gaidāmie notikumi',
     'no_upcoming_events' => 'Nav gaidāmu notikumu',
     'add_event' => 'Pievienot notikumu',
     'no_description' => 'Nav apraksta',
-    
+
     // Goals
     'manage' => 'Pārvaldīt',
     'no_goals_set' => 'Mērķi vēl nav iestatīti',
     'create_goal' => 'Izveidot mērķi',
-    
+
     // Progress photos
     'progress_gallery' => 'Progresa galerija',
     'no_progress_photos' => 'Nav progresa fotoattēlu',
     'add_photo' => 'Pievienot fotoattēlu',
-    
+
     // Profile
     'your_profile' => 'Jūsu profils',
     'full_name' => 'Pilns vārds',
@@ -57,7 +57,7 @@ return [
     'cm' => 'cm',
     'kg' => 'kg',
     'edit_profile' => 'Rediģēt profilu',
-    
+
     // Friends
     'friends' => 'Draugi',
     'find' => 'Meklēt',

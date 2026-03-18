@@ -9,7 +9,7 @@ class AddViewsToPostsTable extends Migration
     public function up()
     {
         Schema::table('posts', function (Blueprint $table) {
-            if (!Schema::hasColumn('posts', 'views')) {
+            if (! Schema::hasColumn('posts', 'views')) {
                 $table->unsignedBigInteger('views')->default(0)->after('media_type')->comment('Number of views for the post');
             }
         });

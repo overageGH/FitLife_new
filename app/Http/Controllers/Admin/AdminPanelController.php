@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
-use App\Models\Post;
 use App\Models\Calendar;
+use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AdminPanelController extends Controller
@@ -32,6 +32,7 @@ class AdminPanelController extends Controller
     public function users()
     {
         $users = User::paginate(10);
+
         return view('admin.users.index', compact('users'));
     }
 
@@ -49,41 +50,47 @@ class AdminPanelController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+            'email' => 'required|email|max:255|unique:users,email,'.$user->id,
             'role' => 'required|in:user,admin',
         ]);
-        
+
         $user->update($validated);
+
         return redirect()->route('admin.users')->with('success', 'User updated successfully');
     }
 
     public function usersDelete(User $user)
     {
         $user->delete();
+
         return redirect()->route('admin.users')->with('success', 'User deleted successfully');
     }
 
     public function posts()
     {
         $posts = Post::with('user')->paginate(10);
+
         return view('admin.posts.index', compact('posts'));
     }
 
     public function postsDelete(Post $post)
     {
         $post->delete();
+
         return redirect()->route('admin.posts')->with('success', 'Post deleted successfully');
     }
 
     public function events()
     {
         $events = Calendar::with('user')->paginate(10);
+
         return view('admin.events.index', compact('events'));
     }
 
     public function eventsDelete(Calendar $event)
     {
         $event->delete();
+
         return redirect()->route('admin.events')->with('success', 'Event deleted successfully');
     }
 
@@ -91,6 +98,7 @@ class AdminPanelController extends Controller
     {
         $totalUsers = User::count();
         $activeUsers = User::where('updated_at', '>=', now()->subDays(30))->count(); // Замена last_login на updated_at
+
         return view('admin.statistics', compact('totalUsers', 'activeUsers'));
     }
 }

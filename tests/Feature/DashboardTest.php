@@ -1,29 +1,28 @@
 <?php
 
-use App\Models\User;
+use App\Models\Calendar;
 use App\Models\MealLog;
 use App\Models\Sleep;
+use App\Models\User;
 use App\Models\WaterLog;
-use App\Models\Goal;
-use App\Models\Calendar;
 
 test('guests cannot access dashboard', function () {
     $response = $this->get('/dashboard');
-    
+
     $response->assertRedirect('/login');
 });
 
 test('authenticated users can access dashboard', function () {
     $user = User::factory()->create();
-    
+
     $response = $this->actingAs($user)->get('/dashboard');
-    
+
     $response->assertOk();
 });
 
 test('dashboard displays user statistics', function () {
     $user = User::factory()->create();
-    
+
     // Create some sample data
     MealLog::create([
         'user_id' => $user->id,
@@ -32,7 +31,7 @@ test('dashboard displays user statistics', function () {
         'quantity' => 200,
         'calories' => 260,
     ]);
-    
+
     Sleep::create([
         'user_id' => $user->id,
         'date' => now()->toDateString(),
@@ -40,14 +39,14 @@ test('dashboard displays user statistics', function () {
         'end_time' => '07:00',
         'duration' => 8,
     ]);
-    
+
     WaterLog::create([
         'user_id' => $user->id,
         'amount' => 500,
     ]);
-    
+
     $response = $this->actingAs($user)->get('/dashboard');
-    
+
     $response->assertOk();
     $response->assertViewHas('totalCalories');
     $response->assertViewHas('totalSleep');
@@ -56,7 +55,7 @@ test('dashboard displays user statistics', function () {
 
 test('dashboard shows upcoming events', function () {
     $user = User::factory()->create();
-    
+
     Calendar::create([
         'user_id' => $user->id,
         'date' => now()->addDays(2)->toDateString(),
@@ -64,9 +63,9 @@ test('dashboard shows upcoming events', function () {
         'description' => 'Morning workout',
         'completed' => false,
     ]);
-    
+
     $response = $this->actingAs($user)->get('/dashboard');
-    
+
     $response->assertOk();
     $response->assertViewHas('upcomingEvents');
 });
