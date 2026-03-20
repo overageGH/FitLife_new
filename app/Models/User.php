@@ -103,6 +103,31 @@ class User extends Authenticatable
         return $this->hasMany(Calendar::class);
     }
 
+    public function followers()
+    {
+        return $this->belongsToMany(User::class, 'follows', 'following_id', 'follower_id')->withTimestamps();
+    }
+
+    public function followings()
+    {
+        return $this->belongsToMany(User::class, 'follows', 'follower_id', 'following_id')->withTimestamps();
+    }
+
+    public function isFollowing(User $user): bool
+    {
+        return $this->followings()->where('following_id', $user->id)->exists();
+    }
+
+    public function mealLogs()
+    {
+        return $this->hasMany(MealLog::class);
+    }
+
+    public function waterLogs()
+    {
+        return $this->hasMany(WaterLog::class);
+    }
+
     public function isFriendWith(User $user): bool
     {
         return $this->friends()->where('friend_id', $user->id)->exists();

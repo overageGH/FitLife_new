@@ -102,4 +102,17 @@ return [
     'stats' => 'Статистика',
     'posts_count' => 'Публикации',
     'friends_count' => 'Друзья',
+
+    // Социальное (подписки)
+    'follow' => 'Подписаться',
+    'following' => 'Подписки',
+    'following_label' => 'Подписки',
+    'followers' => 'Подписчики',
+    'followers_list' => 'Подписчики',
+    'following_list' => 'Подписки',
+    'about' => 'О пользователе',
+    'fitness_stats' => 'Фитнес-статистика',
+    'goals' => 'Цели',
+    'photos' => 'Фото',
+    'no_users' => 'Пользователей пока нет.',
 ];

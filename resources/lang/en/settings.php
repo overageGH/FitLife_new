@@ -19,4 +19,8 @@ return [
     'account' => 'Account',
     'security' => 'Security',
     'password' => 'Password',
+    'appearance_desc' => 'Choose your preferred color scheme',
+    'select_theme' => 'Theme',
+    'theme_dark' => 'Dark',
+    'theme_light' => 'Light',
 ];

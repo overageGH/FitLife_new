@@ -240,45 +240,6 @@
                 <a href="{{ route('profile.edit') }}" class="profile-card-btn">{{ __('dashboard.edit_profile') }}</a>
             </div>
 
-            <!-- Friends -->
-            <div class="dash-card">
-                <div class="dash-card-header">
-                    <h2 class="dash-card-title">
-                        <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-                        {{ __('dashboard.friends') }}
-                    </h2>
-                    <a href="{{ route('posts.index') }}" class="dash-card-action">{{ __('dashboard.find') }}</a>
-                </div>
-                <div class="dash-card-body">
-                    @if(Auth::user()->friends->isEmpty())
-                        <div class="empty-state">
-                            <div class="empty-state-icon">
-                                <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3z"/></svg>
-                            </div>
-                            <p class="empty-state-text">{{ __('dashboard.no_friends') }}</p>
-                            <a href="{{ route('posts.index') }}" class="empty-state-btn">{{ __('dashboard.find_friends') }}</a>
-                        </div>
-                    @else
-                        <div class="friends-list">
-                            @foreach(Auth::user()->friends->take(5) as $friend)
-                                <a href="{{ route('profile.show', $friend) }}" class="friend-item">
-                                    <img src="{{ $friend->avatar ? asset('storage/' . $friend->avatar) : asset('storage/logo/defaultPhoto.jpg') }}"
-                                         alt="{{ $friend->name }}"
-                                         class="friend-avatar">
-                                    <div class="friend-info">
-                                        <span class="friend-name">{{ $friend->name }}</span>
-                                        <span class="friend-username">{{ '@' . $friend->username }}</span>
-                                    </div>
-                                </a>
-                            @endforeach
-                        </div>
-                    @endif
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 <!-- Lightbox -->
 <div id="lightbox" class="lightbox">
     <div class="lightbox-backdrop" onclick="closeLightbox()"></div>

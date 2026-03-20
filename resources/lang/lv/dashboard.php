@@ -20,6 +20,7 @@ return [
     'active_goals' => 'Aktīvie mērķi',
     'total_posts' => 'Kopā ierakstu',
     'friends_count' => 'Draugi',
+    'goals' => 'Mērķi',
 
     // Stats cards
     'calories_today' => 'Kalorijas šodien',

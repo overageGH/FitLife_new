@@ -102,4 +102,17 @@ return [
     'stats' => 'Statistika',
     'posts_count' => 'Ieraksti',
     'friends_count' => 'Draugi',
+
+    // Sociālais (sekošana)
+    'follow' => 'Sekot',
+    'following' => 'Seko',
+    'following_label' => 'Seko',
+    'followers' => 'Sekotāji',
+    'followers_list' => 'Sekotāji',
+    'following_list' => 'Seko',
+    'about' => 'Par lietotāju',
+    'fitness_stats' => 'Fitnesa statistika',
+    'goals' => 'Mērķi',
+    'photos' => 'Fotoattēli',
+    'no_users' => 'Pagaidām nav lietotāju.',
 ];

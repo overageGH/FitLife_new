@@ -85,7 +85,7 @@
 .log-form .form-group input:focus {
     outline: none;
     border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.15);
+    box-shadow: 0 0 0 3px var(--primary-100);
 }
 
 .log-form .form-group input::placeholder {

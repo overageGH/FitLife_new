@@ -39,4 +39,5 @@ return [
     'meals' => 'Maltītes',
     'water' => 'Ūdens',
     'sleep' => 'Miegs',
+    'leaderboard' => 'Reitings',
 ];

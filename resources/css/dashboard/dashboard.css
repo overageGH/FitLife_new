@@ -33,7 +33,7 @@
 }
 
 .dashboard-greeting span {
-    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    background: var(--primary);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -83,7 +83,7 @@
     left: 0;
     right: 0;
     height: 3px;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    background: var(--primary);
     transform: scaleX(0);
     transition: transform var(--transition-base);
 }
@@ -254,7 +254,7 @@
 }
 
 .dash-card:hover {
-    border-color: rgba(34, 197, 94, 0.3);
+    border-color: var(--border-strong);
 }
 
 .dash-card-header {
@@ -292,7 +292,7 @@
 }
 
 .dash-card-action:hover {
-    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    background: var(--primary);
     color: var(--bg-base);
     border-color: transparent;
 }
@@ -318,7 +318,7 @@
     background: rgba(17, 17, 17, 0.5);
     border-radius: var(--radius-md);
     border-left: 3px solid transparent;
-    border-image: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%) 1;
+    border-image: var(--primary) 1;
     transition: all var(--transition-base);
     border: 1px solid var(--border-default);
     border-left: 3px solid;
@@ -327,7 +327,7 @@
 
 .event-item:hover {
     background: rgba(34, 197, 94, 0.05);
-    border-color: rgba(34, 197, 94, 0.3);
+    border-color: var(--border-strong);
     border-left-color: var(--primary);
 }
 
@@ -344,7 +344,7 @@
     width: 48px;
     height: 48px;
     background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(6, 182, 212, 0.1) 100%);
-    border: 1px solid rgba(34, 197, 94, 0.2);
+    border: 1px solid var(--border-default);
     border-radius: var(--radius-sm);
     flex-shrink: 0;
 }
@@ -373,7 +373,7 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    background: var(--primary);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -425,7 +425,7 @@
 }
 
 .goal-item:hover {
-    border-color: rgba(34, 197, 94, 0.3);
+    border-color: var(--border-strong);
     background: rgba(34, 197, 94, 0.05);
 }
 
@@ -445,7 +445,7 @@
 .goal-item-percent {
     font-size: 0.875rem;
     font-weight: 600;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    background: var(--primary);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -468,7 +468,7 @@
 
 .goal-item-progress-fill {
     height: 100%;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    background: var(--primary);
     border-radius: 3px;
     transition: width 0.5s ease;
 }
@@ -519,8 +519,8 @@
 }
 
 .photo-item:hover {
-    border-color: rgba(34, 197, 94, 0.4);
-    box-shadow: 0 0 20px rgba(34, 197, 94, 0.15);
+    border-color: var(--primary);
+    box-shadow: var(--shadow-sm);
 }
 
 .photo-item img {
@@ -574,7 +574,7 @@
     margin: 0 auto 1rem;
     border: 3px solid transparent;
     background: linear-gradient(var(--bg-glass-dark), var(--bg-glass-dark)) padding-box,
-                linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%) border-box;
+                */ /* cleaned */
 }
 
 .profile-card-name {
@@ -607,13 +607,13 @@
 }
 
 .profile-stat-item:hover {
-    border-color: rgba(34, 197, 94, 0.3);
+    border-color: var(--border-strong);
 }
 
 .profile-stat-value {
     font-size: 1.25rem;
     font-weight: 700;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    background: var(--primary);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -629,7 +629,7 @@
     display: block;
     width: 100%;
     padding: 0.875rem 1rem;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    background: var(--primary);
     border: none;
     border-radius: var(--radius-sm);
     color: var(--bg-base);
@@ -667,7 +667,7 @@
 
 .friend-item:hover {
     background: rgba(34, 197, 94, 0.05);
-    border-color: rgba(34, 197, 94, 0.2);
+    border-color: var(--border-default);
 }
 
 .friend-avatar {
@@ -711,7 +711,7 @@
     width: 56px;
     height: 56px;
     background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(6, 182, 212, 0.1) 100%);
-    border: 1px solid rgba(34, 197, 94, 0.2);
+    border: 1px solid var(--border-default);
     border-radius: 14px;
     display: flex;
     align-items: center;
@@ -736,7 +736,7 @@
     align-items: center;
     gap: 0.5rem;
     padding: 0.625rem 1rem;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    background: var(--primary);
     color: white;
     font-size: 0.8125rem;
     font-weight: 600;
@@ -775,7 +775,7 @@
     position: absolute;
     inset: 0;
     background: rgba(10, 10, 10, 0.95);
-    backdrop-filter: blur(20px);
+    
 }
 
 .lightbox-content {

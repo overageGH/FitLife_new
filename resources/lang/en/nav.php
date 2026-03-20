@@ -39,4 +39,5 @@ return [
     'meals' => 'Meals',
     'water' => 'Water',
     'sleep' => 'Sleep',
+    'leaderboard' => 'Leaderboard',
 ];

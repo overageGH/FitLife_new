@@ -20,6 +20,7 @@ return [
     'active_goals' => 'Active Goals',
     'total_posts' => 'Total Posts',
     'friends_count' => 'Friends',
+    'goals' => 'Goals',
 
     // Stats cards
     'calories_today' => 'Calories Today',

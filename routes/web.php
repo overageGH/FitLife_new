@@ -14,6 +14,8 @@ use App\Http\Controllers\ProgressPhotoController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\SleepController;
 use App\Http\Controllers\WaterController;
+use App\Http\Controllers\FollowController;
+use App\Http\Controllers\LeaderboardController;
 use Illuminate\Support\Facades\Route;
 
 // Главная страница
@@ -56,6 +58,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/{user}/accept', [FriendController::class, 'accept'])->name('friends.accept');
         Route::delete('/{user}', [FriendController::class, 'remove'])->name('friends.remove');
     });
+
+    // Подписки (follow/unfollow)
+    Route::post('/follow/{user}', [FollowController::class, 'toggle'])->name('follow.toggle');
+    Route::get('/profile/{user}/followers', [FollowController::class, 'followers'])->name('follow.followers');
+    Route::get('/profile/{user}/following', [FollowController::class, 'following'])->name('follow.following');
+
+    // Рейтинг пользователей
+    Route::get('/leaderboard', [LeaderboardController::class, 'index'])->name('leaderboard.index');
 
     // Трекер еды
     Route::prefix('tracker/foods')->group(function () {

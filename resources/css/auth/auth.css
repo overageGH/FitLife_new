@@ -355,8 +355,6 @@
     right: 0;
     height: var(--header-height);
     background: rgba(3, 3, 5, 0.8);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border);
     z-index: var(--z-fixed);
     display: flex;

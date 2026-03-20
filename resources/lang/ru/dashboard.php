@@ -20,6 +20,7 @@ return [
     'active_goals' => 'Активные цели',
     'total_posts' => 'Всего публикаций',
     'friends_count' => 'Друзей',
+    'goals' => 'Цели',
 
     // Stats cards
     'calories_today' => 'Калории сегодня',

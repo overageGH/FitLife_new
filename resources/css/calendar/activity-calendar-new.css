@@ -14,9 +14,9 @@
     --cal-border-hover: var(--bg-hover);
     
     --cal-primary: var(--primary);
-    --cal-primary-glow: rgba(34, 197, 94, 0.3);
+    --cal-primary-glow: transparent;
     --cal-secondary: var(--accent);
-    --cal-gradient: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    --cal-gradient: var(--primary);
     
     --cal-text: var(--text-primary);
     --cal-text-secondary: var(--text-secondary);
@@ -47,7 +47,7 @@
     
     --cal-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
     --cal-shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.5);
-    --cal-glow: 0 0 20px var(--cal-primary-glow);
+    --cal-glow: none;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -151,12 +151,12 @@
     font-weight: 600;
     cursor: pointer;
     transition: all var(--transition-fast);
-    box-shadow: 0 2px 12px var(--cal-primary-glow);
+    box-shadow: var(--shadow-sm);
 }
 
 .add-event-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 20px var(--cal-primary-glow);
+    box-shadow: var(--shadow-md);
 }
 
 .add-event-btn svg {
@@ -995,7 +995,7 @@
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(8px);
+    
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1123,7 +1123,7 @@
 .form-group textarea:focus {
     outline: none;
     border-color: var(--cal-primary);
-    box-shadow: 0 0 0 3px var(--cal-primary-glow);
+    box-shadow: 0 0 0 3px var(--primary-100);
 }
 
 .form-group textarea {
@@ -1305,7 +1305,7 @@
 .custom-type-input input:focus {
     outline: none;
     border-color: var(--cal-primary);
-    box-shadow: 0 0 0 3px var(--cal-primary-glow);
+    box-shadow: 0 0 0 3px var(--primary-100);
 }
 
 .custom-type-input input::placeholder {
@@ -1356,7 +1356,7 @@
 
 .btn-save:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 16px var(--cal-primary-glow);
+    box-shadow: var(--shadow-md);
 }
 
 .btn-delete {

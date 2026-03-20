@@ -44,7 +44,7 @@
 }
 
 .create-post-box:hover {
-    border-color: rgba(34, 197, 94, 0.3);
+    border-color: var(--border-strong);
 }
 
 .create-post-avatar {
@@ -55,7 +55,7 @@
     flex-shrink: 0;
     border: 2px solid transparent;
     background: linear-gradient(var(--bg-glass-dark), var(--bg-glass-dark)) padding-box,
-                linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%) border-box;
+                */ /* cleaned */
 }
 
 .create-post-input {
@@ -71,7 +71,7 @@
 }
 
 .create-post-input:hover {
-    border-color: rgba(34, 197, 94, 0.3);
+    border-color: var(--border-strong);
     background: var(--bg-elevated);
 }
 
@@ -97,7 +97,7 @@
 .create-post-btn:hover {
     background: rgba(34, 197, 94, 0.1);
     color: var(--primary);
-    border-color: rgba(34, 197, 94, 0.3);
+    border-color: var(--border-strong);
 }
 
 .create-post-btn svg {
@@ -146,7 +146,7 @@
     flex-shrink: 0;
     border: 2px solid transparent;
     background: linear-gradient(var(--bg-glass-dark), var(--bg-glass-dark)) padding-box,
-                linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%) border-box;
+                */ /* cleaned */
 }
 
 .create-post .create-post-header textarea {
@@ -320,7 +320,7 @@
 
 .submit-post-btn {
     padding: 0.5rem 1.25rem;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    background: var(--primary);
     border: none;
     border-radius: var(--radius-sm);
     color: #000;
@@ -405,8 +405,8 @@
 }
 
 .post-card:hover {
-    border-color: rgba(34, 197, 94, 0.3);
-    box-shadow: 0 0 30px rgba(34, 197, 94, 0.1);
+    border-color: var(--border-strong);
+    box-shadow: var(--shadow-sm);
 }
 
 /* Vote Column */
@@ -464,7 +464,7 @@
 .vote-count {
     font-size: 0.75rem;
     font-weight: 700;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    background: var(--primary);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -698,7 +698,7 @@
 
 .comment-submit {
     padding: 0.625rem 1.5rem;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    background: var(--primary);
     border: none;
     border-radius: var(--radius-sm);
     color: #000;
@@ -919,7 +919,7 @@
 
 .btn-save {
     padding: 0.5rem 1rem;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    background: var(--primary);
     border: none;
     border-radius: var(--radius-sm);
     color: #000;
@@ -947,7 +947,7 @@
 
 .btn-cancel:hover {
     background: rgba(34, 197, 94, 0.1);
-    border-color: rgba(34, 197, 94, 0.3);
+    border-color: var(--border-strong);
     color: var(--text-primary);
 }
 
@@ -991,7 +991,7 @@
 
 .btn-reply {
     padding: 0.5rem 1rem;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    background: var(--primary);
     border: none;
     border-radius: var(--radius-sm);
     color: #000;
@@ -1229,7 +1229,7 @@
 }
 
 .edit-save-btn {
-    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    background: var(--primary);
     color: #000;
 }
 
@@ -1245,7 +1245,7 @@
 
 .edit-cancel-btn:hover {
     background: rgba(34, 197, 94, 0.1);
-    border-color: rgba(34, 197, 94, 0.3);
+    border-color: var(--border-strong);
     color: var(--text-primary);
 }
 
@@ -1268,12 +1268,12 @@
 }
 
 .sidebar-card:hover {
-    border-color: rgba(34, 197, 94, 0.3);
+    border-color: var(--border-strong);
 }
 
 .sidebar-card-header {
     padding: 0.875rem 1rem;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    background: var(--primary);
     color: #000;
     font-size: 0.8125rem;
     font-weight: 700;
@@ -1315,7 +1315,7 @@
 .sidebar-stat-value {
     font-size: 1.25rem;
     font-weight: 700;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    background: var(--primary);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -1449,7 +1449,7 @@
 
 .alert-success {
     background: rgba(34, 197, 94, 0.15);
-    border: 1px solid rgba(34, 197, 94, 0.3);
+    border: 1px solid var(--border-default);
     color: var(--primary);
 }
 
@@ -1475,7 +1475,7 @@
     height: 64px;
     margin: 0 auto 1rem;
     background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(6, 182, 212, 0.1) 100%);
-    border: 1px solid rgba(34, 197, 94, 0.2);
+    border: 1px solid var(--border-default);
     border-radius: var(--radius-lg);
     display: flex;
     align-items: center;
@@ -1534,12 +1534,12 @@
 
 .pagination a:hover {
     background: rgba(34, 197, 94, 0.1);
-    border-color: rgba(34, 197, 94, 0.3);
+    border-color: var(--border-strong);
     color: var(--primary);
 }
 
 .pagination span.current {
-    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    background: var(--primary);
     border-color: transparent;
     color: #000;
     font-weight: 600;
@@ -1594,7 +1594,7 @@
 }
 
 .create-post:hover {
-    border-color: rgba(34, 197, 94, 0.3);
+    border-color: var(--border-strong);
 }
 
 .create-post textarea {
@@ -1650,7 +1650,7 @@
 
 .file-label:hover {
     background: rgba(34, 197, 94, 0.1);
-    border-color: rgba(34, 197, 94, 0.3);
+    border-color: var(--border-strong);
 }
 
 .file-label input[type="file"] {
@@ -1677,7 +1677,7 @@
     align-items: center;
     gap: 0.5rem;
     padding: 0.5rem 1.25rem;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    background: var(--primary);
     border: none;
     border-radius: var(--radius-sm);
     color: #000;

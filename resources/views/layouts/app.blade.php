@@ -7,9 +7,15 @@
     <meta name="user-id" content="{{ Auth::id() ?? 'guest' }}">
     <title>@yield('title', 'FitLife')</title>
     <link rel="icon" href="{{ asset('favicon.PNG') }}" type="image/png">
+    <script>
+        (function() {
+            var t = localStorage.getItem('fitlife-theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', t);
+        })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @yield('styles')
 </head>
@@ -68,6 +74,11 @@
                     <span>{{ __('nav.progress') }}</span>
                 </a>
 
+                <a href="{{ route('leaderboard.index') }}" class="nav-item {{ request()->routeIs('leaderboard.*') ? 'active' : '' }}">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8m-4-4v4m-5-8h10l1-4H6l1 4zm1-4l1-4h6l1 4m-8 0h10"/><path d="M12 1v4"/></svg>
+                    <span>{{ __('nav.leaderboard') }}</span>
+                </a>
+
                 @if(Auth::user()->role === 'admin')
                 <a href="{{ route('admin.dashboard') }}" class="nav-item {{ request()->routeIs('admin.*') ? 'active' : '' }}">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
@@ -119,7 +130,7 @@
                                 <span>{{ __('nav.biography') }}</span>
                             </a>
                             <a href="{{ route('settings.index') }}" class="user-dropdown-item">
-                                <svg viewBox="0 -960 960 960"><path d="m370-80-16-128q-13-5-24.5-12T307-235l-119 50L78-375l103-78q-1-7-1-13.5v-27q0-6.5 1-13.5L78-585l110-190 119 50q11-8 23-15t24-12l16-128h220l16 128q13 5 24.5 12t22.5 15l119-50 110 190-103 78q1 7 1 13.5v27q0 6.5-2 13.5l103 78-110 190-118-50q-11 8-23 15t-24 12L590-80H370Z"/></svg>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>
                                 <span>{{ __('nav.settings') }}</span>
                             </a>
                             <div class="user-dropdown-divider"></div>
@@ -196,6 +207,10 @@
                 <a href="{{ route('goals.index') }}" class="mobile-menu-link {{ request()->routeIs('goals.*') ? 'active' : '' }}">
                     <svg viewBox="0 -960 960 960"><path d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Z"/></svg>
                     <span>{{ __('nav.goals') }}</span>
+                </a>
+                <a href="{{ route('leaderboard.index') }}" class="mobile-menu-link {{ request()->routeIs('leaderboard.*') ? 'active' : '' }}">
+                    <svg viewBox="0 -960 960 960"><path d="M160-200h160v-320H160v320Zm240 0h160v-560H400v560Zm240 0h160v-240H640v240ZM80-120v-480h240v-240h320v320h240v400H80Z"/></svg>
+                    <span>{{ __('nav.leaderboard') }}</span>
                 </a>
                 <a href="{{ route('calories.index') }}" class="mobile-menu-link {{ request()->routeIs('calories.*') ? 'active' : '' }}">
                     <svg viewBox="0 -960 960 960"><path d="M320-240h60v-80h80v-60h-80v-80h-60v80h-80v60h80v80Z"/></svg>

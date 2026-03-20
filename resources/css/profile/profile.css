@@ -660,7 +660,7 @@ header h1 {
 .profile-form .form-group select:focus {
     outline: none;
     border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+    box-shadow: 0 0 0 3px var(--primary-50);
 }
 
 .profile-form .form-group input::placeholder,
@@ -827,7 +827,7 @@ header h1 {
 .form-input:focus {
     outline: none;
     border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+    box-shadow: 0 0 0 3px var(--primary-50);
 }
 
 .form-input::placeholder {
@@ -1474,7 +1474,7 @@ textarea.form-input {
     gap: var(--space-2);
     padding: var(--space-2) var(--space-4);
     background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(8px);
+    
     color: var(--text-primary);
     font-size: var(--text-sm);
     font-weight: var(--font-medium);
@@ -1575,7 +1575,7 @@ textarea.form-input {
 .pe-form__input:focus {
     outline: none;
     border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+    box-shadow: 0 0 0 3px var(--primary-50);
 }
 
 .pe-form__input:focus ~ .pe-form__input-icon,
@@ -1617,7 +1617,7 @@ textarea.form-input {
 .pe-form__textarea:focus {
     outline: none;
     border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+    box-shadow: 0 0 0 3px var(--primary-50);
 }
 
 .pe-form__textarea::placeholder {

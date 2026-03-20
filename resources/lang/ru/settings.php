@@ -19,4 +19,8 @@ return [
     'account' => 'Аккаунт',
     'security' => 'Безопасность',
     'password' => 'Пароль',
+    'appearance_desc' => 'Выберите предпочитаемую цветовую схему',
+    'select_theme' => 'Тема',
+    'theme_dark' => 'Тёмная',
+    'theme_light' => 'Светлая',
 ];

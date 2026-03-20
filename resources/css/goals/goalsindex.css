@@ -180,7 +180,7 @@
 }
 
 .goal-card--done {
-    border-color: rgba(34, 197, 94, 0.3);
+    border-color: var(--border-strong);
 }
 
 /* Card Header */

@@ -19,4 +19,8 @@ return [
     'account' => 'Konts',
     'security' => 'Drošība',
     'password' => 'Parole',
+    'appearance_desc' => 'Izvēlieties vēlamo krāsu shēmu',
+    'select_theme' => 'Tēma',
+    'theme_dark' => 'Tumšā',
+    'theme_light' => 'Gaišā',
 ];

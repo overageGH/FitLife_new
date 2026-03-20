@@ -47,7 +47,7 @@
                             </div>
                             <span>{{ __('settings.account') }}</span>
                         </a>
-                        <a href="#language" class="sidebar-link active">
+                        <a href="#language" class="sidebar-link active" data-tab="language" onclick="switchSettingsTab('language', this)">
                             <div class="link-icon">
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <circle cx="12" cy="12" r="10"/>
@@ -57,11 +57,18 @@
                             </div>
                             <span>{{ __('settings.language') }}</span>
                         </a>
-                        <a href="{{ route('profile.edit') }}" class="sidebar-link">
+                        <a href="#appearance" class="sidebar-link" data-tab="appearance" onclick="switchSettingsTab('appearance', this)">
                             <div class="link-icon">
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <circle cx="12" cy="12" r="3"/>
-                                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                                    <circle cx="12" cy="12" r="5"/>
+                                    <line x1="12" y1="1" x2="12" y2="3"/>
+                                    <line x1="12" y1="21" x2="12" y2="23"/>
+                                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                                    <line x1="1" y1="12" x2="3" y2="12"/>
+                                    <line x1="21" y1="12" x2="23" y2="12"/>
+                                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
                                 </svg>
                             </div>
                             <span>{{ __('settings.appearance') }}</span>
@@ -90,7 +97,8 @@
 
         {{-- Main Content --}}
         <main class="settings-content">
-            <div class="content-card">
+            {{-- Language Tab --}}
+            <div class="content-card settings-tab" id="tab-language">
                 <div class="card-header">
                     <div class="header-icon">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -140,6 +148,79 @@
                         </button>
                     </div>
                 </form>
+            </div>
+
+            {{-- Appearance Tab --}}
+            <div class="content-card settings-tab" id="tab-appearance" style="display: none;">
+                <div class="card-header">
+                    <div class="header-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5"/>
+                            <line x1="12" y1="1" x2="12" y2="3"/>
+                            <line x1="12" y1="21" x2="12" y2="23"/>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                            <line x1="1" y1="12" x2="3" y2="12"/>
+                            <line x1="21" y1="12" x2="23" y2="12"/>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                        </svg>
+                    </div>
+                    <div class="header-text">
+                        <h2>{{ __('settings.appearance') }}</h2>
+                        <p>{{ __('settings.appearance_desc') }}</p>
+                    </div>
+                </div>
+
+                <div class="appearance-form">
+                    <label class="form-label">{{ __('settings.select_theme') }}</label>
+                    <div class="theme-cards">
+                        <button type="button" class="theme-card" id="theme-dark" onclick="setTheme('dark')">
+                            <div class="theme-preview theme-preview-dark">
+                                <div class="preview-header"></div>
+                                <div class="preview-body">
+                                    <div class="preview-sidebar"></div>
+                                    <div class="preview-content">
+                                        <div class="preview-line"></div>
+                                        <div class="preview-line short"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="theme-card-label">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                                </svg>
+                                {{ __('settings.theme_dark') }}
+                            </div>
+                        </button>
+                        <button type="button" class="theme-card" id="theme-light" onclick="setTheme('light')">
+                            <div class="theme-preview theme-preview-light">
+                                <div class="preview-header"></div>
+                                <div class="preview-body">
+                                    <div class="preview-sidebar"></div>
+                                    <div class="preview-content">
+                                        <div class="preview-line"></div>
+                                        <div class="preview-line short"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="theme-card-label">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="5"/>
+                                    <line x1="12" y1="1" x2="12" y2="3"/>
+                                    <line x1="12" y1="21" x2="12" y2="23"/>
+                                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                                    <line x1="1" y1="12" x2="3" y2="12"/>
+                                    <line x1="21" y1="12" x2="23" y2="12"/>
+                                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                                </svg>
+                                {{ __('settings.theme_light') }}
+                            </div>
+                        </button>
+                    </div>
+                </div>
             </div>
         </main>
     </div>
@@ -569,6 +650,245 @@
     .language-form {
         padding: 20px;
     }
+
+    .theme-cards {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ─── Appearance Form ─── */
+.appearance-form {
+    padding: 24px;
+}
+
+.theme-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 12px;
+}
+
+.theme-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 2px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    text-align: center;
+}
+
+.theme-card:hover {
+    border-color: rgba(34, 197, 94, 0.3);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.theme-card.selected {
+    border-color: #22c55e;
+    background: rgba(34, 197, 94, 0.08);
+    box-shadow: 0 0 24px rgba(34, 197, 94, 0.15);
+}
+
+.theme-card.selected .theme-card-label {
+    color: #22c55e;
+    font-weight: 600;
+}
+
+.theme-preview {
+    border-radius: 10px;
+    overflow: hidden;
+    aspect-ratio: 16 / 10;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.theme-preview-dark {
+    background: #0a0a0a;
+}
+
+.theme-preview-dark .preview-header {
+    height: 14%;
+    background: #141414;
+    border-bottom: 1px solid rgba(34, 197, 94, 0.15);
+}
+
+.theme-preview-dark .preview-body {
+    display: flex;
+    height: 86%;
+}
+
+.theme-preview-dark .preview-sidebar {
+    width: 25%;
+    background: #111114;
+    border-right: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.theme-preview-dark .preview-content {
+    flex: 1;
+    padding: 10%;
+    display: flex;
+    flex-direction: column;
+    gap: 8%;
+}
+
+.theme-preview-dark .preview-line {
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+.theme-preview-dark .preview-line.short {
+    width: 60%;
+}
+
+.theme-preview-light {
+    background: #f4f6f8;
+}
+
+.theme-preview-light .preview-header {
+    height: 14%;
+    background: #ffffff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.theme-preview-light .preview-body {
+    display: flex;
+    height: 86%;
+}
+
+.theme-preview-light .preview-sidebar {
+    width: 25%;
+    background: #ffffff;
+    border-right: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.theme-preview-light .preview-content {
+    flex: 1;
+    padding: 10%;
+    display: flex;
+    flex-direction: column;
+    gap: 8%;
+}
+
+.theme-preview-light .preview-line {
+    height: 8px;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+}
+
+.theme-preview-light .preview-line.short {
+    width: 60%;
+}
+
+.theme-card-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-secondary, #a1a1aa);
+    transition: color 0.2s ease;
+}
+
+/* ─── Light Theme Overrides ─── */
+[data-theme="light"] .sidebar-card {
+    background: linear-gradient(165deg, rgba(0, 0, 0, 0.01) 0%, transparent 50%), #ffffff;
+    border-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .sidebar-link:hover {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="light"] .sidebar-link.active {
+    background: rgba(34, 197, 94, 0.08);
+}
+
+[data-theme="light"] .sidebar-divider {
+    background: rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .content-card {
+    background: linear-gradient(165deg, rgba(0, 0, 0, 0.01) 0%, transparent 50%), #ffffff;
+    border-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .card-header {
+    border-bottom-color: rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .form-select {
+    background: rgba(0, 0, 0, 0.02);
+    border-color: rgba(0, 0, 0, 0.12);
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .form-select option {
+    background: #ffffff;
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .settings-header h1 {
+    background: linear-gradient(135deg, #111827 0%, #6b7280 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+[data-theme="light"] .theme-card {
+    background: rgba(0, 0, 0, 0.02);
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .theme-card:hover {
+    background: rgba(0, 0, 0, 0.04);
+    border-color: rgba(34, 197, 94, 0.3);
+}
+
+[data-theme="light"] .theme-card.selected {
+    background: rgba(34, 197, 94, 0.06);
+}
+
+[data-theme="light"] .theme-preview {
+    border-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .back-link:hover {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="light"] .settings-alert.success {
+    background: rgba(34, 197, 94, 0.08);
+    border-color: rgba(34, 197, 94, 0.15);
 }
 </style>
+
+<script>
+function switchSettingsTab(tab, el) {
+    document.querySelectorAll('.settings-tab').forEach(function(p) { p.style.display = 'none'; });
+    document.getElementById('tab-' + tab).style.display = '';
+    document.querySelectorAll('.sidebar-link[data-tab]').forEach(function(l) { l.classList.remove('active'); });
+    if (el) el.classList.add('active');
+}
+
+function setTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('fitlife-theme', theme);
+    updateThemeCards(theme);
+}
+
+function updateThemeCards(theme) {
+    document.querySelectorAll('.theme-card').forEach(function(c) { c.classList.remove('selected'); });
+    var card = document.getElementById('theme-' + theme);
+    if (card) card.classList.add('selected');
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    var current = localStorage.getItem('fitlife-theme') || 'dark';
+    updateThemeCards(current);
+});
+</script>
 @endsection

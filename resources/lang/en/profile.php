@@ -102,4 +102,17 @@ return [
     'stats' => 'Stats',
     'posts_count' => 'Posts',
     'friends_count' => 'Friends',
+
+    // Social (follow)
+    'follow' => 'Follow',
+    'following' => 'Following',
+    'following_label' => 'Following',
+    'followers' => 'Followers',
+    'followers_list' => 'Followers',
+    'following_list' => 'Following',
+    'about' => 'About',
+    'fitness_stats' => 'Fitness Stats',
+    'goals' => 'Goals',
+    'photos' => 'Photos',
+    'no_users' => 'No users yet.',
 ];
