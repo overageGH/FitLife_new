@@ -2,7 +2,20 @@
 @section('title', $group->name)
 
 @section('styles')
-<style>.mobile-bottom-nav { display: none !important; }</style>
+<style>
+.mobile-bottom-nav { display: none !important; }
+@media (max-width: 900px) {
+    .chat-input__field,
+    .chat-search-bar__input,
+    .chat-sidebar__input,
+    .chat-sidebar__textarea,
+    input[type="text"],
+    textarea {
+        font-size: 16px !important;
+        -webkit-text-size-adjust: 100% !important;
+    }
+}
+</style>
 @endsection
 
 @section('content')

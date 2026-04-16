@@ -2,7 +2,17 @@
 @section('title', __('messages.create_group'))
 
 @section('styles')
-<style>.mobile-bottom-nav { display: none !important; }</style>
+<style>
+.mobile-bottom-nav { display: none !important; }
+@media (max-width: 900px) {
+    .msg-form__input,
+    input[type="text"],
+    textarea {
+        font-size: 16px !important;
+        -webkit-text-size-adjust: 100% !important;
+    }
+}
+</style>
 @endsection
 
 @section('content')

@@ -6,6 +6,21 @@
         .mobile-bottom-nav { display: none !important; }
         .main-content { padding-bottom: 0 !important; }
     }
+    @media (max-width: 900px) {
+        .search-box input,
+        .edit-form textarea,
+        .composer-body textarea,
+        #composer-text,
+        #user-search-input,
+        .comment-edit-form textarea,
+        .comment-form input,
+        .comment-form textarea,
+        textarea,
+        input[type="text"] {
+            font-size: 16px !important;
+            -webkit-text-size-adjust: 100% !important;
+        }
+    }
 </style>
 @endsection
 
