@@ -1,6 +1,10 @@
 @extends('layouts.app')
 @section('title', __('messages.create_group'))
 
+@section('styles')
+<style>.mobile-bottom-nav { display: none !important; }</style>
+@endsection
+
 @section('content')
 <div class="msg-page">
     <div class="msg-header">

@@ -491,46 +491,228 @@
 }
 
 @media (max-width: 768px) {
+    #fitlife-container main > header {
+        margin-bottom: var(--space-4);
+    }
+
+    #fitlife-container main > header h1 {
+        font-size: var(--text-xl);
+    }
+
+    #fitlife-container main > header p.muted {
+        font-size: var(--text-sm);
+    }
+
     .progress-top-grid {
         grid-template-columns: 1fr;
+        gap: var(--space-4);
+        margin-bottom: var(--space-4);
+    }
+
+    .progress-stats-card {
+        flex-direction: row;
+        text-align: left;
+        padding: var(--space-4);
+        border-radius: var(--radius-lg);
+        gap: var(--space-3);
+    }
+
+    .progress-stats-icon {
+        width: 44px;
+        height: 44px;
+    }
+
+    .progress-stats-icon svg {
+        width: 22px;
+        height: 22px;
+    }
+
+    .progress-stats-body {
+        align-items: flex-start;
+        flex: 1;
+    }
+
+    .progress-stats-value {
+        font-size: var(--text-2xl);
+    }
+
+    .progress-stats-date {
+        display: none;
+    }
+
+    .progress-upload-card {
+        padding: var(--space-4);
+        border-radius: var(--radius-lg);
+    }
+
+    .progress-upload-card h3 {
+        font-size: var(--text-base);
+        margin-bottom: var(--space-3);
+    }
+
+    .progress-file-drop {
+        padding: var(--space-4);
+    }
+
+    .progress-file-drop svg {
+        width: 28px;
+        height: 28px;
     }
 
     .progress-upload-bottom {
         flex-direction: column;
+        gap: var(--space-3);
+    }
+
+    .progress-upload-bottom .form-group input[type="text"] {
+        height: 40px;
     }
 
     .calculate-btn {
         width: 100%;
+        height: 40px;
+    }
+
+    #fitlife-container section h3 {
+        font-size: var(--text-base);
+        margin-bottom: var(--space-3);
     }
 
     .gallery-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-3);
+    }
+
+    .photo-img-wrap .photo-img {
+        height: 180px;
+    }
+
+    .photo-overlay {
+        display: none;
+    }
+
+    .photo-info {
+        padding: var(--space-3);
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-1);
+    }
+
+    .photo-description {
+        font-size: var(--text-xs);
+    }
+
+    .photo-date {
+        font-size: 0.625rem;
+    }
+
+    .photo-actions {
+        padding: var(--space-2) var(--space-3);
+    }
+
+    .photo-edit-form input[type="text"] {
+        font-size: 0.625rem;
+        height: 30px;
+        padding: var(--space-1) var(--space-2);
+    }
+
+    .photo-action-btn {
+        width: 30px;
+        height: 30px;
+    }
+
+    .photo-action-btn svg {
+        width: 14px;
+        height: 14px;
     }
 
     .lightbox-nav.prev {
-        left: var(--space-4);
+        left: var(--space-3);
     }
 
     .lightbox-nav.next {
-        right: var(--space-4);
+        right: var(--space-3);
+    }
+
+    .lightbox-nav {
+        width: 40px;
+        height: 40px;
+        font-size: var(--text-lg);
     }
 
     .lightbox-close {
-        top: var(--space-4);
-        right: var(--space-4);
+        top: var(--space-3);
+        right: var(--space-3);
+        width: 36px;
+        height: 36px;
+    }
+
+    .progress-empty {
+        padding: var(--space-8);
+    }
+
+    .progress-empty svg {
+        width: 36px;
+        height: 36px;
+    }
+
+    .progress-empty p {
+        font-size: var(--text-sm);
     }
 }
 
 @media (max-width: 480px) {
     #fitlife-container main > header h1 {
+        font-size: var(--text-lg);
+    }
+
+    #fitlife-container main > header p.muted {
+        font-size: var(--text-xs);
+    }
+
+    .progress-stats-card {
+        padding: var(--space-3);
+    }
+
+    .progress-stats-icon {
+        width: 38px;
+        height: 38px;
+    }
+
+    .progress-stats-value {
         font-size: var(--text-xl);
     }
 
     .progress-upload-card {
-        padding: var(--space-4);
+        padding: var(--space-3);
+    }
+
+    .progress-file-drop {
+        padding: var(--space-3);
+    }
+
+    .gallery-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-2);
     }
 
     .photo-img-wrap .photo-img {
-        height: 200px;
+        height: 140px;
+    }
+
+    .photo-info {
+        padding: var(--space-2);
+    }
+
+    .photo-actions {
+        padding: var(--space-2);
+    }
+
+    .lightbox-content img {
+        max-height: 60vh;
+    }
+
+    .progress-empty {
+        padding: var(--space-6);
     }
 }

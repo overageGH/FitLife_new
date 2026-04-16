@@ -2,6 +2,10 @@
 
 @section('title', $user->name . ' — FitLife')
 
+@section('styles')
+<style>.mobile-bottom-nav { display: none !important; }</style>
+@endsection
+
 @section('content')
 <div class="sp-page">
 
@@ -223,13 +227,62 @@
 .sp-mini-stat { text-align: center; }
 .sp-mini-stat__value { display: block; font-size: 1.25rem; font-weight: 700; color: var(--primary); }
 .sp-mini-stat__label { font-size: 0.8125rem; color: var(--text-muted); }
-@media (max-width: 640px) {
+@media (max-width: 768px) {
     .sp-page { padding: 0; }
-    .sp-banner { height: 140px; }
-    .sp-avatar { width: 90px; height: 90px; margin-top: -45px; }
+    .sp-banner { height: 150px; }
+    .sp-avatar { width: 96px; height: 96px; margin-top: -48px; margin-bottom: 8px; border-width: 3px; }
     .sp-name { font-size: 1.25rem; }
     .sp-header-body { padding: 0 16px 16px; }
+    .sp-name-row { gap: 8px; }
+    .sp-username { font-size: 0.8125rem; margin-bottom: 10px; }
+    .sp-bio { font-size: 0.8125rem; }
     .sp-stats-row { gap: 16px; }
+    .sp-stat__value { font-size: 1rem; }
+    .sp-stat__label { font-size: 0.75rem; }
+    .sp-btn { padding: 6px 14px; font-size: 13px; border-radius: 8px; }
+    .sp-tabs { margin-top: 12px; }
+    .sp-tab { padding: 10px 8px; font-size: 13px; gap: 6px; }
+    .sp-tab svg { width: 16px; height: 16px; }
+    .sp-tab-content { padding-top: 12px; }
+    .sp-empty { padding: 32px 16px; }
+    .sp-empty svg { width: 40px; height: 40px; }
+    .sp-card__header { padding: 12px 16px; gap: 8px; }
+    .sp-card__header h3 { font-size: 0.875rem; }
+    .sp-card__header svg { width: 16px; height: 16px; }
+    .sp-detail { padding: 8px 16px; }
+    .sp-detail__label, .sp-detail__value { font-size: 13px; }
+    .sp-mini-stats { padding: 16px 0; }
+    .sp-mini-stat__value { font-size: 1.125rem; }
+    .sp-mini-stat__label { font-size: 0.75rem; }
+}
+@media (max-width: 480px) {
+    .sp-banner { height: 120px; }
+    .sp-avatar { width: 76px; height: 76px; margin-top: -38px; margin-bottom: 6px; }
+    .sp-header-body { padding: 0 12px 12px; }
+    .sp-name { font-size: 1.125rem; }
+    .sp-name-row { gap: 6px; }
+    .sp-username { font-size: 0.75rem; margin-bottom: 8px; }
+    .sp-bio { font-size: 0.75rem; line-height: 1.4; }
+    .sp-stats-row { gap: 12px; }
+    .sp-stat__value { font-size: 0.9375rem; }
+    .sp-stat__label { font-size: 0.6875rem; }
+    .sp-btn { padding: 5px 12px; font-size: 12px; }
+    .sp-btn svg { width: 14px; height: 14px; }
+    .sp-tab { padding: 8px 6px; font-size: 12px; gap: 4px; }
+    .sp-tab svg { width: 14px; height: 14px; }
+    .sp-tab-content { padding-top: 8px; }
+    .sp-about-grid { gap: 12px; }
+    .sp-card__header { padding: 10px 12px; }
+    .sp-card__header h3 { font-size: 0.8125rem; }
+    .sp-detail { padding: 6px 12px; }
+    .sp-detail__label, .sp-detail__value { font-size: 12px; }
+    .sp-detail-list { padding: 4px 0; }
+    .sp-mini-stats { padding: 12px 0; }
+    .sp-mini-stat__value { font-size: 1rem; }
+    .sp-mini-stat__label { font-size: 0.6875rem; }
+    .sp-empty { padding: 24px 12px; }
+    .sp-empty svg { width: 36px; height: 36px; }
+    .sp-empty p { font-size: 0.8125rem; }
 }
 [data-theme="light"] .sp-header-card,
 [data-theme="light"] .sp-card { background: #fff; border-color: rgba(0,0,0,0.08); }

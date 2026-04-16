@@ -2,6 +2,10 @@
 
 @section('title', $title . ' — FitLife')
 
+@section('styles')
+<style>.mobile-bottom-nav { display: none !important; }</style>
+@endsection
+
 @section('content')
 <div class="fl-page">
     <div class="fl-header">
@@ -64,5 +68,31 @@
 .fl-empty { padding: 48px 24px; text-align: center; color: var(--text-muted); }
 .fl-pagination { margin-top: 16px; }
 [data-theme="light"] .fl-list { background: #fff; border-color: rgba(0,0,0,0.08); }
+@media (max-width: 768px) {
+    .fl-page { padding: 0; }
+    .fl-header { gap: 10px; margin-bottom: 14px; }
+    .fl-title { font-size: 1.125rem; }
+    .fl-subtitle { font-size: 0.8125rem; }
+    .fl-item { padding: 10px 12px; }
+    .fl-item__avatar { width: 40px; height: 40px; }
+    .fl-item__left { gap: 10px; }
+    .fl-item__name { font-size: 0.875rem; }
+    .fl-item__username { font-size: 0.75rem; }
+    .fl-btn { padding: 5px 14px; font-size: 12px; }
+    .fl-empty { padding: 32px 16px; font-size: 0.875rem; }
+}
+@media (max-width: 480px) {
+    .fl-header { gap: 8px; margin-bottom: 10px; }
+    .fl-back svg { width: 18px; height: 18px; }
+    .fl-title { font-size: 1rem; }
+    .fl-subtitle { font-size: 0.75rem; }
+    .fl-item { padding: 8px 10px; }
+    .fl-item__avatar { width: 36px; height: 36px; }
+    .fl-item__left { gap: 8px; }
+    .fl-item__name { font-size: 0.8125rem; }
+    .fl-item__username { font-size: 0.6875rem; }
+    .fl-btn { padding: 4px 12px; font-size: 11px; border-radius: 6px; }
+    .fl-empty { padding: 24px 12px; font-size: 0.8125rem; }
+}
 </style>
 @endsection

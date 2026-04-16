@@ -198,34 +198,153 @@
 }
 
 @media (max-width: 768px) {
-    .biography-card {
-        padding: var(--space-5);
+    #fitlife-container main > header {
+        margin-bottom: var(--space-4);
     }
 
-    .form-logging {
-        grid-template-columns: 1fr;
-    }
-
-    .kpi-container {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 480px) {
     #fitlife-container main > header h1 {
         font-size: var(--text-xl);
     }
 
+    #fitlife-container main > header p.muted {
+        font-size: var(--text-sm);
+    }
+
     .biography-card {
-        padding: var(--space-4);
+        padding: var(--space-5);
+        border-radius: var(--radius-lg);
     }
 
     .biography-card h3 {
         font-size: var(--text-lg);
+        margin-bottom: var(--space-4);
+        gap: var(--space-2);
+    }
+
+    .biography-card h3::before {
+        font-size: var(--text-xl);
+    }
+
+    .form-logging {
+        grid-template-columns: 1fr;
+        gap: var(--space-3);
+    }
+
+    .form-logging .form-group input[type="text"],
+    .form-logging .form-group input[type="number"],
+    .form-logging .form-group select {
+        height: 44px;
+        padding: var(--space-2) var(--space-3);
+        font-size: var(--text-sm);
+    }
+
+    .calculate-btn {
+        padding: var(--space-3) var(--space-5);
+        font-size: var(--text-sm);
+        min-height: 46px;
+    }
+
+    .calculate-btn svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    #fitlife-container section h3 {
+        font-size: var(--text-base);
+        margin-bottom: var(--space-3);
+    }
+
+    .kpi-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-3);
+        margin-top: var(--space-4);
+    }
+
+    .kpi-card {
+        padding: var(--space-4);
+        border-radius: var(--radius-lg);
+    }
+
+    .kpi-card h4 {
+        font-size: var(--text-xs);
+        margin-bottom: var(--space-2);
+    }
+
+    .kpi-card p {
+        font-size: var(--text-xl);
+    }
+
+    .kpi-card p.status-text {
+        font-size: var(--text-sm);
+    }
+}
+
+@media (max-width: 480px) {
+    #fitlife-container main > header {
+        margin-bottom: var(--space-3);
+    }
+
+    #fitlife-container main > header h1 {
+        font-size: var(--text-lg);
+    }
+
+    #fitlife-container main > header p.muted {
+        font-size: var(--text-xs);
+    }
+
+    .biography-card {
+        padding: var(--space-3);
+        border-radius: var(--radius-md);
+    }
+
+    .biography-card h3 {
+        font-size: var(--text-base);
+        margin-bottom: var(--space-3);
+    }
+
+    .form-logging {
+        gap: var(--space-2);
+    }
+
+    .form-logging .form-group label {
+        font-size: var(--text-xs);
+    }
+
+    .form-logging .form-group input[type="text"],
+    .form-logging .form-group input[type="number"],
+    .form-logging .form-group select {
+        height: 40px;
+        padding: var(--space-2);
+        font-size: var(--text-xs);
+    }
+
+    .calculate-btn {
+        padding: var(--space-3) var(--space-4);
+        font-size: var(--text-xs);
+        min-height: 42px;
     }
 
     .kpi-container {
         grid-template-columns: 1fr;
+        gap: var(--space-2);
+        margin-top: var(--space-3);
+    }
+
+    .kpi-card {
+        padding: var(--space-3);
+    }
+
+    .kpi-card h4 {
+        font-size: 0.625rem;
+        margin-bottom: var(--space-1);
+    }
+
+    .kpi-card p {
+        font-size: var(--text-lg);
+    }
+
+    .kpi-card p.status-text {
+        font-size: var(--text-xs);
     }
 
     .kpi-card:nth-child(6) {

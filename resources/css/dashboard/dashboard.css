@@ -49,7 +49,8 @@
 
 @media (max-width: 640px) {
     .stats-row {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
     }
 }
 
@@ -821,4 +822,308 @@
 @media (max-width: 768px) {
     .lightbox-nav.prev { left: 1rem; }
     .lightbox-nav.next { right: 1rem; }
+}
+
+/* =============================================
+   MOBILE DASHBOARD — phones ≤ 480px
+   ============================================= */
+@media (max-width: 480px) {
+
+    .dashboard-page {
+        padding: 0;
+    }
+
+    /* --- Header --- */
+    .dashboard-header {
+        margin-bottom: 1.25rem;
+    }
+
+    .dashboard-greeting {
+        font-size: 1.35rem;
+        line-height: 1.3;
+    }
+
+    .dashboard-date {
+        font-size: 0.8125rem;
+    }
+
+    /* --- Stats: horizontal scroll strip --- */
+    .stats-row {
+        display: flex;
+        gap: 0.75rem;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 0.5rem;
+        margin-bottom: 1.25rem;
+        scrollbar-width: none;
+    }
+
+    .stats-row::-webkit-scrollbar {
+        display: none;
+    }
+
+    .stat-card {
+        min-width: 160px;
+        flex: 0 0 160px;
+        scroll-snap-align: start;
+        padding: 1rem;
+    }
+
+    .stat-card:hover {
+        transform: none;
+    }
+
+    .stat-card-icon {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+        min-height: 36px;
+    }
+
+    .stat-card-icon svg {
+        width: 20px;
+        height: 20px;
+        min-width: 20px;
+        min-height: 20px;
+        max-width: 20px;
+        max-height: 20px;
+    }
+
+    .stat-card-header {
+        margin-bottom: 0.625rem;
+    }
+
+    .stat-card-value {
+        font-size: 1.5rem;
+    }
+
+    .stat-card-label {
+        font-size: 0.75rem;
+        margin-bottom: 0.625rem;
+    }
+
+    .stat-card-footer {
+        margin-top: 0.5rem;
+        font-size: 0.6875rem;
+    }
+
+    /* --- Grid: single column, sidebar first --- */
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .dashboard-sidebar {
+        order: -1;
+    }
+
+    /* --- Profile card: compact horizontal --- */
+    .profile-card {
+        display: grid;
+        grid-template-columns: 64px 1fr;
+        grid-template-rows: auto auto auto;
+        gap: 0 0.875rem;
+        text-align: left;
+        padding: 1rem;
+    }
+
+    .profile-card-avatar {
+        width: 64px;
+        height: 64px;
+        grid-row: 1 / 3;
+        margin: 0;
+        border-radius: 16px;
+    }
+
+    .profile-card-name {
+        font-size: 1.05rem;
+        align-self: end;
+        margin-bottom: 0.125rem;
+    }
+
+    .profile-card-username {
+        font-size: 0.8125rem;
+        margin-bottom: 0;
+        align-self: start;
+    }
+
+    .profile-stats-grid {
+        grid-column: 1 / -1;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.5rem;
+        margin-top: 0.875rem;
+        margin-bottom: 0.875rem;
+    }
+
+    .profile-stat-item {
+        padding: 0.625rem 0.25rem;
+    }
+
+    .profile-stat-value {
+        font-size: 1rem;
+    }
+
+    .profile-stat-label {
+        font-size: 0.625rem;
+    }
+
+    .profile-card-btn {
+        grid-column: 1 / -1;
+        padding: 0.625rem 0.75rem;
+        font-size: 0.8125rem;
+    }
+
+    /* --- Cards --- */
+    .dash-card {
+        border-radius: var(--radius-md);
+    }
+
+    .dash-card-header {
+        padding: 0.875rem 1rem;
+    }
+
+    .dash-card-title {
+        font-size: 0.875rem;
+        gap: 0.5rem;
+    }
+
+    .dash-card-title svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .dash-card-action {
+        font-size: 0.75rem;
+        padding: 0.375rem 0.625rem;
+    }
+
+    .dash-card-body {
+        padding: 0.875rem 1rem;
+    }
+
+    /* --- Events --- */
+    .event-item {
+        padding: 0.75rem;
+        gap: 0.75rem;
+    }
+
+    .event-date {
+        width: 40px;
+        height: 40px;
+    }
+
+    .event-date-day {
+        font-size: 0.9375rem;
+    }
+
+    .event-date-month {
+        font-size: 0.5625rem;
+    }
+
+    .event-desc {
+        font-size: 0.8125rem;
+    }
+
+    .event-badge {
+        font-size: 0.5625rem;
+        padding: 0.1875rem 0.375rem;
+    }
+
+    /* --- Goals --- */
+    .goal-item {
+        padding: 0.75rem;
+    }
+
+    .goal-item-type {
+        font-size: 0.8125rem;
+    }
+
+    .goal-item-percent {
+        font-size: 0.8125rem;
+    }
+
+    .goal-item-footer {
+        font-size: 0.75rem;
+    }
+
+    /* --- Photos: 3-col on small screens --- */
+    .photos-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.5rem;
+    }
+
+    /* --- Empty states --- */
+    .empty-state {
+        padding: 1.5rem 0.75rem;
+    }
+
+    .empty-state-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+    }
+
+    .empty-state-icon svg {
+        width: 22px;
+        height: 22px;
+    }
+
+    .empty-state-text {
+        font-size: 0.8125rem;
+    }
+
+    .empty-state-btn {
+        font-size: 0.75rem;
+        padding: 0.5rem 0.875rem;
+    }
+
+    /* --- Lightbox fullscreen --- */
+    .lightbox-content {
+        max-width: 100vw;
+        max-height: 100vh;
+        padding: 0.5rem;
+    }
+
+    .lightbox-content img {
+        border-radius: var(--radius-md);
+    }
+
+    .lightbox-close {
+        top: -40px;
+        width: 36px;
+        height: 36px;
+    }
+
+    .lightbox-nav {
+        width: 40px;
+        height: 40px;
+    }
+
+    .lightbox-nav.prev { left: 0.5rem; }
+    .lightbox-nav.next { right: 0.5rem; }
+}
+
+/* =============================================
+   SMALL PHONES — ≤ 360px
+   ============================================= */
+@media (max-width: 360px) {
+
+    .stat-card {
+        min-width: 140px;
+        flex: 0 0 140px;
+        padding: 0.75rem;
+    }
+
+    .stat-card-value {
+        font-size: 1.25rem;
+    }
+
+    .profile-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .photos-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }

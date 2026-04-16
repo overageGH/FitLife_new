@@ -1,6 +1,15 @@
 @extends('layouts.app')
 @section('title', __('messages.chats'))
 
+@section('styles')
+<style>
+    @media (max-width: 768px) {
+        .mobile-bottom-nav { display: none !important; }
+        .main-content { padding-bottom: 0 !important; }
+    }
+</style>
+@endsection
+
 @section('content')
 <div class="messenger">
     @include('chats.partials.sidebar')

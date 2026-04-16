@@ -1,5 +1,12 @@
 @extends('layouts.app', ['title' => 'FitLife — ' . __('dashboard.title')])
 
+@section('styles')
+<style>
+    .mobile-bottom-nav { display: none !important; }
+    .main-content { padding-bottom: 0 !important; }
+</style>
+@endsection
+
 @section('content')
 <div class="dashboard-page">
 

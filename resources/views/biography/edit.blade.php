@@ -1,5 +1,82 @@
 @extends('layouts.app')
 
+@section('styles')
+<style>
+.mobile-bottom-nav { display: none !important; }
+@media (max-width: 768px) {
+    .main-content { padding: 80px 12px 16px 12px !important; }
+    .content-wrapper { padding: 0 !important; max-width: 100% !important; overflow-x: hidden !important; box-sizing: border-box !important; }
+
+    .biography-page { max-width: 100% !important; width: 100% !important; overflow: hidden !important; box-sizing: border-box !important; }
+    .biography-page main { width: 100% !important; min-width: 0 !important; }
+
+    #fitlife-container main > header { margin-bottom: 16px !important; }
+    #fitlife-container main > header h1 { font-size: 1.35rem !important; }
+    #fitlife-container main > header p.muted { font-size: 13px !important; }
+
+    .success-msg { padding: 12px !important; font-size: 13px !important; margin-bottom: 12px !important; gap: 8px !important; }
+
+    .biography-card {
+        padding: 16px !important;
+        max-width: 100% !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+        border-radius: 12px !important;
+        overflow: hidden !important;
+    }
+
+    .biography-form { gap: 16px !important; }
+
+    .bio-section { gap: 12px !important; }
+    .bio-section + .bio-section { padding-top: 16px !important; }
+
+    .bio-section-header { gap: 12px !important; margin-bottom: 4px !important; }
+    .bio-section-icon { width: 36px !important; height: 36px !important; border-radius: 8px !important; }
+    .bio-section-icon svg { width: 18px !important; height: 18px !important; }
+    .bio-section-header h3 { font-size: 0.9375rem !important; }
+    .bio-section-desc { font-size: 12px !important; }
+
+    .bio-row { grid-template-columns: 1fr !important; gap: 12px !important; }
+
+    .biography-form .form-group { gap: 6px !important; }
+    .biography-form .form-group label { font-size: 12px !important; }
+    .biography-form .form-group input[type="text"],
+    .biography-form .form-group input[type="number"],
+    .biography-form .form-group select {
+        font-size: 16px !important;
+        height: 44px !important;
+        padding: 10px 12px !important;
+        border-radius: 8px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    .biography-form .form-group select { padding-right: 36px !important; }
+
+    .input-with-suffix { width: 100% !important; }
+    .input-with-suffix input { width: 100% !important; box-sizing: border-box !important; padding-right: 40px !important; }
+
+    .save-btn {
+        width: 100% !important;
+        justify-content: center !important;
+        padding: 12px 20px !important;
+        border-radius: 10px !important;
+        min-height: 46px !important;
+        font-size: 14px !important;
+        box-sizing: border-box !important;
+        margin-top: 4px !important;
+    }
+}
+@media (max-width: 480px) {
+    .main-content { padding: 72px 8px 12px 8px !important; }
+    #fitlife-container main > header h1 { font-size: 1.2rem !important; }
+    .biography-card { padding: 12px !important; }
+    .bio-section-icon { width: 32px !important; height: 32px !important; }
+    .bio-section-icon svg { width: 16px !important; height: 16px !important; }
+    .bio-section-header h3 { font-size: 0.875rem !important; }
+}
+</style>
+@endsection
+
 @section('content')
 <div id="fitlife-container" class="biography-page" role="application" aria-label="FitLife Biography Settings">
     <main>

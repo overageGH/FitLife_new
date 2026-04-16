@@ -637,7 +637,12 @@
 
 @media (max-width: 768px) {
     .mt-page {
-        padding: var(--space-4) var(--space-3) var(--space-10);
+        padding: var(--space-4) var(--space-3) var(--space-8);
+        gap: var(--space-4);
+    }
+
+    .mt-header {
+        gap: var(--space-3);
     }
 
     .mt-header__icon {
@@ -645,16 +650,62 @@
         height: 44px;
     }
 
+    .mt-header__icon svg {
+        width: 22px;
+        height: 22px;
+    }
+
     .mt-header__text h1 {
         font-size: var(--text-xl);
     }
 
+    .mt-header__text p {
+        font-size: var(--text-xs);
+    }
+
     .mt-card {
         padding: var(--space-4);
+        border-radius: var(--radius-lg);
+    }
+
+    .mt-card__header {
+        gap: var(--space-2);
+        margin-bottom: var(--space-4);
+    }
+
+    .mt-card__header-icon {
+        width: 36px;
+        height: 36px;
+    }
+
+    .mt-card__header-icon svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .mt-card__header h2 {
+        font-size: var(--text-base);
+    }
+
+    .mt-card__header p {
+        font-size: var(--text-xs);
     }
 
     .mt-summary-grid {
         grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-3);
+    }
+
+    .mt-summary-item {
+        padding: var(--space-3);
+    }
+
+    .mt-summary-item__value {
+        font-size: var(--text-xl);
+    }
+
+    .mt-summary-item__label {
+        font-size: 0.625rem;
     }
 
     .mt-meal-selector {
@@ -664,10 +715,17 @@
     .mt-meal-tab {
         padding: var(--space-2) var(--space-3);
         font-size: var(--text-xs);
+        flex: 1;
+        justify-content: center;
+    }
+
+    .mt-food-item {
+        padding: var(--space-3);
     }
 
     .mt-food-item__row {
         flex-wrap: wrap;
+        gap: var(--space-2);
     }
 
     .mt-food-item__input-group {
@@ -676,36 +734,196 @@
 
     .mt-input--qty {
         flex: 1;
+        width: auto;
+    }
+
+    .mt-input {
+        padding: var(--space-2) var(--space-3);
+        font-size: var(--text-sm);
+    }
+
+    .mt-lookup-btn {
+        width: 36px;
+        height: 36px;
     }
 
     .mt-btn--primary {
         width: 100%;
+        padding: var(--space-3) var(--space-6);
+        font-size: var(--text-sm);
     }
 
     .mt-form__actions {
         justify-content: stretch;
     }
 
+    .mt-add-btn {
+        padding: var(--space-2);
+        font-size: var(--text-xs);
+    }
+
+    .mt-info-tag {
+        padding: 2px var(--space-2);
+        font-size: 0.6875rem;
+    }
+
+    /* History table — horizontal scroll */
+    .history-table-wrap {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    #history-section {
+        overflow: hidden;
+    }
+
     .history-table {
         font-size: var(--text-xs);
+        min-width: 580px;
     }
 
     .history-table thead th,
     .history-table tbody td {
         padding: var(--space-2) var(--space-3);
+        white-space: nowrap;
+    }
+
+    .mt-delete-log {
+        width: 26px;
+        height: 26px;
+    }
+
+    .pagination {
+        gap: var(--space-1);
+        flex-wrap: wrap;
+    }
+
+    .pagination a,
+    .pagination span {
+        min-width: 32px;
+        height: 32px;
+        font-size: var(--text-xs);
+        padding: var(--space-1) var(--space-2);
     }
 }
 
 @media (max-width: 480px) {
-    .mt-summary-grid {
-        grid-template-columns: 1fr 1fr;
+    .mt-page {
+        padding: var(--space-3) var(--space-2) var(--space-6);
+        gap: var(--space-3);
     }
 
-    .mt-food-item {
+    .mt-header__icon {
+        width: 38px;
+        height: 38px;
+    }
+
+    .mt-header__icon svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .mt-header__text h1 {
+        font-size: var(--text-lg);
+    }
+
+    .mt-card {
         padding: var(--space-3);
+        border-radius: var(--radius-md);
+    }
+
+    .mt-card__header {
+        margin-bottom: var(--space-3);
+    }
+
+    .mt-card__header-icon {
+        width: 32px;
+        height: 32px;
+    }
+
+    .mt-card__header-icon svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    .mt-card__header h2 {
+        font-size: var(--text-sm);
+    }
+
+    .mt-summary-grid {
+        gap: var(--space-2);
+    }
+
+    .mt-summary-item {
+        padding: var(--space-2) var(--space-3);
+    }
+
+    .mt-summary-item__value {
+        font-size: var(--text-lg);
+    }
+
+    .mt-meal-tab {
+        padding: var(--space-2);
+        gap: var(--space-1);
     }
 
     .mt-meal-tab__icon {
+        width: 20px;
+        height: 20px;
+    }
+
+    .mt-meal-tab__icon svg {
+        width: 12px;
+        height: 12px;
+    }
+
+    .mt-food-item {
+        padding: var(--space-2);
+        gap: var(--space-2);
+    }
+
+    .mt-food-item__row {
+        gap: var(--space-2);
+    }
+
+    .mt-input {
+        padding: var(--space-2);
+        font-size: var(--text-xs);
+    }
+
+    .mt-lookup-btn {
+        width: 34px;
+        height: 34px;
+    }
+
+    .mt-btn--primary {
+        padding: var(--space-3) var(--space-4);
+    }
+
+    .history-table {
+        min-width: 520px;
+    }
+
+    .mt-macros {
+        gap: 2px;
+    }
+
+    .mt-macros__tag {
+        font-size: 10px;
+        padding: 1px 4px;
+    }
+}
+
+@media (max-width: 360px) {
+    .mt-meal-tab__icon {
         display: none;
+    }
+
+    .mt-summary-item__value {
+        font-size: var(--text-base);
+    }
+
+    .mt-summary-item__label {
+        font-size: 0.5625rem;
     }
 }

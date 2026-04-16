@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('styles')
+<style>.mobile-bottom-nav { display: none !important; }</style>
+@endsection
+
 @section('content')
 <div id="fitlife-container" role="application" aria-label="{{ __('food.calorie_calc_label') }}">
     <main>

@@ -396,7 +396,7 @@
 }
 
 .main-content {
-    padding-top: 80px;
+    padding: 80px var(--space-8) var(--space-8);
     min-height: 100vh;
     background: var(--bg-base);
 }
@@ -405,15 +405,18 @@
     max-width: 1400px;
     margin: 0 auto;
     padding: 2rem;
+    overflow-x: hidden;
 }
 
 @media (max-width: 768px) {
     .content-wrapper {
-        padding: 1rem;
+        padding: 0;
     }
+}
 
-    .main-content {
-        padding-top: 72px;
+@media (max-width: 480px) {
+    .content-wrapper {
+        padding: 0;
     }
 }
 

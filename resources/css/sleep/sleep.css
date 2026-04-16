@@ -406,31 +406,209 @@
 }
 
 @media (max-width: 768px) {
+    #fitlife-container main > header {
+        margin-bottom: var(--space-4);
+    }
+
+    #fitlife-container main > header h1 {
+        font-size: var(--text-xl);
+    }
+
+    #fitlife-container main > header p.muted {
+        font-size: var(--text-sm);
+    }
+
     .sleep-top-grid {
         grid-template-columns: 1fr;
+        gap: var(--space-4);
+        margin-bottom: var(--space-4);
+    }
+
+    .sleep-progress-card {
+        padding: var(--space-4);
+        border-radius: var(--radius-lg);
+        gap: var(--space-4);
+    }
+
+    .sleep-ring-wrap {
+        width: 130px;
+        height: 130px;
+    }
+
+    .sleep-ring-value {
+        font-size: var(--text-xl);
+    }
+
+    .sleep-progress-label,
+    .sleep-progress-val {
+        font-size: var(--text-xs);
+    }
+
+    .sleep-add-card {
+        padding: var(--space-4);
+        border-radius: var(--radius-lg);
+    }
+
+    .sleep-add-card h3 {
+        margin-bottom: var(--space-3);
+        font-size: var(--text-base);
     }
 
     .sleep-form {
-        flex-direction: column;
+        gap: var(--space-3);
+    }
+
+    .sleep-form .form-group input {
+        height: 40px;
+        padding: var(--space-2) var(--space-3);
+        font-size: var(--text-sm);
+    }
+
+    .sleep-form .form-group label {
+        font-size: var(--text-xs);
+    }
+
+    .sleep-submit-btn {
+        height: 40px;
+        font-size: var(--text-sm);
+        padding: var(--space-2) var(--space-4);
+    }
+
+    .sleep-today-section {
+        margin-bottom: var(--space-4);
+    }
+
+    .sleep-today-pills {
+        gap: var(--space-2);
+    }
+
+    .sleep-pill {
+        padding: var(--space-2) var(--space-3);
+    }
+
+    .sleep-pill-duration {
+        font-size: var(--text-xs);
+    }
+
+    .sleep-pill-time {
+        font-size: 0.625rem;
+    }
+
+    #fitlife-container section h3 {
+        font-size: var(--text-base);
+        margin-bottom: var(--space-3);
+    }
+
+    .history-table {
+        font-size: var(--text-xs);
+        border-radius: var(--radius-lg);
+    }
+
+    .history-table th {
+        padding: var(--space-2) var(--space-3);
+        font-size: 0.625rem;
+    }
+
+    .history-table td {
+        padding: var(--space-2) var(--space-3);
     }
 
     .sleep-summary-card {
         flex-direction: column;
         text-align: center;
+        padding: var(--space-4);
+        gap: var(--space-3);
+        border-radius: var(--radius-lg);
     }
 
-    .history-table {
-        font-size: var(--text-xs);
+    .sleep-summary-icon {
+        width: 48px;
+        height: 48px;
     }
 
-    .history-table th,
-    .history-table td {
-        padding: var(--space-3);
+    .sleep-summary-icon svg {
+        width: 24px;
+        height: 24px;
+    }
+
+    .sleep-summary-value {
+        font-size: var(--text-2xl);
+    }
+
+    .sleep-empty {
+        padding: var(--space-8);
+        border-radius: var(--radius-lg);
+    }
+
+    .sleep-empty svg {
+        width: 36px;
+        height: 36px;
+    }
+
+    .sleep-empty p {
+        font-size: var(--text-sm);
     }
 }
 
 @media (max-width: 480px) {
     #fitlife-container main > header h1 {
+        font-size: var(--text-lg);
+    }
+
+    #fitlife-container main > header p.muted {
+        font-size: var(--text-xs);
+    }
+
+    .sleep-progress-card {
+        padding: var(--space-3);
+        gap: var(--space-3);
+    }
+
+    .sleep-ring-wrap {
+        width: 110px;
+        height: 110px;
+    }
+
+    .sleep-ring-value {
+        font-size: var(--text-lg);
+    }
+
+    .sleep-add-card {
+        padding: var(--space-3);
+    }
+
+    .sleep-form .form-group input {
+        height: 38px;
+    }
+
+    .sleep-submit-btn {
+        height: 38px;
+    }
+
+    .sleep-pill {
+        padding: var(--space-1) var(--space-2);
+        gap: var(--space-1);
+    }
+
+    .sleep-pill-icon {
+        width: 14px;
+        height: 14px;
+    }
+
+    .history-table th,
+    .history-table td {
+        padding: var(--space-2);
+    }
+
+    .sleep-summary-card {
+        padding: var(--space-3);
+    }
+
+    .sleep-summary-value {
         font-size: var(--text-xl);
+    }
+
+    .sleep-empty {
+        padding: var(--space-6);
     }
 }

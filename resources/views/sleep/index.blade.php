@@ -1,5 +1,14 @@
 @extends('layouts.app')
 
+@section('styles')
+<style>
+    @media (max-width: 768px) {
+        .mobile-bottom-nav { display: none !important; }
+        .main-content { padding-bottom: 0 !important; }
+    }
+</style>
+@endsection
+
 @section('content')
 <div id="fitlife-container" class="sleep-page" role="application" aria-label="{{ __('sleep.title') }}">
     <main>

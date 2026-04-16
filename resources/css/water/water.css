@@ -438,31 +438,168 @@
 }
 
 @media (max-width: 768px) {
+    #fitlife-container main > header {
+        margin-bottom: var(--space-4);
+    }
+
+    #fitlife-container main > header h1 {
+        font-size: var(--text-xl);
+    }
+
+    #fitlife-container main > header p.muted {
+        font-size: var(--text-sm);
+    }
+
     .water-top-grid {
         grid-template-columns: 1fr;
+        gap: var(--space-4);
+        margin-bottom: var(--space-4);
+    }
+
+    .water-progress-card {
+        padding: var(--space-4);
+        border-radius: var(--radius-lg);
+        gap: var(--space-4);
+    }
+
+    .water-ring-wrap {
+        width: 130px;
+        height: 130px;
+    }
+
+    .water-ring-value {
+        font-size: var(--text-xl);
+    }
+
+    .water-progress-label,
+    .water-progress-val {
+        font-size: var(--text-xs);
+    }
+
+    .water-add-card {
+        padding: var(--space-4);
+        border-radius: var(--radius-lg);
+    }
+
+    .water-add-card h3 {
+        font-size: var(--text-base);
+        margin-bottom: var(--space-3);
     }
 
     .water-presets {
         grid-template-columns: repeat(4, 1fr);
+        gap: var(--space-2);
+    }
+
+    .water-preset-btn {
+        padding: var(--space-2) var(--space-1);
+    }
+
+    .water-preset-amount {
+        font-size: var(--text-sm);
+    }
+
+    .water-preset-unit {
+        font-size: 0.625rem;
+    }
+
+    .water-preset-icon {
+        width: 20px;
+        height: 20px;
+    }
+
+    .water-custom-form {
+        gap: var(--space-2);
+    }
+
+    .water-custom-input-wrap input {
+        font-size: var(--text-sm);
+    }
+
+    .water-custom-btn {
+        font-size: var(--text-sm);
+        padding: var(--space-2) var(--space-4);
+    }
+
+    .water-today-section {
+        margin-bottom: var(--space-4);
     }
 
     .water-today-pills {
         gap: var(--space-2);
     }
 
-    .history-table {
+    .water-pill {
+        padding: var(--space-2) var(--space-3);
+    }
+
+    .water-pill-amount {
         font-size: var(--text-xs);
     }
 
-    .history-table th,
+    .water-pill-time {
+        font-size: 0.625rem;
+    }
+
+    #fitlife-container section h3 {
+        font-size: var(--text-base);
+        margin-bottom: var(--space-3);
+    }
+
+    .history-table {
+        font-size: var(--text-xs);
+        border-radius: var(--radius-lg);
+    }
+
+    .history-table th {
+        padding: var(--space-2) var(--space-3);
+        font-size: 0.625rem;
+    }
+
     .history-table td {
-        padding: var(--space-3);
+        padding: var(--space-2) var(--space-3);
+    }
+
+    .water-empty {
+        padding: var(--space-8);
+        border-radius: var(--radius-lg);
+    }
+
+    .water-empty svg {
+        width: 36px;
+        height: 36px;
+    }
+
+    .water-empty p {
+        font-size: var(--text-sm);
     }
 }
 
 @media (max-width: 480px) {
     #fitlife-container main > header h1 {
-        font-size: var(--text-xl);
+        font-size: var(--text-lg);
+    }
+
+    #fitlife-container main > header p.muted {
+        font-size: var(--text-xs);
+    }
+
+    .water-progress-card {
+        padding: var(--space-3);
+        gap: var(--space-3);
+    }
+
+    .water-ring-wrap {
+        width: 110px;
+        height: 110px;
+    }
+
+    .water-ring-value {
+        font-size: var(--text-lg);
+    }
+
+    .water-add-card {
+        padding: var(--space-3);
     }
 
     .water-presets {
@@ -478,16 +615,22 @@
         justify-content: center;
     }
 
-    .water-ring-wrap {
-        width: 130px;
-        height: 130px;
+    .water-pill {
+        padding: var(--space-1) var(--space-2);
+        gap: var(--space-1);
     }
 
-    .water-progress-card {
-        padding: var(--space-4);
+    .water-pill-icon {
+        width: 14px;
+        height: 14px;
     }
 
-    .water-add-card {
-        padding: var(--space-4);
+    .history-table th,
+    .history-table td {
+        padding: var(--space-2);
+    }
+
+    .water-empty {
+        padding: var(--space-6);
     }
 }

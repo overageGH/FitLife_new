@@ -1,5 +1,14 @@
 @extends('layouts.app')
 
+@section('styles')
+<style>
+    @media (max-width: 768px) {
+        .mobile-bottom-nav { display: none !important; }
+        .main-content { padding-bottom: 0 !important; }
+    }
+</style>
+@endsection
+
 @section('content')
 <div class="feed-page">
     @if (session('success'))
@@ -1415,15 +1424,114 @@
 
 @media (max-width: 600px) {
     .feed-page { padding-bottom: 100px; }
-    .feed-grid { padding: 0 8px; }
-    .feed-header { flex-direction: column; gap: 12px; align-items: flex-start; }
-    .post { padding: 14px; }
-    .post-avatar { width: 36px; height: 36px; }
-    .composer-island { bottom: 16px; max-width: 100%; }
-    .composer-island form { padding: 8px 10px; gap: 8px; }
+    .feed-grid { padding: 0 6px; gap: 8px; }
+    .feed-header { flex-direction: column; gap: 10px; align-items: stretch; }
+    .feed-header h1 { font-size: 1.125rem; }
+    .feed-tabs { width: 100%; justify-content: center; }
+    .feed-tab { flex: 1; text-align: center; font-size: 0.75rem; padding: 6px 10px; }
+
+    /* Post card */
+    .post {
+        padding: 14px;
+        border-radius: 14px;
+        border: 1px solid var(--border-subtle);
+    }
+    .post:hover { transform: none; box-shadow: none; }
+    .post-avatar { width: 38px; height: 38px; }
+    .post-author { gap: 10px; }
+    .post-author-name { font-size: 0.875rem; }
+    .post-meta { font-size: 0.75rem; }
+    .post-text { margin-bottom: 10px; }
+    .post-text p { font-size: 0.9375rem; line-height: 1.5; }
+    .post-media { border-radius: 10px; margin-bottom: 10px; }
+    .post-media img, .post-media video { max-height: 320px; }
+
+    /* Post footer — single row, compact */
+    .post-footer {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0;
+        padding-top: 10px;
+    }
+    .post-reactions { gap: 6px; }
+    .reaction-btn {
+        padding: 5px 10px;
+        font-size: 0.8125rem;
+        gap: 5px;
+        border-radius: 16px;
+        background: var(--bg-elevated);
+    }
+    .reaction-btn svg { width: 16px; height: 16px; }
+    .reaction-btn:hover { transform: none; }
+    .post-actions { gap: 2px; }
+    .action-btn { font-size: 0.75rem; padding: 5px 6px; gap: 4px; }
+    .action-btn svg { width: 15px; height: 15px; }
+
+    /* Composer */
+    .composer-island { bottom: 16px; max-width: 100%; padding: 0 8px; }
+    .composer-island form { padding: 8px 10px; gap: 8px; border-radius: 20px; }
     .composer-avatar { width: 32px; height: 32px; }
+    .composer-body textarea { font-size: 0.875rem; padding: 6px 0; }
     .composer-tools label, .composer-tools button { width: 32px; height: 32px; }
     .composer-submit { width: 38px; height: 38px; }
+
+    /* Comments mobile */
+    .comments-section { margin-top: 12px; padding-top: 12px; }
+    .comment-form { padding: 6px 10px; gap: 8px; }
+    .comment-form input { font-size: 0.8125rem; }
+    .comment-item { gap: 8px; padding: 8px 0; }
+    .comment-item.is-reply { padding-left: 28px; }
+    .comment-item .comment-avatar { width: 24px; height: 24px; }
+    .comment-item.is-reply .comment-avatar { width: 22px; height: 22px; }
+    .comment-header { gap: 4px; margin-bottom: 2px; }
+    .comment-author { font-size: 0.75rem; }
+    .comment-username { font-size: 0.6875rem; }
+    .comment-time { font-size: 0.6875rem; }
+    .comment-text p { font-size: 0.8125rem; }
+    .comment-actions { gap: 2px; }
+    .comment-btn { font-size: 0.6875rem; padding: 3px 6px; }
+    .comment-btn svg { width: 12px; height: 12px; }
+    .comment-quote { padding: 5px 8px; }
+    .comment-quote-author { font-size: 0.6875rem; }
+    .comment-quote-text { font-size: 0.75rem; }
+    .replies-toggle-wrap { padding-left: 28px; }
+    .replies-toggle { font-size: 0.6875rem; }
+
+    /* Edit form mobile */
+    .edit-form { padding: 10px; border-radius: 10px; }
+    .edit-form textarea { font-size: 0.875rem; min-height: 60px; padding: 8px; }
+    .edit-bar { flex-direction: column; gap: 8px; }
+    .edit-btns { width: 100%; }
+    .btn-cancel, .btn-save { flex: 1; text-align: center; padding: 8px 12px; }
+
+    /* Pagination mobile */
+    .feed-pagination { margin-top: 16px; }
+
+    /* Empty state mobile */
+    .feed-empty { padding: 40px 16px; border-radius: 12px; }
+    .feed-empty-icon { font-size: 2.5rem; }
+    .feed-empty h3 { font-size: 1rem; }
+    .feed-empty p { font-size: 0.875rem; }
+}
+
+@media (max-width: 400px) {
+    .feed-grid { padding: 0 4px; }
+    .post { padding: 12px; border-radius: 12px; }
+    .post-avatar { width: 34px; height: 34px; }
+    .post-author { gap: 8px; }
+    .post-author-name { font-size: 0.8125rem; }
+    .post-text p { font-size: 0.875rem; }
+    .reaction-btn { padding: 4px 8px; font-size: 0.75rem; }
+    .reaction-btn svg { width: 14px; height: 14px; }
+    .action-btn { padding: 4px 5px; font-size: 0.6875rem; }
+    .action-btn svg { width: 13px; height: 13px; }
+    .composer-island form { padding: 6px 8px; gap: 6px; }
+    .composer-avatar { width: 28px; height: 28px; }
+    .composer-tools { gap: 2px; }
+    .composer-tools label, .composer-tools button { width: 28px; height: 28px; }
+    .composer-submit { width: 34px; height: 34px; }
+    .comment-item.is-reply { padding-left: 22px; }
 }
 
 /* Light theme */

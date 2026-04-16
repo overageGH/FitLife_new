@@ -1,6 +1,10 @@
 @extends('layouts.app')
 @section('title', $group->name)
 
+@section('styles')
+<style>.mobile-bottom-nav { display: none !important; }</style>
+@endsection
+
 @section('content')
 <div class="messenger">
     @include('chats.partials.sidebar')

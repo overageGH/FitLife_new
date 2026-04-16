@@ -1,3 +1,4 @@
+<div class="history-table-wrap">
 <table class="history-table">
   <thead>
     <tr>
@@ -40,6 +41,7 @@
     @endif
   </tbody>
 </table>
+</div>
 @if(!$mealLogs->isEmpty())
   <div class="pagination" data-current-page="{{ $mealLogs->currentPage() }}" data-last-page="{{ $mealLogs->lastPage() }}">
     <a href="{{ route('foods.index', ['page' => max(1, $mealLogs->currentPage() - 1)]) }}" class="{{ $mealLogs->onFirstPage() ? 'disabled' : '' }}">{{ __('profile.previous') }}</a>

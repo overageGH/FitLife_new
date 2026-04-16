@@ -274,20 +274,6 @@ button.calculate-btn[style*="dc3545"]:hover {
     background: var(--danger) !important;
 }
 
-@media (max-width: 768px) {
-    .goal-type-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .form-row {
-        grid-template-columns: 1fr;
-    }
-
-    .goal-card {
-        padding: var(--space-5);
-    }
-}
-
 .error-message,
 .form-group .error {
     color: var(--danger);
@@ -302,8 +288,89 @@ button.calculate-btn[style*="dc3545"]:hover {
 }
 
 @media (max-width: 768px) {
+    #fitlife-container main > header {
+        margin-bottom: var(--space-4);
+    }
+
+    #fitlife-container main > header h1 {
+        font-size: var(--text-xl);
+    }
+
+    #fitlife-container main > header p.muted {
+        font-size: var(--text-sm);
+    }
+
+    #fitlife-container section h3 {
+        font-size: var(--text-base);
+        margin-bottom: var(--space-3);
+    }
+
+    .back-link {
+        font-size: var(--text-xs);
+        margin-bottom: var(--space-3);
+    }
+
     .goal-card {
-        padding: var(--space-5);
+        padding: var(--space-4);
+        border-radius: var(--radius-lg);
+    }
+
+    .goal-form {
+        gap: var(--space-4);
+    }
+
+    .goal-type-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-2);
+    }
+
+    .goal-type-option-inner {
+        padding: var(--space-3) var(--space-2);
+        gap: var(--space-1);
+    }
+
+    .goal-type-option-icon {
+        width: 34px;
+        height: 34px;
+    }
+
+    .goal-type-option-icon svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    .goal-type-option-inner span {
+        font-size: 0.625rem;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: var(--space-3);
+    }
+
+    .goal-form .form-group input[type="text"],
+    .goal-form .form-group input[type="number"],
+    .goal-form .form-group input[type="date"],
+    .goal-form .form-group select,
+    .goal-form .form-group textarea {
+        height: 42px;
+        font-size: var(--text-sm);
+        padding: var(--space-2) var(--space-3);
+    }
+
+    .goal-form .form-group textarea {
+        height: auto;
+        min-height: 80px;
+    }
+
+    .goal-form .form-group > label {
+        font-size: var(--text-xs);
+    }
+
+    .calculate-btn {
+        width: 100%;
+        min-height: 42px;
+        font-size: var(--text-sm);
     }
 
     .form-actions {
@@ -317,10 +384,27 @@ button.calculate-btn[style*="dc3545"]:hover {
 
 @media (max-width: 480px) {
     #fitlife-container main > header h1 {
-        font-size: var(--text-xl);
+        font-size: var(--text-lg);
+    }
+
+    #fitlife-container main > header p.muted {
+        font-size: var(--text-xs);
     }
 
     .goal-card {
-        padding: var(--space-4);
+        padding: var(--space-3);
+    }
+
+    .goal-form {
+        gap: var(--space-3);
+    }
+
+    .goal-type-option-inner {
+        padding: var(--space-2) var(--space-1);
+    }
+
+    .goal-type-option-icon {
+        width: 30px;
+        height: 30px;
     }
 }

@@ -1,5 +1,14 @@
 @extends('layouts.app')
 
+@section('styles')
+<style>
+    @media (max-width: 768px) {
+        .mobile-bottom-nav { display: none !important; }
+        .main-content { padding-bottom: 0 !important; }
+    }
+</style>
+@endsection
+
 @section('content')
 <div class="mt-page">
     <meta name="csrf-token" content="{{ csrf_token() }}">
