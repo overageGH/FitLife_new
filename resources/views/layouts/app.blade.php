@@ -31,6 +31,16 @@
             font-size: 16px !important;
         }
     }
+
+    /* Keep navbar icons outlined even if production serves a stale CSS bundle. */
+    .header-logo-icon svg,
+    .nav-item svg,
+    .mobile-nav-item svg,
+    .mobile-menu-logo-icon svg,
+    .mobile-menu-link svg {
+        fill: none !important;
+        stroke: currentColor !important;
+    }
     </style>
     @yield('styles')
 </head>
