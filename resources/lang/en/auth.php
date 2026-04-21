@@ -15,6 +15,7 @@ return [
     'forgot_your_password' => 'Forgot your password?',
     'reset_password' => 'Reset Password',
     'send_reset_link' => 'Send Reset Link',
+    'generate_reset_link' => 'Generate Reset Link',
     'already_registered' => 'Already registered?',
     'no_account' => 'Don\'t have an account?',
     'name' => 'Name',
@@ -69,6 +70,9 @@ return [
     'terms' => 'Terms of Service',
     'and' => 'and',
     'privacy' => 'Privacy Policy',
-    'forgot_password_text' => 'Forgot your password? No problem.',
+    'forgot_password_text' => 'Enter your email and FitLife will generate a password reset link right here, without sending an email.',
     'remember_password' => 'Remember your password?',
+    'reset_link_ready' => 'Your password reset link is ready.',
+    'open_reset_form' => 'Open Reset Form',
+    'reset_link_local_hint' => 'This project uses a local reset flow, so the link is shown here instead of being emailed.',
 ];

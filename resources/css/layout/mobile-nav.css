@@ -46,7 +46,8 @@
 .mobile-nav-item svg {
     width: 24px;
     height: 24px;
-    fill: currentColor;
+    fill: none;
+    stroke: currentColor;
     transition: transform 0.2s ease;
 }
 
@@ -144,7 +145,8 @@
 .mobile-menu-logo-icon svg {
     width: 24px;
     height: 24px;
-    fill: white;
+    fill: none;
+    stroke: white;
 }
 
 .mobile-menu-logo-text {
@@ -204,7 +206,8 @@
 .mobile-menu-link svg {
     width: 22px;
     height: 22px;
-    fill: currentColor;
+    fill: none;
+    stroke: currentColor;
     opacity: 0.7;
 }
 
@@ -217,7 +220,7 @@
 .mobile-menu-link:hover svg,
 .mobile-menu-link.active svg {
     opacity: 1;
-    fill: var(--primary);
+    stroke: var(--primary);
 }
 
 .mobile-menu-footer {

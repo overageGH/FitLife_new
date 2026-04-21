@@ -20,9 +20,6 @@
             --border: #27272a;
             --error: #ef4444;
             --gradient-1: linear-gradient(135deg, #22c55e 0%, #06b6d4 100%);
-            --glass-surface: rgba(255, 255, 255, 0.08);
-            --glass-edge: rgba(255, 255, 255, 0.2);
-            --glass-shadow: rgba(0, 0, 0, 0.35);
         }
 
         * {
@@ -39,14 +36,12 @@
             font-family: 'Space Grotesk', sans-serif;
             background: var(--bg-dark);
             background-image:
-                radial-gradient(circle at 20% 20%, rgba(34, 197, 94, 0.18), transparent 24%),
-                radial-gradient(circle at 78% 18%, rgba(255, 255, 255, 0.08), transparent 18%),
-                radial-gradient(circle at 78% 72%, rgba(6, 182, 212, 0.16), transparent 26%),
-                linear-gradient(160deg, #07110d 0%, #090909 45%, #03171b 100%);
+                radial-gradient(circle at top left, rgba(34, 197, 94, 0.14), transparent 28%),
+                radial-gradient(circle at 80% 15%, rgba(6, 182, 212, 0.12), transparent 22%),
+                linear-gradient(180deg, #0a0a0a 0%, #090d0c 100%);
             color: var(--text);
             line-height: 1.6;
             min-height: 100vh;
-            overflow-x: hidden;
         }
 
         ::-webkit-scrollbar { width: 8px; }
@@ -67,6 +62,7 @@
             background: rgba(10, 10, 10, 0.8);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
         }
 
         .logo {
@@ -150,6 +146,14 @@
             position: relative;
         }
 
+        .auth-shell {
+            width: 100%;
+            max-width: 460px;
+            position: relative;
+            z-index: 1;
+            margin: 0 auto;
+        }
+
         .auth-container::before {
             content: '';
             position: absolute;
@@ -161,68 +165,55 @@
                 radial-gradient(circle at 30% 30%, var(--primary-glow) 0%, transparent 50%),
                 radial-gradient(circle at 70% 70%, rgba(6, 182, 212, 0.2) 0%, transparent 50%);
             pointer-events: none;
-            filter: blur(12px);
-        }
-
-        .auth-container::after {
-            content: '';
-            position: absolute;
-            width: 420px;
-            height: 420px;
-            top: 14%;
-            left: 50%;
-            transform: translateX(-50%);
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.02) 48%, transparent 72%);
-            filter: blur(26px);
-            opacity: 0.85;
-            pointer-events: none;
         }
 
         .auth-card {
             width: 100%;
-            max-width: 420px;
-            background:
-                linear-gradient(145deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04)),
-                linear-gradient(180deg, rgba(8, 12, 12, 0.88), rgba(10, 14, 16, 0.72));
-            border: 1px solid rgba(255, 255, 255, 0.14);
-            border-radius: 28px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
             padding: 2.5rem;
             position: relative;
-            z-index: 1;
             overflow: hidden;
-            backdrop-filter: blur(24px) saturate(160%);
-            -webkit-backdrop-filter: blur(24px) saturate(160%);
-            box-shadow:
-                0 30px 80px var(--glass-shadow),
-                inset 0 1px 0 rgba(255, 255, 255, 0.18),
-                inset 0 -1px 0 rgba(255, 255, 255, 0.06);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
         }
 
         .auth-card::before {
             content: '';
             position: absolute;
-            inset: 0;
-            background:
-                radial-gradient(circle at top left, rgba(255, 255, 255, 0.26), transparent 34%),
-                radial-gradient(circle at 85% 12%, rgba(34, 197, 94, 0.2), transparent 24%),
-                linear-gradient(135deg, rgba(255, 255, 255, 0.12), transparent 36%);
+            inset: 0 0 auto 0;
+            height: 120px;
+            background: linear-gradient(180deg, rgba(34, 197, 94, 0.12), transparent);
             pointer-events: none;
         }
 
-        .auth-card::after {
-            content: '';
-            position: absolute;
-            inset: 1px;
-            border-radius: 27px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            pointer-events: none;
+        .auth-card > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .auth-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.35rem 0.75rem;
+            margin: 0 auto 1rem;
+            border-radius: 999px;
+            border: 1px solid rgba(34, 197, 94, 0.24);
+            background: rgba(34, 197, 94, 0.08);
+            color: var(--primary);
+            font-size: 0.78rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            font-weight: 700;
         }
 
         .auth-header {
             text-align: center;
             margin-bottom: 2rem;
-            position: relative;
-            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .auth-icon {
@@ -254,18 +245,22 @@
         .auth-header p {
             color: var(--text-muted);
             font-size: 0.95rem;
+            max-width: 28ch;
+            margin: 0 auto;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
         }
 
         /* Alerts */
         .alert {
             padding: 1rem;
-            border-radius: 16px;
+            border-radius: 14px;
             margin-bottom: 1.5rem;
             font-size: 0.9rem;
-            position: relative;
-            z-index: 1;
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
         }
 
         .alert-success {
@@ -291,9 +286,7 @@
 
         /* Form */
         .form-group {
-            margin-bottom: 1.25rem;
-            position: relative;
-            z-index: 1;
+            margin-bottom: 0;
         }
 
         .form-label {
@@ -340,27 +333,23 @@
         .form-input {
             width: 100%;
             padding: 0.875rem 1rem 0.875rem 2.75rem;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.04));
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 16px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 12px;
             color: var(--text);
             font-size: 0.95rem;
             font-family: inherit;
             transition: all 0.3s;
-            box-shadow:
-                inset 0 1px 0 rgba(255, 255, 255, 0.08),
-                0 10px 24px rgba(0, 0, 0, 0.16);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
+        }
+
+        .form-input:hover {
+            border-color: rgba(34, 197, 94, 0.35);
         }
 
         .form-input:focus {
             outline: none;
-            border-color: rgba(125, 255, 184, 0.6);
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.06));
-            box-shadow:
-                0 0 0 3px rgba(34, 197, 94, 0.18),
-                0 18px 36px rgba(6, 182, 212, 0.12);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-glow);
         }
 
         .form-input::placeholder {
@@ -418,11 +407,9 @@
         .submit-btn {
             width: 100%;
             padding: 1rem;
-            background:
-                linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.04)),
-                var(--gradient-1);
-            border: 1px solid rgba(255, 255, 255, 0.24);
-            border-radius: 16px;
+            background: var(--gradient-1);
+            border: none;
+            border-radius: 12px;
             color: var(--bg-dark);
             font-size: 1rem;
             font-weight: 600;
@@ -430,7 +417,7 @@
             cursor: pointer;
             transition: all 0.3s;
             margin-top: 0.5rem;
-            box-shadow: 0 18px 40px rgba(34, 197, 94, 0.26);
+            box-shadow: 0 18px 34px rgba(34, 197, 94, 0.18);
         }
 
         .submit-btn:hover {
@@ -446,8 +433,6 @@
             border-top: 1px solid var(--border);
             font-size: 0.9rem;
             color: var(--text-muted);
-            position: relative;
-            z-index: 1;
         }
 
         .auth-footer a {
@@ -473,6 +458,11 @@
 
             .auth-card {
                 padding: 1.5rem;
+                border-radius: 18px;
+            }
+
+            form {
+                gap: 1rem;
             }
 
             .auth-header h1 {
@@ -496,9 +486,11 @@
     </nav>
 
     <div class="auth-container">
-        <div class="auth-card">
+        <div class="auth-shell">
+            <div class="auth-card">
 
             <div class="auth-header">
+                <div class="auth-badge">FitLife</div>
                 <div class="auth-icon">F</div>
                 <h1><span class="gradient">{{ __('auth.welcome_back') }}</span></h1>
                 <p>{{ __('auth.login_subtitle') }}</p>
@@ -587,6 +579,7 @@
             <div class="auth-footer">
                 <span>{{ __('auth.no_account') }}</span>
                 <a href="{{ route('register') }}">{{ __('auth.register') }}</a>
+            </div>
             </div>
         </div>
     </div>

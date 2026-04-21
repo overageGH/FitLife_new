@@ -15,6 +15,7 @@ return [
     'forgot_your_password' => 'Aizmirsāt paroli?',
     'reset_password' => 'Atjaunot paroli',
     'send_reset_link' => 'Sūtīt saiti',
+    'generate_reset_link' => 'Ģenerēt atiestatīšanas saiti',
     'already_registered' => 'Jau reģistrēts?',
     'no_account' => 'Nav konta?',
     'name' => 'Vārds',
@@ -69,6 +70,9 @@ return [
     'terms' => 'Lietošanas noteikumiem',
     'and' => 'un',
     'privacy' => 'Privātuma politikai',
-    'forgot_password_text' => 'Aizmirsāt paroli? Nav problēmu.',
+    'forgot_password_text' => 'Ievadiet savu e-pastu, un FitLife izveidos paroles atiestatīšanas saiti tepat, nesūtot e-pastu.',
     'remember_password' => 'Atceraties paroli?',
+    'reset_link_ready' => 'Paroles atiestatīšanas saite ir gatava.',
+    'open_reset_form' => 'Atvērt atiestatīšanas formu',
+    'reset_link_local_hint' => 'Šajā projektā tiek izmantota lokāla atiestatīšanas plūsma, tāpēc saite tiek parādīta šeit, nevis nosūtīta uz e-pastu.',
 ];

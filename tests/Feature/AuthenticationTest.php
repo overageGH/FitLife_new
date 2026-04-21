@@ -1,6 +1,8 @@
 <?php
 
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
 
 test('welcome page is accessible', function () {
     $response = $this->get('/');
@@ -174,4 +176,42 @@ test('registration requires password confirmation', function () {
 
     $this->assertGuest();
     $response->assertSessionHasErrors('password');
+});
+
+test('users can generate a local password reset link without email delivery', function () {
+    $user = User::factory()->create([
+        'email' => 'resetme@example.com',
+    ]);
+
+    $response = $this->from('/forgot-password')->post('/forgot-password', [
+        'email' => $user->email,
+    ]);
+
+    $response->assertRedirect('/forgot-password');
+    $response->assertSessionHas('status');
+    $response->assertSessionHas('reset_link');
+
+    $resetLink = session('reset_link');
+
+    expect($resetLink)->toContain('/reset-password/');
+    expect($resetLink)->toContain('email='.urlencode($user->email));
+});
+
+test('users can reset password using generated local reset token', function () {
+    $user = User::factory()->create([
+        'email' => 'localreset@example.com',
+        'password' => bcrypt('old-password'),
+    ]);
+
+    $token = Password::broker()->createToken($user);
+
+    $response = $this->post('/reset-password', [
+        'token' => $token,
+        'email' => $user->email,
+        'password' => 'new-secure-password',
+        'password_confirmation' => 'new-secure-password',
+    ]);
+
+    $response->assertRedirect('/login');
+    expect(Hash::check('new-secure-password', $user->fresh()->password))->toBeTrue();
 });
