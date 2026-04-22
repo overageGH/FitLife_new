@@ -59,7 +59,7 @@
         </div>
     </div>
 
-    @php $bio = Auth::user()->biography; $completedGoals = $goals->filter(fn($g) => $g->progressPercent() >= 100)->count(); @endphp
+    @php $authUser = Auth::user(); $completedGoals = $goals->filter(fn($g) => $g->progressPercent() >= 100)->count(); @endphp
 
     <div class="profile-card">
         <div class="profile-card-banner" style="background-image: url('{{ Auth::user()->banner ? asset('storage/' . Auth::user()->banner) : asset('storage/banner/default-banner.jpg') }}')"></div>
@@ -70,15 +70,15 @@
         <div class="profile-card-username">{{ '@' . Auth::user()->username }}</div>
         <div class="profile-stats-grid">
             <div class="profile-stat-item">
-                <div class="profile-stat-value">{{ $bio?->age ?? '—' }}</div>
+                <div class="profile-stat-value">{{ $authUser->age ?? '—' }}</div>
                 <div class="profile-stat-label">{{ __('dashboard.age') }}</div>
             </div>
             <div class="profile-stat-item">
-                <div class="profile-stat-value">{{ $bio?->weight ? $bio->weight . ' kg' : '—' }}</div>
+                <div class="profile-stat-value">{{ $authUser->weight ? $authUser->weight . ' kg' : '—' }}</div>
                 <div class="profile-stat-label">{{ __('dashboard.weight') }}</div>
             </div>
             <div class="profile-stat-item">
-                <div class="profile-stat-value">{{ $bio?->height ? $bio->height . ' cm' : '—' }}</div>
+                <div class="profile-stat-value">{{ $authUser->height ? $authUser->height . ' cm' : '—' }}</div>
                 <div class="profile-stat-label">{{ __('dashboard.height') }}</div>
             </div>
             <div class="profile-stat-item">
@@ -152,6 +152,10 @@
                 <svg viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.4 0-8-3.6-8-8s3.6-8 8-8 8 3.6 8 8-3.6 8-8 8z"/></svg>
                 {{ __('dashboard.active_goals') }}
             </h2>
+            <div class="goals-search-wrap">
+                <svg class="goals-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                <input type="text" id="goals-search" class="goals-search-input" placeholder="Search..." oninput="filterGoals(this.value)">
+            </div>
             <a href="{{ route('goals.index') }}" class="dash-card-action">{{ __('dashboard.manage') }}</a>
         </div>
         <div class="dash-card-body">
@@ -164,10 +168,10 @@
                     <a href="{{ route('goals.create') }}" class="empty-state-btn">{{ __('dashboard.create_goal') }}</a>
                 </div>
             @else
-                <div class="goals-list">
+                <div class="goals-list" id="goals-list">
                     @foreach($goals as $goal)
                         @php $percent = min(100, max(0, (int) $goal->progressPercent())); @endphp
-                        <div class="goal-item">
+                        <div class="goal-item" data-type="{{ strtolower($goal->type) }}">
                             <div class="goal-item-header">
                                 <span class="goal-item-type">{{ ucfirst($goal->type) }}</span>
                                 <span class="goal-item-percent {{ $percent >= 100 ? 'complete' : '' }}">{{ $percent }}%</span>
@@ -183,9 +187,42 @@
                         </div>
                     @endforeach
                 </div>
+                    <div class="goals-empty-search" id="goals-empty-search" style="display:none">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                        <span>No goals found</span>
+                    </div>
             @endif
         </div>
     </div>
+    <script>
+    function filterGoals(q) {
+        const list = document.getElementById('goals-list');
+        const items = list.querySelectorAll('.goal-item');
+        const empty = document.getElementById('goals-empty-search');
+        const val = q.trim().toLowerCase();
+        let visible = 0;
+        items.forEach(item => {
+            const type = item.dataset.type || '';
+            const match = !val || type.includes(val);
+            item.style.display = match ? '' : 'none';
+            if (match) visible++;
+        });
+        empty.style.display = visible === 0 ? 'flex' : 'none';
+    }
+    function filterGallery(month) {
+        const grid = document.getElementById('photos-grid');
+        if (!grid) return;
+        const items = grid.querySelectorAll('.photo-item');
+        const empty = document.getElementById('gallery-empty-search');
+        let visible = 0;
+        items.forEach(item => {
+            const match = !month || item.dataset.fulldate === month;
+            item.style.display = match ? '' : 'none';
+            if (match) visible++;
+        });
+        empty.style.display = visible === 0 ? 'flex' : 'none';
+    }
+    </script>
 
     <div class="dash-card dash-gallery">
         <div class="dash-card-header">
@@ -193,6 +230,10 @@
                 <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
                 {{ __('dashboard.progress_gallery') }}
             </h2>
+            <div class="gallery-date-wrap">
+                <svg class="gallery-date-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                <input type="month" id="gallery-month" class="gallery-date-input" oninput="filterGallery(this.value)" title="Filter by month">
+            </div>
             <a href="{{ route('progress.index') }}" class="dash-card-action">{{ __('dashboard.view_all') }}</a>
         </div>
         <div class="dash-card-body">
@@ -205,13 +246,14 @@
                     <a href="{{ route('progress.index') }}" class="empty-state-btn">{{ __('dashboard.add_photo') }}</a>
                 </div>
             @else
-                <div class="photos-grid">
+                <div class="photos-grid" id="photos-grid">
                     @foreach($photos as $idx => $photo)
                         <div class="photo-item"
                              data-idx="{{ $idx }}"
                              data-img="{{ asset('storage/' . $photo->photo) }}"
                              data-desc="{{ $photo->description ?? '' }}"
                              data-date="{{ $photo->created_at->format('M d, Y') }}"
+                             data-fulldate="{{ $photo->created_at->format('Y-m') }}"
                              onclick="openLightbox(this)">
                             <img src="{{ asset('storage/' . $photo->photo) }}" alt="Progress" loading="lazy">
                             <div class="photo-item-overlay">
@@ -219,6 +261,10 @@
                             </div>
                         </div>
                     @endforeach
+                    <div class="gallery-empty-search" id="gallery-empty-search" style="display:none">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                        <span>No photos for this month</span>
+                    </div>
                 </div>
             @endif
         </div>

@@ -1,147 +1,136 @@
 <?php
 
-use App\Models\Biography;
 use App\Models\User;
 
-test('guests cannot access biography page', function () {
-    $response = $this->get('/biography');
+test('guests cannot access profile edit page', function () {
+    $response = $this->get('/profile');
 
     $response->assertRedirect('/login');
 });
 
-test('authenticated users can access biography edit page', function () {
+test('authenticated users can access profile edit page', function () {
     $user = User::factory()->create();
 
-    $response = $this->actingAs($user)->get('/biography');
+    $response = $this->actingAs($user)->get('/profile');
 
     $response->assertOk();
 });
 
-test('users can create biography via store endpoint', function () {
+test('users can update personal info fields', function () {
     $user = User::factory()->create();
 
-    $response = $this->actingAs($user)->post('/biography', [
+    $response = $this->actingAs($user)->patch('/profile', [
+        'name'      => $user->name,
+        'username'  => $user->username,
+        'email'     => $user->email,
         'full_name' => 'John Doe',
-        'age' => 25,
-        'height' => 180,
-        'weight' => 75,
-        'gender' => 'male',
+        'age'       => 25,
+        'height'    => 180,
+        'weight'    => 75,
+        'gender'    => 'male',
     ]);
 
-    $response->assertRedirect('/biography');
+    $response->assertRedirect('/profile');
 
-    $this->assertDatabaseHas('biographies', [
-        'user_id' => $user->id,
+    $this->assertDatabaseHas('users', [
+        'id'        => $user->id,
         'full_name' => 'John Doe',
-        'age' => 25,
-        'height' => 180,
-        'weight' => 75,
-        'gender' => 'male',
+        'age'       => 25,
+        'gender'    => 'male',
     ]);
 });
 
-test('users can update their biography', function () {
+test('users can update personal info without optional fields', function () {
     $user = User::factory()->create();
 
-    Biography::create([
-        'user_id' => $user->id,
-        'full_name' => 'John Doe',
-        'age' => 25,
-        'height' => 180,
-        'weight' => 75,
-        'gender' => 'male',
+    $response = $this->actingAs($user)->patch('/profile', [
+        'name'     => $user->name,
+        'username' => $user->username,
+        'email'    => $user->email,
     ]);
 
-    $response = $this->actingAs($user)->patch('/biography', [
-        'full_name' => 'John Smith',
-        'age' => 26,
-        'height' => 181,
-        'weight' => 73,
-        'gender' => 'male',
-    ]);
-
-    $response->assertRedirect('/biography');
-
-    $this->assertDatabaseHas('biographies', [
-        'user_id' => $user->id,
-        'full_name' => 'John Smith',
-        'age' => 26,
-    ]);
+    $response->assertRedirect('/profile');
 });
 
-test('biography age must be positive integer', function () {
+test('age must be a positive integer', function () {
     $user = User::factory()->create();
 
-    $response = $this->actingAs($user)->post('/biography', [
-        'full_name' => 'John Doe',
-        'age' => -5,
+    $response = $this->actingAs($user)->patch('/profile', [
+        'name'     => $user->name,
+        'username' => $user->username,
+        'email'    => $user->email,
+        'age'      => -5,
     ]);
 
     $response->assertSessionHasErrors('age');
 });
 
-test('biography height must be positive', function () {
+test('height must be a positive number', function () {
     $user = User::factory()->create();
 
-    $response = $this->actingAs($user)->post('/biography', [
-        'full_name' => 'John Doe',
-        'height' => -100,
+    $response = $this->actingAs($user)->patch('/profile', [
+        'name'     => $user->name,
+        'username' => $user->username,
+        'email'    => $user->email,
+        'height'   => -100,
     ]);
 
     $response->assertSessionHasErrors('height');
 });
 
-test('biography weight must be positive', function () {
+test('weight must be a positive number', function () {
     $user = User::factory()->create();
 
-    $response = $this->actingAs($user)->post('/biography', [
-        'full_name' => 'John Doe',
-        'weight' => -50,
+    $response = $this->actingAs($user)->patch('/profile', [
+        'name'     => $user->name,
+        'username' => $user->username,
+        'email'    => $user->email,
+        'weight'   => -50,
     ]);
 
     $response->assertSessionHasErrors('weight');
 });
 
-test('biography gender must be valid option', function () {
+test('gender must be a valid option', function () {
     $user = User::factory()->create();
 
-    $response = $this->actingAs($user)->post('/biography', [
-        'full_name' => 'John Doe',
-        'gender' => 'invalid',
+    $response = $this->actingAs($user)->patch('/profile', [
+        'name'     => $user->name,
+        'username' => $user->username,
+        'email'    => $user->email,
+        'gender'   => 'invalid',
     ]);
 
     $response->assertSessionHasErrors('gender');
 });
 
-test('biography fields are nullable', function () {
+test('full_name field is saved on profile update', function () {
     $user = User::factory()->create();
 
-    $response = $this->actingAs($user)->post('/biography', [
+    $this->actingAs($user)->patch('/profile', [
+        'name'      => $user->name,
+        'username'  => $user->username,
+        'email'     => $user->email,
         'full_name' => 'John Doe',
     ]);
 
-    $response->assertRedirect('/biography');
-
-    $this->assertDatabaseHas('biographies', [
-        'user_id' => $user->id,
+    $this->assertDatabaseHas('users', [
+        'id'        => $user->id,
         'full_name' => 'John Doe',
     ]);
 });
 
-test('biography page shows existing data', function () {
-    $user = User::factory()->create();
-
-    Biography::create([
-        'user_id' => $user->id,
+test('profile edit page loads for user with existing data', function () {
+    $user = User::factory()->create([
         'full_name' => 'Test User',
-        'age' => 30,
-        'height' => 175,
-        'weight' => 70,
-        'gender' => 'female',
+        'age'       => 30,
+        'height'    => 175,
+        'weight'    => 70,
+        'gender'    => 'female',
     ]);
 
-    $response = $this->actingAs($user)->get('/biography');
+    $response = $this->actingAs($user)->get('/profile');
 
     $response->assertOk();
-    $response->assertViewHas('biography');
+    $response->assertSee('Test User');
 });

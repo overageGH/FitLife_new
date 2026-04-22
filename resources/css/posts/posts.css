@@ -2603,9 +2603,9 @@
 
 .reaction-btn.like:hover,
 .reaction-btn.like.active {
-    background: rgba(249,115,22,0.12) !important;
-    border-color: rgba(249,115,22,0.3) !important;
-    color: #f97316 !important;
+    background: rgba(239,68,68,0.12) !important;
+    border-color: rgba(239,68,68,0.3) !important;
+    color: #ef4444 !important;
 }
 
 .reaction-btn.dislike:hover,

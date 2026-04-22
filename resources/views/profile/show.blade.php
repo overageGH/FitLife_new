@@ -130,11 +130,11 @@
                     <h3>{{ __('profile.profile_details') }}</h3>
                 </div>
                 <div class="sp-detail-list">
-                    <div class="sp-detail"><span class="sp-detail__label">{{ __('profile.full_name') }}</span><span class="sp-detail__value">{{ $user->biography?->full_name ?? __('profile.not_set') }}</span></div>
-                    <div class="sp-detail"><span class="sp-detail__label">{{ __('profile.age') }}</span><span class="sp-detail__value">{{ $user->biography?->age ?? __('profile.not_set') }}</span></div>
-                    <div class="sp-detail"><span class="sp-detail__label">{{ __('profile.height') }}</span><span class="sp-detail__value">{{ $user->biography?->height ? $user->biography->height . ' ' . __('profile.cm') : __('profile.not_set') }}</span></div>
-                    <div class="sp-detail"><span class="sp-detail__label">{{ __('profile.weight') }}</span><span class="sp-detail__value">{{ $user->biography?->weight ? $user->biography->weight . ' ' . __('profile.kg') : __('profile.not_set') }}</span></div>
-                    <div class="sp-detail"><span class="sp-detail__label">{{ __('profile.gender') }}</span><span class="sp-detail__value">{{ $user->biography?->gender ?? __('profile.not_set') }}</span></div>
+                    <div class="sp-detail"><span class="sp-detail__label">{{ __('profile.full_name') }}</span><span class="sp-detail__value">{{ $user->full_name ?? __('profile.not_set') }}</span></div>
+                    <div class="sp-detail"><span class="sp-detail__label">{{ __('profile.age') }}</span><span class="sp-detail__value">{{ $user->age ?? __('profile.not_set') }}</span></div>
+                    <div class="sp-detail"><span class="sp-detail__label">{{ __('profile.height') }}</span><span class="sp-detail__value">{{ $user->height ? $user->height . ' ' . __('profile.cm') : __('profile.not_set') }}</span></div>
+                    <div class="sp-detail"><span class="sp-detail__label">{{ __('profile.weight') }}</span><span class="sp-detail__value">{{ $user->weight ? $user->weight . ' ' . __('profile.kg') : __('profile.not_set') }}</span></div>
+                    <div class="sp-detail"><span class="sp-detail__label">{{ __('profile.gender') }}</span><span class="sp-detail__value">{{ $user->gender ?? __('profile.not_set') }}</span></div>
                 </div>
             </div>
 

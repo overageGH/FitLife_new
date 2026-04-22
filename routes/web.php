@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\BiographyController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\CalorieCalculatorController;
 use App\Http\Controllers\CommentController;
@@ -96,12 +95,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::prefix('calories')->group(function () {
         Route::get('/', [CalorieCalculatorController::class, 'index'])->name('calories.index');
         Route::post('/', [CalorieCalculatorController::class, 'calculate'])->name('calories.calculate');
-    });
-
-    Route::prefix('biography')->group(function () {
-        Route::get('/', [BiographyController::class, 'edit'])->name('biography.edit');
-        Route::post('/', [BiographyController::class, 'store'])->name('biography.store');
-        Route::patch('/', [BiographyController::class, 'update'])->name('biography.update');
     });
 
     Route::get('/posts', [PostController::class, 'index'])->name('posts.index');

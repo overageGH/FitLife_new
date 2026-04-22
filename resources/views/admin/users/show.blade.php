@@ -23,11 +23,11 @@
         <div class="users-section">
             <h2 class="users-section-title">{{ __('admin.biography') }}</h2>
             <div class="users-details">
-                <p><strong>{{ __('admin.full_name') }}:</strong> {{ $user->biography->full_name ?? __('admin.not_set') }}</p>
-                <p><strong>{{ __('admin.age') }}:</strong> {{ $user->biography->age ?? __('admin.not_set') }}</p>
-                <p><strong>{{ __('admin.height') }}:</strong> {{ $user->biography->height ?? __('admin.not_set') }} cm</p>
-                <p><strong>{{ __('admin.weight') }}:</strong> {{ $user->biography->weight ?? __('admin.not_set') }} kg</p>
-                <p><strong>{{ __('admin.gender') }}:</strong> {{ $user->biography->gender ?? __('admin.not_set') }}</p>
+                <p><strong>{{ __('admin.full_name') }}:</strong> {{ $user->full_name ?? __('admin.not_set') }}</p>
+                <p><strong>{{ __('admin.age') }}:</strong> {{ $user->age ?? __('admin.not_set') }}</p>
+                <p><strong>{{ __('admin.height') }}:</strong> {{ $user->height ? $user->height . ' cm' : __('admin.not_set') }}</p>
+                <p><strong>{{ __('admin.weight') }}:</strong> {{ $user->weight ? $user->weight . ' kg' : __('admin.not_set') }}</p>
+                <p><strong>{{ __('admin.gender') }}:</strong> {{ $user->gender ?? __('admin.not_set') }}</p>
             </div>
         </div>
 

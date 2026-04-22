@@ -235,22 +235,6 @@
                 </div>
             </div>
 
-            <div class="sidebar-card sidebar-stats">
-                <h3 class="sidebar-title">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
-                    {{ __('posts.community_stats') }}
-                </h3>
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <span class="stat-label">{{ __('posts.total_posts') }}</span>
-                        <span class="stat-value" style="color: #ffffff !important; -webkit-text-fill-color: #ffffff !important;">{{ $posts->total() }}</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-label">{{ __('posts.online_now') }}</span>
-                        <span class="stat-value" style="color: #ffffff !important; -webkit-text-fill-color: #ffffff !important;">{{ $activeUsers->count() }}</span>
-                    </div>
-                </div>
-            </div>
         </aside>
     </div>
 
@@ -1013,7 +997,7 @@
     gap: 2px;
 }
 .comment-quote:hover {
-    background: #f0f0f0;
+    background: var(--bg-hover, #1a1d22);
 }
 .comment-quote-author {
     font-size: 0.75rem;

@@ -36,6 +36,7 @@ class ProfileController extends Controller
 
         $request->validate([
             'name' => 'required|string|max:255',
+            'full_name' => 'nullable|string|max:255',
             'username' => [
                 'required',
                 'string',
@@ -51,9 +52,13 @@ class ProfileController extends Controller
             ],
             'banner' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'age' => 'nullable|integer|min:1|max:120',
+            'gender' => 'nullable|in:male,female,other',
+            'height' => 'nullable|numeric|min:50|max:300',
+            'weight' => 'nullable|numeric|min:20|max:500',
         ]);
 
-        $data = $request->only('name', 'username', 'email');
+        $data = $request->only('name', 'full_name', 'username', 'email', 'age', 'gender', 'height', 'weight', 'bio');
 
         if ($request->hasFile('banner')) {
             $this->deleteFile($user->banner);

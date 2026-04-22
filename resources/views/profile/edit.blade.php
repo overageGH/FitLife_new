@@ -294,6 +294,89 @@
                         </div>
 
                         <div class="pe-form__group pe-form__group--full">
+                            <label for="full_name" class="pe-form__label">Full Name</label>
+                            <div class="pe-form__input-wrap">
+                                <svg class="pe-form__input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                    <circle cx="12" cy="7" r="4"/>
+                                </svg>
+                                <input class="pe-form__input" type="text" id="full_name" name="full_name"
+                                       value="{{ old('full_name', $user->full_name) }}"
+                                       placeholder="Your full name">
+                            </div>
+                            @error('full_name')
+                                <p class="pe-form__error">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div class="pe-form__group">
+                            <label for="age" class="pe-form__label">Age</label>
+                            <div class="pe-form__input-wrap">
+                                <svg class="pe-form__input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <polyline points="12 6 12 12 16 14"/>
+                                </svg>
+                                <input class="pe-form__input" type="number" id="age" name="age"
+                                       value="{{ old('age', $user->age) }}"
+                                       min="1" max="120" placeholder="Years">
+                            </div>
+                            @error('age')
+                                <p class="pe-form__error">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div class="pe-form__group">
+                            <label for="gender" class="pe-form__label">Gender</label>
+                            <div class="pe-form__input-wrap pe-form__input-wrap--select">
+                                <svg class="pe-form__input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="8" r="4"/>
+                                    <path d="M12 12v8M8 16h8"/>
+                                </svg>
+                                <select class="pe-form__input pe-form__select" id="gender" name="gender">
+                                    <option value="">Select gender</option>
+                                    <option value="male" {{ old('gender', $user->gender) === 'male' ? 'selected' : '' }}>Male</option>
+                                    <option value="female" {{ old('gender', $user->gender) === 'female' ? 'selected' : '' }}>Female</option>
+                                    <option value="other" {{ old('gender', $user->gender) === 'other' ? 'selected' : '' }}>Other</option>
+                                </select>
+                            </div>
+                            @error('gender')
+                                <p class="pe-form__error">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div class="pe-form__group">
+                            <label for="height" class="pe-form__label">Height (cm)</label>
+                            <div class="pe-form__input-wrap">
+                                <svg class="pe-form__input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>
+                                </svg>
+                                <input class="pe-form__input" type="number" id="height" name="height"
+                                       value="{{ old('height', $user->height) }}"
+                                       step="0.1" min="50" max="300" placeholder="cm">
+                            </div>
+                            @error('height')
+                                <p class="pe-form__error">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div class="pe-form__group">
+                            <label for="weight" class="pe-form__label">Weight (kg)</label>
+                            <div class="pe-form__input-wrap">
+                                <svg class="pe-form__input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                                    <line x1="3" y1="6" x2="21" y2="6"/>
+                                    <path d="M16 10a4 4 0 0 1-8 0"/>
+                                </svg>
+                                <input class="pe-form__input" type="number" id="weight" name="weight"
+                                       value="{{ old('weight', $user->weight) }}"
+                                       step="0.1" min="20" max="500" placeholder="kg">
+                            </div>
+                            @error('weight')
+                                <p class="pe-form__error">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div class="pe-form__group pe-form__group--full">
                             <label for="bio" class="pe-form__label">{{ __('profile.bio') }}</label>
                             <textarea class="pe-form__textarea" id="bio" name="bio" rows="4"
                                       placeholder="{{ __('profile.tell_us_about_yourself') }}">{{ old('bio', $user->bio ?? '') }}</textarea>

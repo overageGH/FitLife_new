@@ -375,7 +375,7 @@ class PostController extends Controller
                 }
             }
 
-            Cache::forget('posts_page_1');
+            $this->clearPostsCache();
 
             if ($request->expectsJson()) {
                 return response()->json([
@@ -582,7 +582,7 @@ class PostController extends Controller
 
     private function formatCommentForJson($comment)
     {
-        $comment->load('parent.user', 'replyTo.user');
+        $comment->load(['parent.user', 'replyTo.user', 'likes', 'replies']);
 
         // Use replyTo (actual comment replied to) for quote, fall back to parent
         $quoted = $comment->replyTo ?: $comment->parent;
@@ -604,11 +604,11 @@ class PostController extends Controller
             'quoted_username' => $quoted ? $quoted->user->username : null,
             'quoted_content' => $quoted ? $quoted->content : null,
             'quoted_comment_id' => $quoted ? $quoted->id : null,
-            'reply_count' => $comment->replies()->count(),
-            'like_count' => $comment->likes()->where('type', 'like')->count(),
-            'dislike_count' => $comment->likes()->where('type', 'dislike')->count(),
-            'user_liked' => $comment->likes()->where('user_id', Auth::id())->where('type', 'like')->exists(),
-            'user_disliked' => $comment->likes()->where('user_id', Auth::id())->where('type', 'dislike')->exists(),
+            'reply_count' => $comment->replies->count(),
+            'like_count' => $comment->likes->where('type', 'like')->count(),
+            'dislike_count' => $comment->likes->where('type', 'dislike')->count(),
+            'user_liked' => $comment->likes->where('user_id', Auth::id())->where('type', 'like')->isNotEmpty(),
+            'user_disliked' => $comment->likes->where('user_id', Auth::id())->where('type', 'dislike')->isNotEmpty(),
             'can_update' => Auth::id() === $comment->user_id,
             'can_delete' => Auth::id() === $comment->user_id,
         ];

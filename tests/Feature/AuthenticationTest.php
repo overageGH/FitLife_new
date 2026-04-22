@@ -60,7 +60,6 @@ test('guests are redirected from protected routes to login', function () {
         '/goals',
         '/posts',
         '/calendar',
-        '/biography',
     ];
 
     foreach ($protectedRoutes as $route) {

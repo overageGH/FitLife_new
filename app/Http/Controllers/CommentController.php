@@ -24,7 +24,9 @@ class CommentController extends Controller
 
             $request->validate(['content' => 'required|string|max:500']);
             $comment->update(['content' => $request->input('content')]);
-            Cache::forget('posts_page_1');
+            foreach (['newest', 'top', 'hot'] as $sort) {
+                Cache::forget("posts_page_1_sort_{$sort}");
+            }
 
             if ($request->expectsJson()) {
                 return response()->json([
@@ -64,7 +66,9 @@ class CommentController extends Controller
             }
 
             $comment->delete();
-            Cache::forget('posts_page_1');
+            foreach (['newest', 'top', 'hot'] as $sort) {
+                Cache::forget("posts_page_1_sort_{$sort}");
+            }
 
             if ($request->expectsJson()) {
                 return response()->json(['success' => true], 200);
