@@ -33,7 +33,7 @@
 
     <section aria-labelledby="goal-form-heading">
       <h3 id="goal-form-heading">{{ __('goals.create_new_goal') }}</h3>
-      <div class="goal-card">
+      <div class="goal-form-card">
         <form action="{{ route('goals.store') }}" method="POST" class="goal-form">
           @csrf
 

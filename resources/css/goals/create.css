@@ -51,7 +51,7 @@
     color: var(--primary);
 }
 
-.goal-card {
+.goal-form-card {
     background: var(--bg-surface);
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-xl);
@@ -262,14 +262,14 @@
     border-color: var(--text-muted);
 }
 
-.goal-card form[onsubmit*="confirm"] .calculate-btn,
+.goal-form-card form[onsubmit*="confirm"] .calculate-btn,
 button.calculate-btn[style*="dc3545"] {
     background: var(--danger) !important;
     color: white !important;
     margin-top: var(--space-5) !important;
 }
 
-.goal-card form[onsubmit*="confirm"] .calculate-btn:hover,
+.goal-form-card form[onsubmit*="confirm"] .calculate-btn:hover,
 button.calculate-btn[style*="dc3545"]:hover {
     background: var(--danger) !important;
 }
@@ -310,7 +310,7 @@ button.calculate-btn[style*="dc3545"]:hover {
         margin-bottom: var(--space-3);
     }
 
-    .goal-card {
+    .goal-form-card {
         padding: var(--space-4);
         border-radius: var(--radius-lg);
     }
@@ -391,7 +391,7 @@ button.calculate-btn[style*="dc3545"]:hover {
         font-size: var(--text-xs);
     }
 
-    .goal-card {
+    .goal-form-card {
         padding: var(--space-3);
     }
 

@@ -20,7 +20,7 @@
 
     <section aria-labelledby="goal-form-heading">
       <h3 id="goal-form-heading">{{ __('goals.edit') }}</h3>
-      <div class="goal-card">
+      <div class="goal-form-card">
         <form action="{{ route('goals.update', $goal) }}" method="POST" class="goal-form">
           @csrf
           @method('PATCH')

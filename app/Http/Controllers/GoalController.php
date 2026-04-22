@@ -107,16 +107,17 @@ class GoalController extends Controller
             'value' => 'required|numeric|min:0',
         ]);
 
-        $change = $request->value - $goal->current_value;
+        $increment = (float) $request->value;
+        $updatedValue = (float) $goal->current_value + $increment;
 
         GoalLog::create([
             'goal_id' => $goal->id,
-            'value' => $request->value,
-            'change' => $change,
+            'value' => $updatedValue,
+            'change' => $increment,
             'date' => now()->toDateString(),
         ]);
 
-        $goal->current_value = $request->value;
+        $goal->current_value = $updatedValue;
         $goal->save();
 
         $sessionKey = 'goal_'.$goal->id.'_completed';

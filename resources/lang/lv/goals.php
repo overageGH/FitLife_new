@@ -57,8 +57,10 @@ return [
     'fitlife_log_progress' => 'FitLife Reģistrēt progresu',
     'update_progress_for' => 'Atjauniniet savu progresu :type mērķim',
     'log_progress_for' => 'Reģistrēt progresu :type',
-    'todays_value' => 'Šodienas vērtība',
-    'enter_todays_value' => 'Ievadiet šodienas vērtību',
+    'todays_value' => 'Pievienojamā vērtība',
+    'enter_todays_value' => 'Ievadiet pievienojamo apjomu',
+    'new_total' => 'Jaunā kopējā vērtība',
+    'log_progress_hint' => 'Šī vērtība tiks pieskaitīta jūsu pašreizējam progresam.',
     'submit' => 'Iesniegt',
 
     'total_goals' => 'Kopā mērķi',

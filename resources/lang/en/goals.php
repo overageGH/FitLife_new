@@ -57,8 +57,10 @@ return [
     'fitlife_log_progress' => 'FitLife Log Progress',
     'update_progress_for' => 'Update your progress for :type goal',
     'log_progress_for' => 'Log Progress for :type',
-    'todays_value' => "Today's Value",
-    'enter_todays_value' => "Enter today's value",
+    'todays_value' => 'Value to add',
+    'enter_todays_value' => 'Enter amount to add',
+    'new_total' => 'New total',
+    'log_progress_hint' => 'This amount will be added to your current progress.',
     'submit' => 'Submit',
 
     'total_goals' => 'Total Goals',

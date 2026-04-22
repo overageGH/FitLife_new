@@ -227,10 +227,11 @@ test('users can log goal progress', function () {
     $this->assertDatabaseHas('goal_logs', [
         'goal_id' => $goal->id,
         'value' => 75,
+        'change' => 75,
     ]);
 });
 
-test('goal log creates change record', function () {
+test('goal log adds submitted progress to the current total', function () {
     $user = User::factory()->create();
     $goal = Goal::create([
         'user_id' => $user->id,
@@ -241,11 +242,15 @@ test('goal log creates change record', function () {
     ]);
 
     $this->actingAs($user)->post("/goals/{$goal->id}/log", [
-        'value' => 78,
+        'value' => 8,
     ]);
 
+    $goal->refresh();
     $log = GoalLog::where('goal_id', $goal->id)->first();
-    expect((float) $log->change)->toBe(-2.0);
+
+    expect((float) $goal->current_value)->toBe(88.0);
+    expect((float) $log->value)->toBe(88.0);
+    expect((float) $log->change)->toBe(8.0);
 });
 
 test('users only see their own goals', function () {
