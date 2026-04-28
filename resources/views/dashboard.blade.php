@@ -2,6 +2,8 @@
 
 @section('hide-mobile-nav', '1')
 @section('flush-mobile-content', '1')
+@section('main-content-class', 'main-content--dashboard')
+@section('content-wrapper-class', 'content-wrapper--dashboard')
 
 @section('content')
 <div class="dashboard-page">

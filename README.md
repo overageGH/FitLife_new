@@ -1,692 +1,362 @@
 <div align="center">
 
-# 🏋️ FitLife
+# FitLife
 
-### ⚡ Personal Fitness, Wellness & Social Platform
+### Fitness tracking, social momentum, and full-featured messaging in one Laravel application.
 
-<br/>
-
-[![Laravel](https://img.shields.io/badge/Laravel-12.x-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)](https://laravel.com)
-[![PHP](https://img.shields.io/badge/PHP-8.2+-777BB4?style=for-the-badge&logo=php&logoColor=white)](https://php.net)
-[![Tailwind](https://img.shields.io/badge/Tailwind-3.x-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
-[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
-
-[![Tests](https://github.com/Ichiro149/FitLife_new/actions/workflows/tests.yml/badge.svg)](https://github.com/Ichiro149/FitLife_new/actions/workflows/tests.yml)
-[![Pest](https://img.shields.io/badge/Pest-4.x-F472B6?style=flat-square&logo=php)](https://pestphp.com)
-[![Code Style](https://img.shields.io/badge/Code%20Style-Laravel%20Pint-orange?style=flat-square)](https://laravel.com/docs/pint)
-
-<br/>
-
-<p align="center">
-  <a href="#-quick-start">Quick Start</a> •
-  <a href="#-features">Features</a> •
-  <a href="#-messaging-system">Messaging</a> •
-  <a href="#-tech-stack">Tech Stack</a> •
-  <a href="#-testing">Testing</a> •
-  <a href="#-api-integrations">API</a> •
-  <a href="#-docker">Docker</a>
+<p>
+  <img src="https://img.shields.io/badge/Laravel-12.x-FF2D20?style=for-the-badge&logo=laravel&logoColor=white" alt="Laravel 12" />
+  <img src="https://img.shields.io/badge/PHP-8.2+-777BB4?style=for-the-badge&logo=php&logoColor=white" alt="PHP 8.2+" />
+  <img src="https://img.shields.io/badge/Vite-7.x-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite 7" />
+  <img src="https://img.shields.io/badge/Tailwind-3.x-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind CSS 3" />
+  <img src="https://img.shields.io/badge/Pest-4.x-F472B6?style=for-the-badge" alt="Pest 4" />
 </p>
 
-<br/>
+<p>
+  <img src="https://img.shields.io/badge/Health-Tracking-1B7F79?style=flat-square" alt="Health Tracking" />
+  <img src="https://img.shields.io/badge/Social-Community-CC5A71?style=flat-square" alt="Social Community" />
+  <img src="https://img.shields.io/badge/Messaging-DMs%20%26%20Groups-4C6FFF?style=flat-square" alt="Messaging" />
+  <img src="https://img.shields.io/badge/Locales-EN%20%7C%20RU%20%7C%20LV-4D8B31?style=flat-square" alt="Locales" />
+</p>
 
-**Complete fitness tracking solution with Nutrition, Sleep, Goals, Progress Photos, Real-time Messaging & Social Community**
-
-<br/>
-
-> 🌍 **Multi-language**: Supports English, Russian, and Latvian
+<p>
+  <a href="#overview">Overview</a> •
+  <a href="#project-snapshot">Snapshot</a> •
+  <a href="#architecture">Architecture</a> •
+  <a href="#core-modules">Modules</a> •
+  <a href="#quick-start">Quick Start</a> •
+  <a href="#testing--quality">Testing</a> •
+  <a href="#repository-map">Repository Map</a>
+</p>
 
 </div>
 
-<br/>
-
 ---
 
-<br/>
+## Overview
 
-## 🚀 Quick Start
+FitLife is a Laravel-based fitness platform that merges personal tracking with community features. It covers the day-to-day health workflow of a user, then layers social discovery, direct messages, group chats, polls, notifications, and moderation on top.
 
-```bash
-# Clone & Install
-git clone https://github.com/Ichiro149/FitLife_new.git
-cd FitLife_new && composer install && npm install
+Instead of splitting the experience across multiple small tools, FitLife keeps nutrition, hydration, sleep, goals, progress photos, profile management, posts, messaging, and admin workflows in one codebase.
 
-# Setup
-cp .env.example .env && php artisan key:generate
-php artisan migrate --seed && php artisan storage:link
+> The result is a product that feels part tracker, part social app, and part messaging hub.
 
-# Run
-npm run build && php artisan serve
+## Project Snapshot
+
+| Area | Verified in this repository |
+|:-----|:----------------------------|
+| Domain models | 30 Eloquent models |
+| Controllers | 28 controllers |
+| Database changes | 47 migrations |
+| Tests | 33 test files total (25 feature + 8 unit) |
+| Localization | 54 translation files across 3 locales |
+| Dev workflow | `composer dev` launches 4 concurrent services |
+
+## Architecture
+
+```mermaid
+flowchart LR
+    U[Authenticated User] --> D[Dashboard]
+    D --> H[Health Tracking]
+    D --> S[Social Feed]
+    D --> M[Messaging Hub]
+    D --> C[Activity Calendar]
+    D --> A[Admin Panel]
+
+    H --> H1[Meals, Water, Sleep, Goals, Photos, Calculator]
+    S --> S1[Posts, Comments, Follows, Subscriptions, Notifications]
+    M --> M1[Direct Messages, Groups, Polls, Favorites, Themes]
+    A --> A1[Users, Posts, Comments, Events, Statistics]
 ```
 
-**Visit:** http://localhost:8000
+## Core Modules
 
-<br/>
+<table>
+<tr>
+<td width="50%" valign="top">
 
-### 🐳 Docker
+### Health Engine
+
+- Meal logging with macro tracking
+- Nutrition lookup via CalorieNinjas with local fallback data
+- Water tracker with a daily goal workflow
+- Sleep tracking with overnight duration handling
+- Goals with progress logs and completion state
+- Progress photo uploads with descriptions
+- Biography and body-metric profile data
+- Calorie calculator flow for daily intake planning
+
+</td>
+<td width="50%" valign="top">
+
+### Social Layer
+
+- Post feed with sorting modes and media support
+- Comments, reactions, and per-post view tracking
+- Follow graph and subscription request flows
+- User profiles, followers, and following pages
+- Notification center for reactions, mentions, and invites
+- Activity calendar with 25 supported activity types
+- Online status tracking through last-seen updates
+
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
+
+### Messaging Suite
+
+- Direct conversations gated by mutual follow
+- Group chats with owner, admin, and member roles
+- Images, video, files, and voice messages
+- Message replies, editing, deleting, reactions, and pinning
+- Favorites, in-chat search, forwarding, and theme selection
+- Typing indicators and polling-based message refresh
+- Group polls with anonymous and multi-select support
+
+</td>
+<td width="50%" valign="top">
+
+### Admin Tools
+
+- Admin dashboard
+- User management
+- Post moderation
+- Comment moderation
+- Event moderation
+- Platform statistics
+- Super-admin-only administrator area
+
+</td>
+</tr>
+</table>
+
+## Messaging Deep Dive
+
+<details>
+<summary><strong>Direct Messages</strong></summary>
+
+- Start a chat only when both users follow each other
+- Send text, images, video, files, and voice messages
+- Reply to existing messages
+- Edit or soft-delete your own messages
+- React with emoji-style reactions
+- Forward messages across conversations and groups
+- Favorite important messages for quick access
+- Search message history inside the current conversation
+- Pin messages and apply per-chat visual themes
+
+</details>
+
+<details>
+<summary><strong>Group Chats</strong></summary>
+
+- Create groups with name, description, and avatar
+- Use a three-level role system: owner, admin, member
+- Invite users into groups through dedicated invite flows
+- Moderate messages as an admin or owner
+- Search chat history and manage unread flow
+- Create group polls and collect votes
+- Promote, demote, or remove members
+- Pin messages and apply per-group chat themes
+
+</details>
+
+## Product Behaviors Worth Noting
+
+| Behavior | How it works |
+|:---------|:-------------|
+| Nutrition lookup | Uses CalorieNinjas when configured, otherwise falls back to local food data |
+| Sleep duration | Handles overnight sleep sessions by carrying end time into the next day when needed |
+| Online state | Uses `last_seen_at` tracking to approximate recent presence |
+| Feed ranking | Supports multiple feed modes, including a time-sensitive hot sort |
+| Messaging updates | Uses polling endpoints for new messages, typing status, and history loading |
+
+## Quick Start
+
+### Prerequisites
+
+- PHP 8.2+
+- Composer
+- Node.js and npm
+- MySQL or PostgreSQL
+
+### Installation
 
 ```bash
-docker build -t fitlife .
-docker run -p 10000:10000 fitlife
+git clone <your-repository-url>
+cd FitLife_new
+
+composer install
+npm install
+
+cp .env.example .env
+php artisan key:generate
 ```
 
-The Docker image uses `php:8.2-cli` with PHP extensions for MySQL/PostgreSQL, GD image processing, and includes a full Node.js build step.
+### Configure Environment
 
-<br/>
+Set your application and database values in `.env`.
 
-### 🔧 Dev Mode (concurrent)
+Minimum setup usually includes:
+
+- `APP_NAME`
+- `APP_URL`
+- `DB_CONNECTION`
+- `DB_HOST`
+- `DB_PORT`
+- `DB_DATABASE`
+- `DB_USERNAME`
+- `DB_PASSWORD`
+
+Optional service keys:
+
+- `CALORIENINJAS_KEY` for nutrition lookup
+- `OPENAI_API_KEY` for OpenAI-backed features
+
+### Database and Storage
+
+```bash
+php artisan migrate --seed
+php artisan storage:link
+```
+
+### Run in Development
+
+Option 1: start backend and frontend separately.
+
+```bash
+php artisan serve
+npm run dev
+```
+
+Option 2: use the combined workflow defined in `composer.json`.
 
 ```bash
 composer dev
 ```
 
-Starts **4 processes** simultaneously: Laravel server, queue worker, Pail log viewer, and Vite dev server.
+`composer dev` starts:
 
-<br/>
+- Laravel development server
+- Queue listener
+- Laravel Pail log stream
+- Vite development server
 
----
-
-<br/>
-
-## ✨ Features
-
-<table>
-<tr>
-<td width="50%">
-
-### 🍎 Health Tracking
-
-- 🍽️ **Meal Tracker** — Log meals with CalorieNinjas API + local database of 16 foods
-- 💧 **Water Tracker** — Daily hydration monitoring with 2000ml goal
-- 😴 **Sleep Tracker** — Duration tracking with overnight detection algorithm
-- 🔥 **Calorie Calculator** — Mifflin-St Jeor BMR formula, TDEE & macro split
-- 📊 **Progress Photos** — Visual transformation gallery with descriptions
-- 🎯 **Goals** — Custom fitness goals with progress logging & completion celebration
-- 📋 **Biography** — Health profile (age, height, weight, gender)
-
-</td>
-<td width="50%">
-
-### 👥 Social Features
-
-- 📝 **Posts** — Share updates with photo/video, like/dislike reactions
-- 💬 **Comments** — TikTok-style flat threading with @mentions
-- 👫 **Friends** — Bidirectional friend system (send/accept/reject)
-- 👤 **Follow System** — Follow/unfollow with mutual follow detection
-- 🟢 **Online Status** — Real-time "last seen" tracking (3-min threshold)
-- 📅 **Activity Calendar** — 25 activity types with completion tracking
-- 🔔 **Notifications** — Reactions, @mentions, group invites
-- 🔥 **Trending** — Hot sort algorithm with time-decay ranking
-
-</td>
-</tr>
-</table>
-
-<br/>
-
----
-
-<br/>
-
-## 💬 Messaging System
-
-Full-featured messaging with both **1:1 Direct Messages** and **Group Chats**.
-
-<table>
-<tr>
-<td width="50%">
-
-### 📨 Direct Messages
-
-- Start conversations (requires mutual follow)
-- Text, image, video, file & voice messages
-- Reply-to threading
-- Message editing & deletion
-- Emoji reactions
-- Message forwarding (to DMs or groups)
-- Pinned messages
-- Message favorites/bookmarks
-- In-chat search
-- Read receipts & typing indicators
-- Per-chat themes
-
-</td>
-<td width="50%">
-
-### 👥 Group Chats
-
-- Create groups with name, description & avatar
-- Role system: **Owner → Admin → Member**
-- Group invitations (mutual-follow gated)
-- All DM features plus:
-- 📊 **In-chat polls** (anonymous & multi-choice)
-- Admin message moderation (delete any message)
-- Admin-only pinning
-- Member management (promote/demote/remove)
-- Group settings (name, description, avatar)
-
-</td>
-</tr>
-</table>
-
-<br/>
-
-### 💡 Messaging Features Detail
-
-| Feature | Description |
-|:--------|:------------|
-| 🎤 **Voice Messages** | Audio recording with duration tracking |
-| ↩️ **Message Forwarding** | Cross-type forwarding between DMs and groups |
-| 📌 **Pinned Messages** | Pin important messages (admin-only in groups) |
-| ⭐ **Favorites** | Bookmark messages across all chats |
-| 🔍 **Search** | Full-text search within any conversation |
-| ⌨️ **Typing Indicators** | Cache-based (4s TTL), shows who is typing |
-| 🎨 **Chat Themes** | Customizable themes per user per chat |
-| 👀 **Read Receipts** | Track message read status |
-| 🔄 **Long Polling** | Real-time message delivery with online status |
-
-<br/>
-
----
-
-<br/>
-
-### 📅 Activity Calendar — 25 Activity Types
-
-<table>
-<tr>
-<td width="25%" align="center">
-
-**🏃 Cardio**
-
-Running, Cycling,
-Swimming, Walking,
-Rowing, Cardio
-
-</td>
-<td width="25%" align="center">
-
-**🧘 Wellness**
-
-Yoga, Meditation,
-Dance, Pilates,
-Stretching
-
-</td>
-<td width="25%" align="center">
-
-**💪 Strength**
-
-Weightlifting, Boxing,
-CrossFit, Gym,
-Martial Arts, Climbing
-
-</td>
-<td width="25%" align="center">
-
-**🌿 Other**
-
-Hiking, Tennis,
-Basketball, Soccer,
-Rest, Recovery
-
-</td>
-</tr>
-</table>
-
-<br/>
-
-### 🔐 Role System
-
-| Role | Access Level |
-|:-----|:-------------|
-| 🔴 **Super Admin** | Full system access, can manage admins, protected from deletion |
-| 🟠 **Admin** | User management, content moderation, events management, statistics |
-| 🟢 **User** | Track health, post updates, message, connect with friends |
-
-<br/>
-
-### 🌍 Multi-language Support
-
-<table>
-<tr>
-<td align="center">🇬🇧 <b>English</b></td>
-<td align="center">🇷🇺 <b>Русский</b></td>
-<td align="center">🇱🇻 <b>Latviešu</b></td>
-</tr>
-</table>
-
-Language preference is stored per user and applied automatically via middleware. 18 translation files per language covering all modules.
-
-<br/>
-
----
-
-<br/>
-
-## 🔬 API Integrations
-
-| Integration | Usage |
-|:------------|:------|
-| **CalorieNinjas API** | Nutrition data lookup for food items with full macro breakdown (calories, protein, fats, carbs). Falls back to local database of 16 common foods |
-| **OpenAI** | `openai-php/laravel` package installed for AI-powered features |
-
-<br/>
-
-### 🧮 Algorithms
-
-| Algorithm | Details |
-|:----------|:--------|
-| **Mifflin-St Jeor BMR** | `10 × weight + 6.25 × height - 5 × age + 5`, with 4 activity multipliers (1.2–1.725), ±500 kcal goal adjustment |
-| **Macro Split** | Protein: 1.8g/kg, Fat: 25% of calories, Carbs: remainder |
-| **Hot Sort** | Post ranking: `(likes + comments) / (hours_since_post + 1)` — time-decay engagement scoring |
-| **Overnight Sleep** | Auto-detects when end_time < start_time, adds a day for correct duration |
-| **Online Status** | Updates `last_seen_at` throttled to 1/min, online if seen within 3 minutes |
-
-<br/>
-
----
-
-<br/>
-
-## 🛠️ Tech Stack
-
-<table>
-<tr>
-<td align="center" width="20%">
-<img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="80"/><br/>
-<b>Laravel 12</b><br/>
-<sub>Backend Framework</sub>
-</td>
-<td align="center" width="20%">
-<img src="https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-icon.svg" width="50"/><br/>
-<b>Tailwind CSS</b><br/>
-<sub>Styling</sub>
-</td>
-<td align="center" width="20%">
-<img src="https://alpinejs.dev/alpine_long.svg" width="80"/><br/>
-<b>Alpine.js</b><br/>
-<sub>JavaScript</sub>
-</td>
-<td align="center" width="20%">
-<img src="https://vitejs.dev/logo.svg" width="50"/><br/>
-<b>Vite 7</b><br/>
-<sub>Build Tool</sub>
-</td>
-<td align="center" width="20%">
-<img src="https://pestphp.com/www/assets/logo.svg" width="50"/><br/>
-<b>Pest PHP 4</b><br/>
-<sub>Testing</sub>
-</td>
-</tr>
-</table>
-
-<br/>
-
-| Layer | Technologies |
-|:------|:------------|
-| **Backend** | PHP 8.2+, Laravel 12, Blade Templates, Eloquent ORM |
-| **Frontend** | Tailwind CSS 3, Alpine.js 3, Vite 7, Axios |
-| **Database** | MySQL 8.0+ / PostgreSQL (prod), SQLite (testing) |
-| **Testing** | Pest PHP 4.x with Pest Browser plugin, parallel execution |
-| **Auth** | Laravel Breeze (email verification, password reset) |
-| **Code Style** | Laravel Pint |
-| **Containerization** | Docker (php:8.2-cli, multi-DB support) |
-| **Packages** | openai-php/laravel, Laravel Sail, Laravel Pail |
-
-<br/>
-
-### 🧩 Middleware Stack
-
-| Middleware | Purpose |
-|:-----------|:--------|
-| `AdminMiddleware` | Restricts admin routes to `admin`/`super_admin` roles |
-| `SetLocale` | Sets app language from user preference → session → fallback `en` |
-| `TrackLastSeen` | Updates `last_seen_at` (throttled to 1 write/min) for online status |
-
-<br/>
-
----
-
-<br/>
-
-## 🧪 Testing
-
-<div align="center">
-
-```
-✅ 245 Tests | 32 Test Files | ⚡ Parallel Execution
-```
-
-</div>
-
-<br/>
+### Production Build
 
 ```bash
-# Run all tests
+npm run build
+php artisan serve
+```
+
+## Testing & Quality
+
+```bash
+php artisan test
 ./vendor/bin/pest
-
-# Parallel execution (faster)
 ./vendor/bin/pest --parallel
-
-# With coverage
-./vendor/bin/pest --coverage
+./vendor/bin/pint
 ```
 
-<br/>
+Use `composer test` if you want the framework test runner after a config clear.
 
-### Test Coverage
+## Integrations
 
-<table>
-<tr><td>
+| Service | Purpose |
+|:--------|:--------|
+| CalorieNinjas | Nutrition lookup with calories and macro data |
+| OpenAI PHP for Laravel | Foundation for AI-powered features |
 
-#### Feature Tests (24 files)
+## Database Restore
 
-| Module | What's Covered |
-|:-------|:---------------|
-| 🔐 Auth | Registration, login, password reset, email verification |
-| 🔒 Authorization | Policy checks, role-based access |
-| 🍽️ Meals | CRUD, calorie calculation, nutrition lookup |
-| 😴 Sleep | Logging, overnight detection, duration |
-| 💧 Water | Daily logging, history, goal tracking |
-| 🎯 Goals | CRUD, progress logging, completion |
-| 📝 Posts | CRUD, media, reactions, views, comments |
-| 💬 Comments | CRUD, threading, reactions |
-| 👫 Friends | Requests, accept/reject, removal |
-| 📅 Calendar | Events CRUD, filtering, completion |
-| 📊 Progress | Photo upload, gallery, descriptions |
-| 👤 Profile | Edit, biography, avatar, banner |
-| 🛡️ Admin | Dashboard, user/post/event management |
+The repository includes a backup file named `fitlife_backup.sql` at the project root.
 
-</td><td>
+Example MySQL restore:
 
-#### Unit Tests (8 files)
-
-| Module | What's Covered |
-|:-------|:---------------|
-| 🔥 Calories | BMR calculation, macro split |
-| 📅 Dates | Date helper functions |
-| 🎯 Goals | Progress percentage calculation |
-| 🏥 Health | Health metrics computation |
-| 😴 Sleep | Duration calculation, overnight |
-| ✅ Validation | Input validation rules |
-| 💧 Water | Daily intake calculation |
-
-</td></tr>
-</table>
-
-<br/>
-
-### Model Tests
-
-| Model | Relationships & Logic Tested |
-|:------|:----------------------------|
-| User | Friends, follows, online status, roles |
-| Post | Likes, views, comments, media |
-| Comment | Threading, parent/reply, reactions |
-| Goal / GoalLog | Progress tracking, completion |
-| Sleep / MealLog / WaterLog | Data integrity, user association |
-| Biography / Calendar / Friend | CRUD, model relationships |
-
-<br/>
-
----
-
-<br/>
-
-## 📁 Project Structure
-
+```bash
+mysql -u <user> -p <database_name> < fitlife_backup.sql
 ```
+
+After restoring, apply any pending migrations and relink storage if needed.
+
+```bash
+php artisan migrate
+php artisan storage:link
+```
+
+## Localization & Access Control
+
+### Supported Locales
+
+| Locale | Status |
+|:-------|:-------|
+| English | Supported |
+| Russian | Supported |
+| Latvian | Supported |
+
+### Role Levels
+
+| Role | Access |
+|:-----|:-------|
+| User | Health tracking, social features, messaging |
+| Admin | Moderation, dashboard access, statistics, management pages |
+| Super Admin | Administrator management in addition to admin permissions |
+
+## Repository Map
+
+```text
 app/
-├── 📂 Http/
-│   ├── Controllers/           # 20 controllers
-│   │   ├── Admin/             # AdminPanelController
-│   │   ├── Auth/              # 9 auth controllers (Breeze)
-│   │   ├── ConversationController  # 1:1 messaging
-│   │   ├── GroupController         # Group chats & polls
-│   │   ├── NotificationController  # Notifications & invites
-│   │   ├── PostController          # Social feed
-│   │   ├── FoodController          # Nutrition tracking
-│   │   ├── FollowController        # Follow system
-│   │   └── ...                     # 11 more controllers
-│   ├── Middleware/
-│   │   ├── AdminMiddleware         # Role-based access
-│   │   ├── SetLocale               # i18n middleware
-│   │   └── TrackLastSeen           # Online status
-│   └── Requests/              # Form validation
-│
-├── 📂 Models/                 # 30 Eloquent models
-│   ├── User, Post, Comment, Like, CommentLike
-│   ├── Goal, GoalLog, Sleep, MealLog, Food, WaterLog
-│   ├── Progress, Biography, Calendar
-│   ├── Follow, Friend, PostView, Notification
-│   ├── Conversation, ConversationMessage
-│   ├── Group, GroupMember, GroupMessage, GroupInvite
-│   ├── GroupPoll, GroupPollOption, GroupPollVote
-│   └── MessageFavorite, MessageReaction, ChatTheme
-│
-├── 📂 Policies/               # PostPolicy (owner/admin checks)
-└── 📂 View/Components/        # Blade layout components
+  Http/
+    Controllers/
+    Middleware/
+    Requests/
+  Models/
+  Policies/
+  Providers/
+  View/Components/
 
 database/
-├── 📂 factories/              # 5 factories (User, Post, Goal, GoalLog, Like)
-├── 📂 migrations/             # 48 migrations
-└── 📂 seeders/                # User, Goal, Post, Friend seeders
+  factories/
+  migrations/
+  seeders/
 
 resources/
-├── 📂 css/                    # Stylesheets
-├── 📂 js/                     # Alpine.js + Axios
-├── 📂 lang/                   # 18 translation files × 3 languages
-│   ├── en/                    # English
-│   ├── ru/                    # Russian
-│   └── lv/                    # Latvian
-└── 📂 views/                  # Blade templates
-    ├── admin/                 # Admin panel views
-    ├── chats/                 # Unified chat hub
-    ├── conversations/         # DM views
-    ├── groups/                # Group chat views
-    ├── notifications/         # Notification center
-    ├── posts/                 # Social feed
-    ├── profile/               # User profiles
-    ├── foods/, sleep/, water/ # Health trackers
-    ├── goals/, progress/      # Goals & photos
-    ├── activity-calendar/     # Calendar
-    └── layouts/, components/  # Shared UI
+  css/
+  js/
+  lang/
+  views/
+
+routes/
+  web.php
+  auth.php
+  admin.php
 
 tests/
-├── 📂 Feature/                # 24 feature test files
-└── 📂 Unit/                   # 8 unit test files
+  Feature/
+  Unit/
 ```
 
-<br/>
+## Important Files
+
+- `composer.json` — PHP dependencies, scripts, and local dev workflow
+- `package.json` — frontend build tooling and Vite commands
+- `routes/web.php` — main application routes
+- `routes/admin.php` — admin and super-admin routes
+- `app/Http/Controllers` — application workflows
+- `app/Models` — domain entities and relationships
+- `database/migrations` — schema history
+- `resources/views` — Blade templates
+- `resources/js` and `resources/css` — frontend assets
+
+## License
+
+This project is distributed under the MIT license metadata declared in `composer.json`.
 
 ---
-
-<br/>
-
-## ⚙️ Configuration
-
-### Environment Variables
-
-```env
-# App
-APP_NAME=FitLife
-APP_URL=http://localhost:8000
-
-# Database (MySQL or PostgreSQL)
-DB_CONNECTION=mysql
-DB_DATABASE=fitlife
-
-# CalorieNinjas API (for nutrition lookup)
-CALORIENINJAS_API_KEY=your-api-key
-
-# OpenAI (optional)
-OPENAI_API_KEY=your-openai-key
-
-# Mail (optional)
-MAIL_MAILER=smtp
-MAIL_HOST=smtp.gmail.com
-MAIL_PORT=587
-MAIL_USERNAME=your-email@gmail.com
-MAIL_PASSWORD=your-app-password
-```
-
-<br/>
-
----
-
-<br/>
-
-## 🔌 Main Routes
-
-<details>
-<summary><b>🏠 Dashboard & Tracking</b></summary>
-
-| Route | Description |
-|:------|:------------|
-| `/dashboard` | Main dashboard with all health stats, upcoming events |
-| `/tracker/foods` | Meal tracker with CalorieNinjas API lookup |
-| `/tracker/foods/history` | Meal history |
-| `/tracker/sleep` | Sleep tracker with overnight detection |
-| `/tracker/water` | Water tracker with daily goal |
-| `/goals` | Goals management with progress logging |
-| `/goals/{id}/log` | Log progress for a specific goal |
-| `/progress-photos` | Progress photos gallery |
-| `/calorie-calculator` | BMR & macro calculator |
-| `/biography` | Health profile (age, height, weight) |
-
-</details>
-
-<details>
-<summary><b>👥 Social</b></summary>
-
-| Route | Description |
-|:------|:------------|
-| `/posts` | Community feed (newest / top / hot sort) |
-| `/posts/search-users` | User search for @mentions |
-| `/profile/{username}` | User profile with follow/friend actions |
-| `/profile` | Edit own profile |
-| `/friends/{username}` | Send/accept/remove friend request |
-| `/follow/{username}` | Toggle follow |
-| `/profile/{username}/followers` | Followers list |
-| `/profile/{username}/following` | Following list |
-
-</details>
-
-<details>
-<summary><b>💬 Messaging</b></summary>
-
-| Route | Description |
-|:------|:------------|
-| `/chats` | Unified chat hub (DMs + groups) |
-| `/conversations` | Direct message list |
-| `/conversations/start/{username}` | Start new DM (requires mutual follow) |
-| `/conversations/{id}` | Conversation view with full messaging |
-| `/groups` | Group list |
-| `/groups/create` | Create new group |
-| `/groups/{id}` | Group chat view |
-| `/groups/{id}/invite` | Invite members |
-| `/favorites` | All favorited messages |
-
-</details>
-
-<details>
-<summary><b>🔔 Notifications</b></summary>
-
-| Route | Description |
-|:------|:------------|
-| `/notifications` | Notification center with group invites |
-| `/notifications/read` | Mark all as read |
-| `/notifications/invite/{id}/accept` | Accept group invite |
-| `/notifications/invite/{id}/decline` | Decline group invite |
-
-</details>
-
-<details>
-<summary><b>📅 Calendar & Settings</b></summary>
-
-| Route | Description |
-|:------|:------------|
-| `/calendar` | Activity calendar (25 activity types) |
-| `/calendar/events` | JSON API for calendar events |
-| `/settings` | Language settings |
-| `/privacy-policy` | Privacy policy page |
-| `/terms-of-service` | Terms of service page |
-
-</details>
-
-<details>
-<summary><b>🛡️ Admin Panel</b></summary>
-
-| Route | Description |
-|:------|:------------|
-| `/admin/dashboard` | Admin dashboard with stats |
-| `/admin/users` | User management (view/edit/delete) |
-| `/admin/users/{username}` | View user details |
-| `/admin/users/{username}/edit` | Edit user (role assignment) |
-| `/admin/posts` | Posts moderation |
-| `/admin/events` | Events management |
-| `/admin/statistics` | Platform statistics |
-
-</details>
-
-<br/>
-
----
-
-<br/>
-
-## 📊 Database Schema
-
-30 models across 48 migrations:
-
-| Domain | Models |
-|:-------|:-------|
-| **Users & Auth** | User, Biography, Follow, Friend |
-| **Health Tracking** | Food, MealLog, Sleep, WaterLog, Progress, Goal, GoalLog |
-| **Social** | Post, Comment, Like, CommentLike, PostView, Notification |
-| **Calendar** | Calendar (25 activity types) |
-| **Messaging** | Conversation, ConversationMessage |
-| **Groups** | Group, GroupMember, GroupMessage, GroupInvite |
-| **Polls** | GroupPoll, GroupPollOption, GroupPollVote |
-| **Shared** | MessageReaction, MessageFavorite, ChatTheme |
-
-Key patterns: **Polymorphic relations** for reactions, favorites, themes & notifications. **Bidirectional friendships** with status tracking. **Dual messaging** (DM + Group) with shared polymorphic features.
-
-<br/>
-
----
-
-<br/>
-
-## 📝 License
-
-This project is open-sourced under the [MIT License](https://opensource.org/licenses/MIT).
-
-<br/>
-
----
-
-<br/>
 
 <div align="center">
 
-### 🌟 Star this repo if you find it helpful!
-
-<br/>
-
-**Built with ❤️ using**
-
-<br/>
-
-[![Laravel](https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)](https://laravel.com)
-[![Tailwind](https://img.shields.io/badge/Tailwind-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
-[![Alpine.js](https://img.shields.io/badge/Alpine.js-8BC0D0?style=for-the-badge&logo=alpine.js&logoColor=white)](https://alpinejs.dev)
-[![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev)
-[![Pest](https://img.shields.io/badge/Pest-F472B6?style=for-the-badge&logo=php&logoColor=white)](https://pestphp.com)
-[![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://docker.com)
-
-<br/>
-
-<sub>Made by <a href="https://github.com/Ichiro149">@Ichiro149</a></sub>
+Built for a workflow where tracking progress and staying connected belong in the same product.
 
 </div>

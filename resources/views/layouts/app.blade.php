@@ -18,6 +18,8 @@
 @php
     $hideMobileNav = trim($__env->yieldContent('hide-mobile-nav')) === '1';
     $flushMobileContent = trim($__env->yieldContent('flush-mobile-content')) === '1';
+    $mainContentClass = trim($__env->yieldContent('main-content-class'));
+    $contentWrapperClass = trim($__env->yieldContent('content-wrapper-class'));
     $toastMessages = [
         'post_created' => __('toast.post_created'),
         'post_updated' => __('toast.post_updated'),
@@ -253,8 +255,8 @@
         </div>
     </nav>
 
-    <main class="main-content {{ $flushMobileContent ? 'main-content--mobile-flush' : '' }}">
-        <div class="content-wrapper">
+    <main class="main-content {{ $flushMobileContent ? 'main-content--mobile-flush' : '' }} {{ $mainContentClass }}">
+        <div class="content-wrapper {{ $contentWrapperClass }}">
             @yield('content')
         </div>
     </main>

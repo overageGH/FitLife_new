@@ -11,8 +11,10 @@
     grid-template-rows: auto;
     gap: 1rem;
     padding: 0;
+    width: 100%;
     align-items: start;
     max-width: 1520px;
+    margin: 0 auto;
     grid-template-areas:
         "header    header    header    header"
         "profile   profile   gallery   gallery"
@@ -20,13 +22,14 @@
         "events    events    goallist  goallist";
 }
 
-/* Remove centering, keep left-aligned */
-.main-content:has(.dashboard-page) {
+/* Use explicit layout classes instead of :has() so production CSS behaves consistently. */
+.main-content.main-content--dashboard {
     max-width: none;
     margin: 0;
     width: 100%;
 }
-.content-wrapper:has(.dashboard-page) {
+
+.content-wrapper.content-wrapper--dashboard {
     max-width: none;
     margin: 0;
     padding: 1.5rem 2rem;
@@ -98,7 +101,7 @@
             "events   events"
             "goallist goallist";
     }
-    .content-wrapper:has(.dashboard-page) {
+    .content-wrapper.content-wrapper--dashboard {
         padding: 1rem;
     }
 }
@@ -115,7 +118,7 @@
             "events   events"
             "goallist goallist";
     }
-    .content-wrapper:has(.dashboard-page) {
+    .content-wrapper.content-wrapper--dashboard {
         padding: 0.75rem;
     }
 }
