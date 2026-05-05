@@ -47,7 +47,7 @@
 
 <div class="welcome-mobile-backdrop" id="welcomeMobileBackdrop" hidden></div>
 
-<aside class="welcome-mobile-panel" id="welcomeMobilePanel" aria-hidden="true">
+<aside class="welcome-mobile-panel" id="welcomeMobilePanel" aria-hidden="true" hidden>
     <div class="welcome-mobile-panel-shell">
         <div class="welcome-mobile-panel-head">
             <span class="welcome-mobile-panel-kicker">Navigate FitLife</span>

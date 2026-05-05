@@ -196,6 +196,11 @@ body.welcome-page {
     display: none;
 }
 
+.welcome-mobile-backdrop[hidden],
+.welcome-mobile-panel[hidden] {
+    display: none !important;
+}
+
 .welcome-menu-toggle span {
     display: block;
     width: 18px;

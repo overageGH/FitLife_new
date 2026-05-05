@@ -7,14 +7,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const welcomeSectionLinks = document.querySelectorAll('a[href^="#"]');
 
     const setMenuOpen = (isOpen) => {
-        if (!welcomeMenuToggle) {
-            return;
+        if (welcomeMenuToggle) {
+            welcomeMenuToggle.classList.toggle('is-open', isOpen);
+            welcomeMenuToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
         }
 
-        welcomeMenuToggle.classList.toggle('is-open', isOpen);
-        welcomeMenuToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-
         if (welcomeMobilePanel) {
+            welcomeMobilePanel.hidden = !isOpen;
             welcomeMobilePanel.classList.toggle('is-open', isOpen);
             welcomeMobilePanel.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
         }
@@ -30,6 +29,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         document.body.classList.toggle('welcome-menu-open', isOpen);
     };
+
+    setMenuOpen(false);
 
     const stripWelcomeHash = () => {
         if (!window.location.hash) {
