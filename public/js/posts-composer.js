@@ -12,6 +12,33 @@ document.addEventListener('DOMContentLoaded', function() {
     const composerTools = document.getElementById('composer-tools');
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
 
+    if (!composerIsland || !composerForm || !composerText || !composerContext || !composerContextText || !composerContextClose || !composerMode || !composerPostId || !composerParentId || !composerReplyToIdInput || !csrfToken) {
+        return;
+    }
+
+    const messages = window.postsComposerMessages || {};
+    const message = (key, fallback) => messages[key] || fallback;
+    const toastMessage = (key, fallback) => window.toastMessages?.[key] || fallback;
+
+    const updateRepliesToggleLabel = (toggleBtn, expanded) => {
+        if (!toggleBtn) {
+            return;
+        }
+
+        const textEl = toggleBtn.querySelector('.replies-toggle-text');
+        if (!textEl) {
+            return;
+        }
+
+        const commentId = toggleBtn.dataset.commentId;
+        const repliesEl = commentId ? document.getElementById('replies-' + commentId) : null;
+        const total = Number(repliesEl?.dataset.total || textEl.textContent.match(/\d+/)?.[0] || 0);
+
+        textEl.textContent = expanded
+            ? message('collapseReplies', 'Hide replies')
+            : message('viewReplies', ':count Replies').replace(':count', total);
+    };
+
     const originalAction = composerForm.action;
     const originalPlaceholder = composerText.placeholder;
     let composerReplyToUser = '';
@@ -54,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
             composerContext.classList.add('is-active');
             composerContextText.textContent = contextLabel;
             composerForm.action = '/posts/' + postId + '/comment';
-            composerText.placeholder = mode === 'reply' ? '{{ __("posts.write_reply") }}' : '{{ __("posts.write_comment") }}';
+            composerText.placeholder = mode === 'reply' ? message('writeReply', 'Write a reply...') : message('writeComment', 'Write a comment...');
             composerText.setAttribute('maxlength', '500');
         } else {
             composerIsland.classList.remove('mode-comment', 'mode-reply');
@@ -84,7 +111,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const postId = commentToggle.dataset.postId;
             const postEl = document.getElementById('post-' + postId);
             const authorName = postEl?.querySelector('.post-author-name')?.textContent || '';
-            setComposerMode('comment', postId, '', '{{ __("posts.commenting_on") }} ' + authorName);
+            setComposerMode('comment', postId, '', message('commentingOn', 'Commenting on') + ' ' + authorName);
             // Also still toggle the comments section
         }
 
@@ -99,13 +126,16 @@ document.addEventListener('DOMContentLoaded', function() {
             const authorName = replyToUser || commentEl?.querySelector('.comment-author')?.textContent || '';
             composerReplyToUser = replyToUser;
             composerReplyToIdInput.value = replyToId;
-            setComposerMode('reply', postId, commentId, '{{ __("posts.replying_to") }} @' + authorName);
+            setComposerMode('reply', postId, commentId, message('replyingTo', 'Replying to') + ' @' + authorName);
             // Show replies section if hidden
             const repliesEl = document.getElementById('replies-' + commentId);
             if (repliesEl) repliesEl.style.display = 'block';
             // Update toggle text
             const toggleBtn = document.querySelector(`.replies-toggle[data-comment-id="${commentId}"]`);
-            if (toggleBtn) toggleBtn.classList.add('expanded');
+            if (toggleBtn) {
+                toggleBtn.classList.add('expanded');
+                updateRepliesToggleLabel(toggleBtn, true);
+            }
         }
 
         // Click "View N replies" toggle
@@ -117,6 +147,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const isVisible = repliesEl.style.display !== 'none';
                 repliesEl.style.display = isVisible ? 'none' : 'block';
                 repliesToggle.classList.toggle('expanded', !isVisible);
+                updateRepliesToggleLabel(repliesToggle, !isVisible);
             }
         }
 
@@ -133,7 +164,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 loadMoreBtn.style.display = 'none';
             } else {
                 loadMoreBtn.dataset.remaining = stillHidden;
-                loadMoreBtn.textContent = '{{ __("posts.load_more_replies") }}'.replace(':count', stillHidden);
+                loadMoreBtn.textContent = message('loadMoreReplies', 'Load :count more').replace(':count', stillHidden);
             }
         }
 
@@ -144,7 +175,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const container = document.getElementById('replies-' + cid);
             if (container) container.style.display = 'none';
             const toggleBtn = document.querySelector(`.replies-toggle[data-comment-id="${cid}"]`);
-            if (toggleBtn) toggleBtn.classList.remove('expanded');
+            if (toggleBtn) {
+                toggleBtn.classList.remove('expanded');
+                updateRepliesToggleLabel(toggleBtn, false);
+            }
         }
 
         // Click "share" button on a post
@@ -153,7 +187,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const pid = shareBtn.dataset.postId;
             const url = window.location.origin + '/posts#post-' + pid;
             navigator.clipboard.writeText(url).then(() => {
-                window.toast?.success('{{ __("posts.link_copied") }}');
+                window.toast?.success(message('linkCopied', 'Link copied to clipboard!'));
             }).catch(() => {
                 const inp = document.createElement('input');
                 inp.value = url;
@@ -161,7 +195,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 inp.select();
                 document.execCommand('copy');
                 document.body.removeChild(inp);
-                window.toast?.success('{{ __("posts.link_copied") }}');
+                window.toast?.success(message('linkCopied', 'Link copied to clipboard!'));
             });
         }
 
@@ -200,7 +234,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
                 const data = await res.json();
                 if (data.success) {
-                    window.toast?.success('{{ __("toast.comment_updated") }}');
+                    window.toast?.success(message('commentUpdated', 'Comment updated'));
                     const textEl = document.getElementById('comment-text-' + cid);
                     if (textEl) {
                         // Preserve quote block, only update the <p> text
@@ -226,7 +260,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else {
                     window.toast?.error(data.message || 'Error');
                 }
-            } catch { window.toast?.error('{{ __("toast.comment_update_error") }}'); }
+            } catch { window.toast?.error(toastMessage('comment_update_error', 'Failed to update comment')); }
             return;
         }
 
@@ -246,7 +280,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
                 const data = await res.json();
                 if (data.success) {
-                    window.toast?.success('{{ __("toast.post_updated") }}');
+                    window.toast?.success(toastMessage('post_updated', 'Post updated'));
                     if (postBodyEl) {
                         const p = postBodyEl.querySelector('p');
                         if (p) p.textContent = data.post.content;
@@ -256,10 +290,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     const editedBadge = document.getElementById('post-edited-' + postId);
                     if (editedBadge) editedBadge.style.removeProperty('display');
                 } else {
-                    window.toast?.error(data.message || '{{ __("toast.post_update_error") }}');
+                    window.toast?.error(data.message || toastMessage('post_update_error', 'Failed to update post'));
                 }
             } catch (err) {
-                window.toast?.error('{{ __("toast.post_update_error") }}');
+                window.toast?.error(toastMessage('post_update_error', 'Failed to update post'));
             } finally {
                 if (submitBtn) submitBtn.disabled = false;
             }
@@ -271,7 +305,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (deletePostForm) {
             e.preventDefault();
             const confirmed = await window.confirmAsync(
-                (window.postsConfirmMessages?.deletePost) || '{{ __("posts.confirm_delete_post") }}'
+                (window.postsConfirmMessages?.deletePost) || 'Are you sure you want to delete this post?'
             );
             if (!confirmed) return;
             const postEl = deletePostForm.closest('.post');
@@ -283,13 +317,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
                 const data = await res.json();
                 if (data.success) {
-                    window.toast?.success('{{ __("toast.post_deleted") }}');
+                    window.toast?.success(toastMessage('post_deleted', 'Post deleted'));
                     postEl?.remove();
                 } else {
-                    window.toast?.error(data.message || '{{ __("toast.post_delete_error") }}');
+                    window.toast?.error(data.message || toastMessage('post_delete_error', 'Failed to delete post'));
                 }
             } catch (err) {
-                window.toast?.error('{{ __("toast.post_delete_error") }}');
+                window.toast?.error(toastMessage('post_delete_error', 'Failed to delete post'));
             }
             return;
         }
@@ -299,7 +333,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (inlineDeleteForm && !e.defaultPrevented) {
             e.preventDefault();
             const confirmed = await window.confirmAsync(
-                (window.postsConfirmMessages?.deleteComment) || '{{ __("posts.confirm_delete_comment") }}'
+                (window.postsConfirmMessages?.deleteComment) || 'Are you sure you want to delete this comment?'
             );
             if (!confirmed) return;
             const commentEl = inlineDeleteForm.closest('.comment-item, .comment');
@@ -312,7 +346,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
                 const data = await res.json();
                 if (data.success) {
-                    window.toast?.success('{{ __("toast.comment_deleted") }}');
+                    window.toast?.success(toastMessage('comment_deleted', 'Comment deleted'));
                     commentEl?.remove();
                     if (postId) {
                         const toggle = document.querySelector(`.comment-toggle[data-post-id="${postId}"]`);
@@ -322,10 +356,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         }
                     }
                 } else {
-                    window.toast?.error(data.message || '{{ __("toast.comment_delete_error") }}');
+                    window.toast?.error(data.message || toastMessage('comment_delete_error', 'Failed to delete comment'));
                 }
             } catch (err) {
-                window.toast?.error('{{ __("toast.comment_delete_error") }}');
+                window.toast?.error(toastMessage('comment_delete_error', 'Failed to delete comment'));
             }
             return;
         }
@@ -364,7 +398,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
                 const data = await res.json();
                 if (data.success && data.comment) {
-                    window.toast?.success('{{ __("toast.comment_added") }}');
+                    window.toast?.success(toastMessage('comment_added', 'Comment added'));
                     composerText.value = '';
                     composerText.dispatchEvent(new Event('input'));
 
@@ -395,8 +429,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         '<div class="comment-text" id="comment-text-' + c.id + '"><p>' + displayContent + '</p></div>' +
                         '<div class="comment-actions">' +
                         '<button class="comment-btn like" data-comment-id="' + c.id + '"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> 0</button>' +
-                        '<button class="comment-btn reply-btn" data-comment-id="' + c.id + '" data-post-id="' + postId + '" data-reply-to-id="' + c.id + '" data-reply-to-user="' + esc(c.user_username) + '">{{ __("posts.reply") }}</button>' +
-                        (c.can_delete ? '<form action="/posts/comments/' + c.id + '" method="POST" class="inline-delete"><input type="hidden" name="_method" value="DELETE"><input type="hidden" name="_token" value="' + csrfToken + '"><button class="comment-btn delete">{{ __("posts.delete") }}</button></form>' : '') +
+                        '<button class="comment-btn reply-btn" data-comment-id="' + c.id + '" data-post-id="' + postId + '" data-reply-to-id="' + c.id + '" data-reply-to-user="' + esc(c.user_username) + '">' + message('reply', 'Reply') + '</button>' +
+                        (c.can_delete ? '<form action="/posts/comments/' + c.id + '" method="POST" class="inline-delete"><input type="hidden" name="_method" value="DELETE"><input type="hidden" name="_token" value="' + csrfToken + '"><button class="comment-btn delete">' + message('delete', 'Delete') + '</button></form>' : '') +
                         '</div>' +
                         '</div>' +
                         '</div>';
@@ -417,10 +451,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     setComposerMode('post');
                 } else {
-                    window.toast?.error(data.message || '{{ __("toast.comment_add_error") }}');
+                    window.toast?.error(data.message || toastMessage('comment_add_error', 'Failed to add comment'));
                 }
             } catch (err) {
-                window.toast?.error('{{ __("toast.comment_add_error") }}');
+                window.toast?.error(toastMessage('comment_add_error', 'Failed to add comment'));
             }
         }
     });

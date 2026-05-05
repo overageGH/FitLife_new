@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Conversation;
 use App\Models\ConversationMessage;
 use App\Models\ChatTheme;
+use App\Models\Group;
 use App\Models\MessageFavorite;
-use App\Models\MessageReaction;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,13 +18,8 @@ class ConversationController extends Controller
     {
         $user = Auth::user();
 
-        $conversations = Conversation::forUser($user->id)
-            ->with(['userOne', 'userTwo', 'latestMessage'])
-            ->get()
-            ->sortByDesc(fn ($c) => $c->latestMessage?->created_at)
-            ->values();
-
-        $groups = $user->groups()->with('owner', 'latestMessage.user')->withCount('members')->get();
+        $conversations = $this->getConversationList($user);
+        $groups = $this->getGroupList($user);
 
         return view('chats.index', compact('conversations', 'groups'));
     }
@@ -33,11 +28,7 @@ class ConversationController extends Controller
     {
         $user = Auth::user();
 
-        $conversations = Conversation::forUser($user->id)
-            ->with(['userOne', 'userTwo', 'latestMessage'])
-            ->get()
-            ->sortByDesc(fn ($c) => $c->latestMessage?->created_at)
-            ->values();
+        $conversations = $this->getConversationList($user);
 
         return view('conversations.index', compact('conversations'));
     }
@@ -76,9 +67,7 @@ class ConversationController extends Controller
     {
         $user = Auth::user();
 
-        if ($conversation->user_one_id !== $user->id && $conversation->user_two_id !== $user->id) {
-            abort(403);
-        }
+        $this->ensureParticipant($conversation, $user);
 
         $conversation->messages()
             ->where('user_id', '!=', $user->id)
@@ -102,12 +91,8 @@ class ConversationController extends Controller
 
         $forwardTargets = $this->getForwardTargets($user);
 
-        $conversations = Conversation::forUser($user->id)
-            ->with(['userOne', 'userTwo', 'latestMessage'])
-            ->get()
-            ->sortByDesc(fn ($c) => $c->latestMessage?->created_at)
-            ->values();
-        $groups = $user->groups()->with('owner', 'latestMessage.user')->withCount('members')->get();
+        $conversations = $this->getConversationList($user);
+        $groups = $this->getGroupList($user);
         $activeConversationId = $conversation->id;
         $chatTheme = ChatTheme::where('user_id', $user->id)->where('chat_type', Conversation::class)->where('chat_id', $conversation->id)->value('theme_key') ?? 'default';
 
@@ -118,9 +103,7 @@ class ConversationController extends Controller
     {
         $user = Auth::user();
 
-        if ($conversation->user_one_id !== $user->id && $conversation->user_two_id !== $user->id) {
-            abort(403);
-        }
+        $this->ensureParticipant($conversation, $user);
 
         $request->validate([
             'body' => 'nullable|string|max:2000',
@@ -183,9 +166,7 @@ class ConversationController extends Controller
     {
         $user = Auth::user();
 
-        if ($conversation->user_one_id !== $user->id && $conversation->user_two_id !== $user->id) {
-            abort(403);
-        }
+        $this->ensureParticipant($conversation, $user);
 
         $afterId = $request->integer('after', 0);
 
@@ -214,9 +195,7 @@ class ConversationController extends Controller
     {
         $user = Auth::user();
 
-        if ($conversation->user_one_id !== $user->id && $conversation->user_two_id !== $user->id) {
-            abort(403);
-        }
+        $this->ensureParticipant($conversation, $user);
 
         $beforeId = $request->integer('before', 0);
 
@@ -237,9 +216,7 @@ class ConversationController extends Controller
     {
         $user = Auth::user();
 
-        if ($conversation->user_one_id !== $user->id && $conversation->user_two_id !== $user->id) {
-            abort(403);
-        }
+        $this->ensureParticipant($conversation, $user);
 
         $request->validate(['q' => 'required|string|max:200']);
 
@@ -263,9 +240,7 @@ class ConversationController extends Controller
     {
         $user = Auth::user();
 
-        if ($conversation->user_one_id !== $user->id && $conversation->user_two_id !== $user->id) {
-            abort(403);
-        }
+        $this->ensureParticipant($conversation, $user);
 
         $cacheKey = "typing.conv.{$conversation->id}.{$user->id}";
         cache()->put($cacheKey, true, now()->addSeconds(4));
@@ -277,9 +252,7 @@ class ConversationController extends Controller
     {
         $user = Auth::user();
 
-        if ($conversation->user_one_id !== $user->id && $conversation->user_two_id !== $user->id) {
-            abort(403);
-        }
+        $this->ensureParticipant($conversation, $user);
 
         $otherUser = $conversation->otherUser($user);
         $cacheKey = "typing.conv.{$conversation->id}.{$otherUser->id}";
@@ -291,12 +264,8 @@ class ConversationController extends Controller
     {
         $user = Auth::user();
 
-        if ($message->conversation_id !== $conversation->id) {
-            abort(404);
-        }
-        if ($conversation->user_one_id !== $user->id && $conversation->user_two_id !== $user->id) {
-            abort(403);
-        }
+        $this->ensureMessageBelongsToConversation($message, $conversation);
+        $this->ensureParticipant($conversation, $user);
 
         $request->validate([
             'target_type' => 'required|in:conversation,group',
@@ -305,9 +274,7 @@ class ConversationController extends Controller
 
         if ($request->target_type === 'conversation') {
             $targetConv = Conversation::findOrFail($request->target_id);
-            if ($targetConv->user_one_id !== $user->id && $targetConv->user_two_id !== $user->id) {
-                abort(403);
-            }
+            $this->ensureParticipant($targetConv, $user);
 
             $targetConv->messages()->create([
                 'user_id' => $user->id,
@@ -320,7 +287,7 @@ class ConversationController extends Controller
                 'forwarded_from_id' => $message->id,
             ]);
         } else {
-            $group = \App\Models\Group::findOrFail($request->target_id);
+            $group = Group::findOrFail($request->target_id);
             if (!$group->hasMember($user)) {
                 abort(403);
             }
@@ -343,12 +310,8 @@ class ConversationController extends Controller
     {
         $user = Auth::user();
 
-        if ($message->conversation_id !== $conversation->id) {
-            abort(404);
-        }
-        if ($conversation->user_one_id !== $user->id && $conversation->user_two_id !== $user->id) {
-            abort(403);
-        }
+        $this->ensureMessageBelongsToConversation($message, $conversation);
+        $this->ensureParticipant($conversation, $user);
 
         $message->update(['pinned_at' => $message->pinned_at ? null : now()]);
 
@@ -495,14 +458,18 @@ class ConversationController extends Controller
         $conversations = Conversation::forUser($user->id)
             ->with(['userOne', 'userTwo'])
             ->get()
-            ->map(fn ($c) => [
-                'type' => 'conversation',
-                'id' => $c->id,
-                'name' => $c->otherUser($user)->name,
-                'avatar' => $c->otherUser($user)->avatar
-                    ? asset('storage/' . $c->otherUser($user)->avatar)
+            ->map(function (Conversation $conversation) use ($user) {
+                $otherUser = $conversation->otherUser($user);
+
+                return [
+                    'type' => 'conversation',
+                    'id' => $conversation->id,
+                    'name' => $otherUser->name,
+                    'avatar' => $otherUser->avatar
+                    ? asset('storage/' . $otherUser->avatar)
                     : asset('storage/default-avatar/default-avatar.avif'),
-            ]);
+                ];
+            });
 
         $groups = $user->groups->map(fn ($g) => [
             'type' => 'group',
@@ -518,12 +485,8 @@ class ConversationController extends Controller
     {
         $user = Auth::user();
 
-        if ($message->conversation_id !== $conversation->id) {
-            abort(404);
-        }
-        if ($conversation->user_one_id !== $user->id && $conversation->user_two_id !== $user->id) {
-            abort(403);
-        }
+        $this->ensureMessageBelongsToConversation($message, $conversation);
+        $this->ensureParticipant($conversation, $user);
 
         $existing = MessageFavorite::where('user_id', $user->id)
             ->where('message_type', ConversationMessage::class)
@@ -548,9 +511,7 @@ class ConversationController extends Controller
     {
         $user = Auth::user();
 
-        if ($conversation->user_one_id !== $user->id && $conversation->user_two_id !== $user->id) {
-            abort(403);
-        }
+        $this->ensureParticipant($conversation, $user);
 
         $request->validate(['theme_key' => 'required|string|max:50']);
 
@@ -587,5 +548,36 @@ class ConversationController extends Controller
             ->values();
 
         return response()->json(['favorites' => $favs]);
+    }
+
+    private function ensureParticipant(Conversation $conversation, User $user): void
+    {
+        if ($conversation->user_one_id !== $user->id && $conversation->user_two_id !== $user->id) {
+            abort(403);
+        }
+    }
+
+    private function ensureMessageBelongsToConversation(ConversationMessage $message, Conversation $conversation): void
+    {
+        if ($message->conversation_id !== $conversation->id) {
+            abort(404);
+        }
+    }
+
+    private function getConversationList(User $user)
+    {
+        return Conversation::forUser($user->id)
+            ->with(['userOne', 'userTwo', 'latestMessage'])
+            ->get()
+            ->sortByDesc(fn ($conversation) => $conversation->latestMessage?->created_at)
+            ->values();
+    }
+
+    private function getGroupList(User $user)
+    {
+        return $user->groups()
+            ->with('owner', 'latestMessage.user')
+            ->withCount('members')
+            ->get();
     }
 }

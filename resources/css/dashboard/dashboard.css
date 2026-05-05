@@ -1414,3 +1414,103 @@
         grid-template-columns: repeat(2, 1fr);
     }
 }
+
+[data-theme="light"] .dashboard-header {
+    border-bottom-color: var(--border-subtle);
+}
+
+[data-theme="light"] .dashboard-date {
+    color: var(--text-muted);
+}
+
+[data-theme="light"] .stat-card,
+[data-theme="light"] .dash-card,
+[data-theme="light"] .profile-card {
+    background: var(--bg-surface);
+    border-color: var(--border-default);
+    box-shadow: var(--shadow-sm);
+}
+
+[data-theme="light"] .stat-card:hover,
+[data-theme="light"] .dash-card:hover,
+[data-theme="light"] .profile-card:hover {
+    border-color: var(--border-strong);
+}
+
+[data-theme="light"] .stat-card-value,
+[data-theme="light"] .profile-card-name {
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .stat-card-label,
+[data-theme="light"] .profile-card-username,
+[data-theme="light"] .profile-stat-label,
+[data-theme="light"] .goals-empty-search,
+[data-theme="light"] .gallery-empty-search {
+    color: var(--text-muted);
+}
+
+[data-theme="light"] .stat-card-footer,
+[data-theme="light"] .dash-card-title {
+    color: var(--text-secondary);
+}
+
+[data-theme="light"] .stat-card-progress,
+[data-theme="light"] .goal-item-progress,
+[data-theme="light"] .goals-search-wrap,
+[data-theme="light"] .gallery-date-wrap,
+[data-theme="light"] .goal-item,
+[data-theme="light"] .profile-stat-item {
+    background: var(--bg-elevated);
+}
+
+[data-theme="light"] .dash-card-header {
+    border-bottom-color: var(--border-subtle);
+}
+
+[data-theme="light"] .dash-card-action,
+[data-theme="light"] .goals-search-wrap,
+[data-theme="light"] .gallery-date-wrap,
+[data-theme="light"] .goal-item,
+[data-theme="light"] .profile-stat-item {
+    border-color: var(--border-default);
+}
+
+[data-theme="light"] .event-item {
+    background: var(--bg-glass-light);
+    border-top-color: var(--border-subtle);
+    border-right-color: var(--border-subtle);
+    border-bottom-color: var(--border-subtle);
+}
+
+[data-theme="light"] .event-item:hover {
+    background: var(--bg-elevated);
+}
+
+[data-theme="light"] .profile-card-avatar {
+    border-color: var(--bg-surface);
+}
+
+[data-theme="light"] .goals-search-icon,
+[data-theme="light"] .gallery-date-icon,
+[data-theme="light"] .goals-search-input::placeholder {
+    color: var(--text-muted);
+}
+
+[data-theme="light"] .gallery-date-input {
+    color-scheme: light;
+}
+
+[data-theme="light"] .dash-events .dash-card-body,
+[data-theme="light"] .dash-goalslist .dash-card-body,
+[data-theme="light"] .dash-gallery .dash-card-body,
+[data-theme="light"] .goals-list {
+    scrollbar-color: var(--border-default) transparent;
+}
+
+[data-theme="light"] .dash-events .dash-card-body::-webkit-scrollbar-thumb,
+[data-theme="light"] .dash-goalslist .dash-card-body::-webkit-scrollbar-thumb,
+[data-theme="light"] .dash-gallery .dash-card-body::-webkit-scrollbar-thumb,
+[data-theme="light"] .goals-list::-webkit-scrollbar-thumb {
+    background: var(--border-default);
+}

@@ -17,6 +17,8 @@ return [
     'food_tracker' => 'Ēdiena izsekotājs',
     'calorie_calculator' => 'Kaloriju kalkulators',
     'home' => 'Sākums',
+    'features' => 'Funkcijas',
+    'system' => 'Sistēma',
     'menu' => 'Izvēlne',
     'toggle_menu' => 'Pārslēgt izvēlni',
 

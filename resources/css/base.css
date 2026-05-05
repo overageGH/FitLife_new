@@ -412,7 +412,7 @@
 html {
     overscroll-behavior-y: none;
     overscroll-behavior-x: auto;
-    background: #040506;
+    background: var(--bg-base);
 }
 
 @media (max-width: 900px) {

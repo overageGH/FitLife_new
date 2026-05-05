@@ -83,6 +83,8 @@
         </div>
     </div>
 
+    @include('partials.site-footer')
+
     <script src="{{ asset('js/auth-confirm-password.js') }}"></script>
 </body>
 </html>

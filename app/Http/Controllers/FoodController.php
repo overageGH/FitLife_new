@@ -32,25 +32,15 @@ class FoodController extends Controller
 
     public function index(Request $request)
     {
-        $logs = MealLog::where('user_id', Auth::id())
+        $userId = Auth::id();
+
+        $logs = $this->mealLogsQuery($userId)
             ->latest()
             ->paginate(10);
 
-        $todayLogs = MealLog::where('user_id', Auth::id())
-            ->whereDate('created_at', today())
-            ->get();
-
-        $todaySummary = [
-            'calories' => $todayLogs->sum('calories'),
-            'protein' => round($todayLogs->sum('protein'), 1),
-            'fats' => round($todayLogs->sum('fats'), 1),
-            'carbs' => round($todayLogs->sum('carbs'), 1),
-            'count' => $todayLogs->count(),
-        ];
-
         return view('foods.index', [
             'mealLogs' => $logs,
-            'todaySummary' => $todaySummary,
+            'todaySummary' => $this->summarizeLogs($this->todayLogs($userId)),
         ]);
     }
 
@@ -62,42 +52,12 @@ class FoodController extends Controller
 
         $query = $request->input('query');
         $apiKey = config('services.calorieninjas.key');
-        $items = [];
-
-        if ($apiKey) {
-            try {
-                $response = Http::withHeaders([
-                    'X-Api-Key' => $apiKey,
-                ])->timeout(5)->get('https://api.calorieninjas.com/v1/nutrition', [
-                    'query' => $query,
-                ]);
-
-                if ($response->successful()) {
-                    $data = $response->json();
-                    foreach ($data['items'] ?? [] as $item) {
-                        $items[] = [
-                            'name' => $item['name'] ?? $query,
-                            'calories' => round($item['calories'] ?? 0),
-                            'serving_size' => round($item['serving_size_g'] ?? 100),
-                            'protein' => round($item['protein_g'] ?? 0, 1),
-                            'fat' => round($item['fat_total_g'] ?? 0, 1),
-                            'carbs' => round($item['carbohydrates_total_g'] ?? 0, 1),
-                        ];
-                    }
-                }
-            } catch (\Exception $e) {
-                Log::warning('CalorieNinjas API error: '.$e->getMessage());
-            }
-        }
-
-        if (empty($items)) {
-            $items = $this->fallbackLookup($query);
-        }
+        [$items, $source] = $this->lookupFoods($query, $apiKey);
 
         return response()->json([
             'success' => ! empty($items),
             'items' => $items,
-            'source' => $apiKey && ! empty($items) ? 'api' : 'local',
+            'source' => $source,
         ]);
     }
 
@@ -167,11 +127,8 @@ class FoodController extends Controller
             ], 422);
         }
 
-        $todayLogs = MealLog::where('user_id', Auth::id())
-            ->whereDate('created_at', today())
-            ->get();
-
-        $dailyCalories = $todayLogs->sum('calories');
+        $todaySummary = $this->summarizeLogs($this->todayLogs(Auth::id()));
+        $dailyCalories = $todaySummary['calories'];
 
         $comment = match (true) {
             $dailyCalories < 1500 => __('food.eat_more'),
@@ -189,9 +146,9 @@ class FoodController extends Controller
             ],
             'daily' => [
                 'calories' => round($dailyCalories),
-                'protein' => round($todayLogs->sum('protein'), 1),
-                'fats' => round($todayLogs->sum('fats'), 1),
-                'carbs' => round($todayLogs->sum('carbs'), 1),
+                'protein' => $todaySummary['protein'],
+                'fats' => $todaySummary['fats'],
+                'carbs' => $todaySummary['carbs'],
             ],
             'comment' => $comment,
             'logs' => collect($createdLogs)->map(fn ($log) => [
@@ -210,11 +167,78 @@ class FoodController extends Controller
 
     public function history()
     {
-        $logs = MealLog::where('user_id', Auth::id())
+        $logs = $this->mealLogsQuery(Auth::id())
             ->latest()
             ->paginate(10);
 
         return view('foods.history', ['mealLogs' => $logs]);
+    }
+
+    private function mealLogsQuery(int $userId)
+    {
+        return MealLog::query()->where('user_id', $userId);
+    }
+
+    private function todayLogs(int $userId)
+    {
+        return $this->mealLogsQuery($userId)
+            ->whereDate('created_at', today())
+            ->get();
+    }
+
+    private function summarizeLogs($logs): array
+    {
+        return [
+            'calories' => $logs->sum('calories'),
+            'protein' => round($logs->sum('protein'), 1),
+            'fats' => round($logs->sum('fats'), 1),
+            'carbs' => round($logs->sum('carbs'), 1),
+            'count' => $logs->count(),
+        ];
+    }
+
+    private function lookupFoods(string $query, ?string $apiKey): array
+    {
+        if ($apiKey) {
+            $items = $this->lookupFromApi($query, $apiKey);
+
+            if (! empty($items)) {
+                return [$items, 'api'];
+            }
+        }
+
+        return [$this->fallbackLookup($query), 'local'];
+    }
+
+    private function lookupFromApi(string $query, string $apiKey): array
+    {
+        try {
+            $response = Http::withHeaders([
+                'X-Api-Key' => $apiKey,
+            ])->timeout(5)->get('https://api.calorieninjas.com/v1/nutrition', [
+                'query' => $query,
+            ]);
+
+            if (! $response->successful()) {
+                return [];
+            }
+
+            return collect($response->json('items', []))
+                ->map(fn ($item) => [
+                    'name' => $item['name'] ?? $query,
+                    'calories' => round($item['calories'] ?? 0),
+                    'serving_size' => round($item['serving_size_g'] ?? 100),
+                    'protein' => round($item['protein_g'] ?? 0, 1),
+                    'fat' => round($item['fat_total_g'] ?? 0, 1),
+                    'carbs' => round($item['carbohydrates_total_g'] ?? 0, 1),
+                ])
+                ->values()
+                ->all();
+        } catch (\Exception $e) {
+            Log::warning('CalorieNinjas API error: '.$e->getMessage());
+
+            return [];
+        }
     }
 
     public function destroy(MealLog $mealLog)

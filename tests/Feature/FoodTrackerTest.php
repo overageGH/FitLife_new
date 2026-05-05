@@ -2,6 +2,8 @@
 
 use App\Models\MealLog;
 use App\Models\User;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Http;
 
 test('guests cannot access food tracker', function () {
     $response = $this->get('/tracker/foods');
@@ -24,6 +26,26 @@ test('food tracker displays today summary', function () {
 
     $response->assertOk();
     $response->assertViewHas('todaySummary');
+});
+
+test('food lookup marks fallback results as local source', function () {
+    Config::set('services.calorieninjas.key', 'test-key');
+
+    Http::fake([
+        'https://api.calorieninjas.com/*' => Http::response(['items' => []], 200),
+    ]);
+
+    $user = User::factory()->create();
+
+    $response = $this->actingAs($user)
+        ->withHeaders(['X-Requested-With' => 'XMLHttpRequest'])
+        ->postJson('/tracker/foods/lookup', [
+            'query' => 'rice',
+        ]);
+
+    $response->assertOk();
+    $response->assertJsonPath('source', 'local');
+    $response->assertJsonPath('items.0.name', 'Rice');
 });
 
 test('users can calculate calories', function () {

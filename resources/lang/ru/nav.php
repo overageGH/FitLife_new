@@ -17,6 +17,8 @@ return [
     'food_tracker' => 'Трекер питания',
     'calorie_calculator' => 'Калькулятор калорий',
     'home' => 'Главная',
+    'features' => 'Функции',
+    'system' => 'Система',
     'menu' => 'Меню',
     'toggle_menu' => 'Открыть меню',
 

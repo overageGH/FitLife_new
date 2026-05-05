@@ -1,3 +1,4 @@
 @import 'core/variables.css';
 @import 'core/reset.css';
+@import 'layout/site-footer.css';
 @import 'welcome/welcome.css';

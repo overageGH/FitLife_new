@@ -40,6 +40,8 @@
         </div>
     </div>
 
+    @include('partials.site-footer')
+
     <script src="{{ asset('js/auth-shell.js') }}"></script>
     @yield('scripts')
 </body>

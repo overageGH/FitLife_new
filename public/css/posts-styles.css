@@ -915,10 +915,6 @@
     text-decoration: underline;
 }
 
-.replies-toggle.expanded .replies-toggle-text::before {
-    content: '{{ __("posts.hide") }} ';
-}
-
 /* Load more / Collapse replies buttons */
 .replies-load-more,
 .replies-collapse-btn {

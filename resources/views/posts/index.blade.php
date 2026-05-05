@@ -265,6 +265,32 @@
 <link rel="stylesheet" href="{{ asset('css/posts-styles.css') }}">
 @endsection
 
+@php
+    $postsComposerMessages = [
+        'writeComment' => __('posts.write_comment'),
+        'writeReply' => __('posts.write_reply'),
+        'commentingOn' => __('posts.commenting_on'),
+        'replyingTo' => __('posts.replying_to'),
+        'viewReplies' => __('posts.view_replies', ['count' => ':count']),
+        'collapseReplies' => __('posts.collapse_replies'),
+        'loadMoreReplies' => __('posts.load_more_replies', ['count' => ':count']),
+        'linkCopied' => __('posts.link_copied'),
+        'reply' => __('posts.reply'),
+        'delete' => __('posts.delete'),
+        'commentUpdated' => __('toast.comment_updated'),
+    ];
+
+    $postsConfirmMessages = [
+        'deletePost' => __('posts.confirm_delete_post'),
+        'deleteComment' => __('posts.confirm_delete_comment'),
+    ];
+@endphp
+
 @section('scripts')
+<script>
+window.postsComposerMessages = {{ \Illuminate\Support\Js::from($postsComposerMessages) }};
+window.postsConfirmMessages = Object.assign({}, window.postsConfirmMessages || {}, {{ \Illuminate\Support\Js::from($postsConfirmMessages) }});
+</script>
+<script src="{{ asset('js/posts.js') }}"></script>
 <script src="{{ asset('js/posts-composer.js') }}"></script>
 @endsection

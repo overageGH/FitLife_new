@@ -268,6 +268,8 @@
     </main>
     @endauth
 
+    @include('partials.site-footer', ['withMobileNav' => auth()->check() && ! $hideMobileNav])
+
     @yield('scripts')
 
     <!-- Confirm Modal -->

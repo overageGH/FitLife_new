@@ -17,6 +17,8 @@ return [
     'food_tracker' => 'Food Tracker',
     'calorie_calculator' => 'Calorie Calculator',
     'home' => 'Home',
+    'features' => 'Features',
+    'system' => 'System',
     'menu' => 'Menu',
     'toggle_menu' => 'Toggle menu',
 

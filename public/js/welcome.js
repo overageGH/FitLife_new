@@ -2,7 +2,34 @@ document.addEventListener('DOMContentLoaded', () => {
     const welcomeHeader = document.getElementById('welcomeHeader');
     const welcomeNav = document.getElementById('welcomeNav');
     const welcomeMenuToggle = document.getElementById('welcomeMenuToggle');
+    const welcomeMobilePanel = document.getElementById('welcomeMobilePanel');
+    const welcomeMobileBackdrop = document.getElementById('welcomeMobileBackdrop');
     const welcomeSectionLinks = document.querySelectorAll('a[href^="#"]');
+
+    const setMenuOpen = (isOpen) => {
+        if (!welcomeMenuToggle) {
+            return;
+        }
+
+        welcomeMenuToggle.classList.toggle('is-open', isOpen);
+        welcomeMenuToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+
+        if (welcomeMobilePanel) {
+            welcomeMobilePanel.classList.toggle('is-open', isOpen);
+            welcomeMobilePanel.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+        }
+
+        if (welcomeMobileBackdrop) {
+            welcomeMobileBackdrop.hidden = !isOpen;
+            welcomeMobileBackdrop.classList.toggle('is-visible', isOpen);
+        }
+
+        if (welcomeNav && window.innerWidth <= 900) {
+            welcomeNav.classList.toggle('is-open', isOpen);
+        }
+
+        document.body.classList.toggle('welcome-menu-open', isOpen);
+    };
 
     const stripWelcomeHash = () => {
         if (!window.location.hash) {
@@ -14,8 +41,12 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     welcomeMenuToggle?.addEventListener('click', () => {
-        welcomeNav?.classList.toggle('is-open');
-        welcomeMenuToggle.classList.toggle('is-open');
+        const isOpen = !welcomeMenuToggle.classList.contains('is-open');
+        setMenuOpen(isOpen);
+    });
+
+    welcomeMobileBackdrop?.addEventListener('click', () => {
+        setMenuOpen(false);
     });
 
     welcomeSectionLinks.forEach((link) => {
@@ -35,13 +66,22 @@ document.addEventListener('DOMContentLoaded', () => {
             event.preventDefault();
             target.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-            if (welcomeNav?.classList.contains('is-open')) {
-                welcomeNav.classList.remove('is-open');
-                welcomeMenuToggle?.classList.remove('is-open');
-            }
+            setMenuOpen(false);
 
             stripWelcomeHash();
         });
+    });
+
+    window.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            setMenuOpen(false);
+        }
+    });
+
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 900) {
+            setMenuOpen(false);
+        }
     });
 
     window.addEventListener('load', () => {

@@ -250,3 +250,34 @@ test('posts display with like and comment counts', function () {
 
     $response->assertOk();
 });
+
+test('posts json exposes correct like and dislike counts', function () {
+    $author = User::factory()->create();
+    $viewer = User::factory()->create();
+
+    $post = Post::create([
+        'user_id' => $author->id,
+        'content' => 'Post with mixed reactions',
+        'views' => 0,
+    ]);
+
+    Like::create([
+        'user_id' => $author->id,
+        'post_id' => $post->id,
+        'type' => 'post',
+        'is_like' => true,
+    ]);
+
+    Like::create([
+        'user_id' => $viewer->id,
+        'post_id' => $post->id,
+        'type' => 'post',
+        'is_like' => false,
+    ]);
+
+    $response = $this->actingAs($viewer)->getJson('/posts');
+
+    $response->assertOk();
+    $response->assertJsonPath('posts.0.like_count', 1);
+    $response->assertJsonPath('posts.0.dislike_count', 1);
+});

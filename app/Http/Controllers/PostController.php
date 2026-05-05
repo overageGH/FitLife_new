@@ -28,8 +28,8 @@ class PostController extends Controller
                     $q->whereNull('parent_id')->with(['replies.user', 'replies.replyTo.user', 'replies.parent.user', 'user', 'parent.user']);
                 }, 'likes'])
                     ->withCount([
-                        'likes as like_count' => fn ($q) => $q->where('type', 'like'),
-                        'likes as dislike_count' => fn ($q) => $q->where('type', 'dislike'),
+                        'likes as like_count' => fn ($q) => $q->where('type', 'post')->where('is_like', true),
+                        'likes as dislike_count' => fn ($q) => $q->where('type', 'post')->where('is_like', false),
                         'allComments as comment_count',
                     ]);
 
@@ -55,9 +55,9 @@ class PostController extends Controller
             if ($request->wantsJson()) {
                 return response()->json([
                     'success' => true,
-                    'posts' => $posts->items()->map(function ($post) {
+                    'posts' => collect($posts->items())->map(function ($post) {
                         return $this->formatPostForJson($post);
-                    }),
+                    })->values(),
                 ]);
             }
 
@@ -474,10 +474,12 @@ class PostController extends Controller
             }
 
             $posts = Post::with(['allComments'])->whereIn('id', $postIds)->get();
+            /** @var \Illuminate\Database\Eloquent\Collection<int, Post> $posts */
             $userId = Auth::id();
 
             $result = [];
             foreach ($posts as $post) {
+                /** @var Post $post */
                 $result[$post->id] = [
                     'views' => $post->postViews()->count(),
                     'likes' => $post->likes()->where('type', 'post')->where('is_like', true)->count(),
@@ -527,6 +529,7 @@ class PostController extends Controller
     private function formatPostResponse($post)
     {
         $user = Auth::user();
+        $reactionCounts = $this->resolvePostReactionCounts($post);
 
         return [
             'id' => $post->id,
@@ -542,8 +545,8 @@ class PostController extends Controller
             ],
             'created_at_diff' => $post->created_at->diffForHumans(),
             'views' => $post->views,
-            'like_count' => $post->likes()->where('type', 'like')->count(),
-            'dislike_count' => $post->likes()->where('type', 'dislike')->count(),
+            'like_count' => $reactionCounts['like_count'],
+            'dislike_count' => $reactionCounts['dislike_count'],
             'comment_count' => $post->allComments()->count(),
             'user_liked' => $post->isLikedBy(Auth::id()),
             'user_disliked' => $post->isDislikedBy(Auth::id()),
@@ -554,6 +557,8 @@ class PostController extends Controller
 
     private function formatPostForJson($post)
     {
+        $reactionCounts = $this->resolvePostReactionCounts($post);
+
         return [
             'id' => $post->id,
             'content' => $post->content,
@@ -567,8 +572,8 @@ class PostController extends Controller
             ],
             'created_at_diff' => $post->created_at->diffForHumans(),
             'views' => $post->views,
-            'like_count' => $post->like_count ?? $post->likes()->where('type', 'like')->count(),
-            'dislike_count' => $post->dislike_count ?? $post->likes()->where('type', 'dislike')->count(),
+            'like_count' => $reactionCounts['like_count'],
+            'dislike_count' => $reactionCounts['dislike_count'],
             'comment_count' => $post->comment_count ?? $post->allComments()->count(),
             'user_liked' => $post->isLikedBy(Auth::id()),
             'user_disliked' => $post->isDislikedBy(Auth::id()),
@@ -577,6 +582,14 @@ class PostController extends Controller
             'comments' => $post->allComments->map(function ($comment) {
                 return $this->formatCommentForJson($comment);
             })->toArray(),
+        ];
+    }
+
+    private function resolvePostReactionCounts($post): array
+    {
+        return [
+            'like_count' => $post->like_count ?? $post->likes()->where('type', 'post')->where('is_like', true)->count(),
+            'dislike_count' => $post->dislike_count ?? $post->likes()->where('type', 'post')->where('is_like', false)->count(),
         ];
     }
 
@@ -640,7 +653,7 @@ class PostController extends Controller
             ->select('id', 'name', 'username', 'avatar', 'last_seen_at')
             ->limit(10)
             ->get()
-            ->map(function ($user) {
+            ->map(function (User $user) {
                 return [
                     'id' => $user->id,
                     'name' => $user->name,

@@ -39,11 +39,56 @@
         @endauth
     </div>
 
-    <button class="welcome-menu-toggle" id="welcomeMenuToggle" type="button" aria-label="Toggle menu">
+    <button class="welcome-menu-toggle" id="welcomeMenuToggle" type="button" aria-label="Toggle menu" aria-controls="welcomeMobilePanel" aria-expanded="false">
         <span></span>
         <span></span>
     </button>
 </header>
+
+<div class="welcome-mobile-backdrop" id="welcomeMobileBackdrop" hidden></div>
+
+<aside class="welcome-mobile-panel" id="welcomeMobilePanel" aria-hidden="true">
+    <div class="welcome-mobile-panel-shell">
+        <div class="welcome-mobile-panel-head">
+            <span class="welcome-mobile-panel-kicker">Navigate FitLife</span>
+            <strong>Everything important, one thumb away.</strong>
+        </div>
+
+        <nav class="welcome-mobile-nav" aria-label="Mobile navigation">
+            <a href="#features" class="welcome-mobile-nav-link">
+                <span>Features</span>
+                <small>Track the core stack</small>
+            </a>
+            <a href="#system" class="welcome-mobile-nav-link">
+                <span>System</span>
+                <small>See the weekly command flow</small>
+            </a>
+            <a href="#results" class="welcome-mobile-nav-link">
+                <span>Results</span>
+                <small>Why the product feels sharper</small>
+            </a>
+            <a href="#community" class="welcome-mobile-nav-link">
+                <span>Community</span>
+                <small>Visible accountability at scale</small>
+            </a>
+        </nav>
+
+        <div class="welcome-mobile-actions">
+            @auth
+                <a href="{{ route('dashboard') }}" class="welcome-btn welcome-btn--primary">Open Dashboard</a>
+            @else
+                <a href="{{ route('register') }}" class="welcome-btn welcome-btn--primary">Start Strong</a>
+                <a href="{{ route('login') }}" class="welcome-btn welcome-btn--surface">Log In</a>
+            @endauth
+        </div>
+
+        <div class="welcome-mobile-meta">
+            <span>Nutrition pressure</span>
+            <span>Recovery rhythm</span>
+            <span>Community signal</span>
+        </div>
+    </div>
+</aside>
 
 <main class="welcome-layout">
     <section class="welcome-hero" id="top">
@@ -80,8 +125,8 @@
                     @auth
                         <a href="{{ route('dashboard') }}" class="welcome-btn welcome-btn--primary welcome-btn--xl">Open Dashboard</a>
                     @else
-                        <a href="{{ route('register') }}" class="welcome-btn welcome-btn--primary welcome-btn--xl">Join the Platform</a>
-                        <a href="#features" class="welcome-btn welcome-btn--surface welcome-btn--xl">Explore the System</a>
+                        <a href="{{ route('register') }}" class="welcome-btn welcome-btn--primary welcome-btn--xl">Start Strong</a>
+                        <a href="{{ route('login') }}" class="welcome-btn welcome-btn--surface welcome-btn--xl">Log In</a>
                     @endauth
                 </div>
 
@@ -373,29 +418,7 @@
     </section>
 </main>
 
-<footer class="welcome-footer">
-    <div class="welcome-footer-top">
-        <div>
-<a href="{{ route('welcome') }}" class="welcome-brand welcome-brand--footer">
-                <img src="{{ asset('storage/logo/fitlife-logo.png') }}" alt="FitLife" class="welcome-brand-img" style="height: 72px;">
-            </a>
-            <p class="welcome-footer-copy">Track hard, recover properly, and make progress visible.</p>
-        </div>
-
-        <div class="welcome-footer-links">
-            <a href="#features">Features</a>
-            <a href="#system">System</a>
-            <a href="#results">Results</a>
-            <a href="#community">Community</a>
-            <a href="{{ route('privacy-policy') }}">Privacy Policy</a>
-            <a href="{{ route('terms-of-service') }}">Terms of Service</a>
-        </div>
-    </div>
-
-    <div class="welcome-footer-bottom">
-        <span>© {{ now()->year }} FitLife. Built for focused training.</span>
-    </div>
-</footer>
+@include('partials.site-footer')
 
 <script src="{{ asset('js/welcome.js') }}"></script>
 </body>
