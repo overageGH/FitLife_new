@@ -24,6 +24,175 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const t = (key, fallback) => window.toastMessages?.[key] || fallback || key;
 
+    const POST_IMAGE_TARGET_BYTES = 900 * 1024;
+    const POST_IMAGE_MAX_DIMENSION = 1600;
+    const POST_IMAGE_SCALE_STEP = 0.85;
+    const POST_IMAGE_QUALITY_START = 0.86;
+    const POST_IMAGE_QUALITY_STEP = 0.08;
+    const POST_IMAGE_MIN_QUALITY = 0.54;
+    const POST_VIDEO_MAX_BYTES = 10 * 1024 * 1024;
+    const POST_ALLOWED_IMAGE_TYPES = new Set(['image/jpeg', 'image/png', 'image/jpg', 'image/gif']);
+
+    const revokePreviewUrl = el => {
+        if (!el?.dataset?.previewUrl) return;
+        URL.revokeObjectURL(el.dataset.previewUrl);
+        delete el.dataset.previewUrl;
+    };
+
+    const resetPreview = el => {
+        if (!el) return;
+        revokePreviewUrl(el);
+        el.removeAttribute('src');
+        el.style.display = 'none';
+        if (el.tagName === 'VIDEO') el.load();
+    };
+
+    const setPreviewFile = (el, file) => {
+        if (!el || !file) return;
+        revokePreviewUrl(el);
+        const previewUrl = URL.createObjectURL(file);
+        el.dataset.previewUrl = previewUrl;
+        el.src = previewUrl;
+        el.style.display = 'block';
+        if (el.tagName === 'VIDEO') el.load();
+    };
+
+    const assignFileToInput = (input, file) => {
+        if (!window.DataTransfer) return false;
+        const transfer = new DataTransfer();
+        transfer.items.add(file);
+        input.files = transfer.files;
+        return true;
+    };
+
+    const readFileAsDataUrl = file => new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = () => reject(new Error('read_failed'));
+        reader.readAsDataURL(file);
+    });
+
+    const loadImageFromUrl = src => new Promise((resolve, reject) => {
+        const image = new Image();
+        image.onload = () => resolve(image);
+        image.onerror = () => reject(new Error('image_load_failed'));
+        image.src = src;
+    });
+
+    const canvasToBlob = (canvas, type, quality) => new Promise((resolve, reject) => {
+        canvas.toBlob(blob => {
+            if (!blob) {
+                reject(new Error('image_blob_failed'));
+                return;
+            }
+            resolve(blob);
+        }, type, quality);
+    });
+
+    const compressImageFile = async file => {
+        if (file.type === 'image/gif') {
+            return file.size <= POST_IMAGE_TARGET_BYTES ? file : null;
+        }
+
+        if (POST_ALLOWED_IMAGE_TYPES.has(file.type) && file.size <= POST_IMAGE_TARGET_BYTES) {
+            return file;
+        }
+
+        const dataUrl = await readFileAsDataUrl(file);
+        const image = await loadImageFromUrl(dataUrl);
+
+        let width = image.naturalWidth || image.width;
+        let height = image.naturalHeight || image.height;
+        const initialScale = Math.min(1, POST_IMAGE_MAX_DIMENSION / Math.max(width, height));
+
+        width = Math.max(1, Math.round(width * initialScale));
+        height = Math.max(1, Math.round(height * initialScale));
+
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d', { alpha: false });
+
+        if (!ctx) {
+            throw new Error('image_context_failed');
+        }
+
+        let blob = null;
+        let longestSide = Math.max(width, height);
+
+        while (true) {
+            canvas.width = width;
+            canvas.height = height;
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, width, height);
+            ctx.drawImage(image, 0, 0, width, height);
+
+            let quality = POST_IMAGE_QUALITY_START;
+            blob = await canvasToBlob(canvas, 'image/jpeg', quality);
+
+            while (blob.size > POST_IMAGE_TARGET_BYTES && quality > POST_IMAGE_MIN_QUALITY) {
+                quality = Math.max(POST_IMAGE_MIN_QUALITY, quality - POST_IMAGE_QUALITY_STEP);
+                blob = await canvasToBlob(canvas, 'image/jpeg', quality);
+            }
+
+            if (blob.size <= POST_IMAGE_TARGET_BYTES || longestSide <= 960) {
+                break;
+            }
+
+            width = Math.max(1, Math.round(width * POST_IMAGE_SCALE_STEP));
+            height = Math.max(1, Math.round(height * POST_IMAGE_SCALE_STEP));
+            longestSide = Math.max(width, height);
+        }
+
+        if (!blob || blob.size > POST_IMAGE_TARGET_BYTES) {
+            return null;
+        }
+
+        const basename = file.name.replace(/\.[^.]+$/, '') || 'post-image';
+        return new File([blob], `${basename}.jpg`, {
+            type: 'image/jpeg',
+            lastModified: Date.now(),
+        });
+    };
+
+    const prepareUploadFile = async (input, file) => {
+        if (!file) return null;
+
+        if (file.type.startsWith('video/')) {
+            if (file.size > POST_VIDEO_MAX_BYTES) {
+                showAlert(t('post_video_too_large', 'Video is too large. Maximum size is 10 MB.'), 'error');
+                input.value = '';
+                return null;
+            }
+
+            return file;
+        }
+
+        if (!file.type.startsWith('image/')) {
+            return file;
+        }
+
+        try {
+            const prepared = await compressImageFile(file);
+
+            if (!prepared) {
+                showAlert(t('post_image_too_large', 'Image is too large. Choose a smaller photo.'), 'error');
+                input.value = '';
+                return null;
+            }
+
+            if (prepared !== file && !assignFileToInput(input, prepared)) {
+                showAlert(t('post_image_prepare_error', 'Failed to prepare image. Try another photo.'), 'error');
+                input.value = '';
+                return null;
+            }
+
+            return prepared;
+        } catch {
+            showAlert(t('post_image_prepare_error', 'Failed to prepare image. Try another photo.'), 'error');
+            input.value = '';
+            return null;
+        }
+    };
+
     const SVG = {
         heart: '<path d="m480-120-58-52q-101-91-167-157T150-447.5Q111-500 95.5-544T80-634q0-94 63-157t157-63q52 0 99 22t81 62q34-40 81-62t99-22q94 0 157 63t63 157q0 46-15.5 90T810-447.5Q771-395 705-329T538-172l-58 52Zm0-108q96-86 158-147.5t98-107q36-45.5 50-81t14-70.5q0-60-40-100t-100-40q-47 0-87 26.5T518-680h-76q-15-41-55-67.5T300-774q-60 0-100 40t-40 100q0 35 14 70.5t50 81q36 45.5 98 107T480-228Zm0-273Z"/>',
         dislike: '<path d="M240-840h440v520L400-40l-50-50q-7-7-11.5-19t-4.5-23v-14l44-174H120q-32 0-56-24t-24-56v-80q0-7 2-15t4-15l120-282q9-20 30-34t44-14Zm360 80H240L120-480v80h360l-54 220 174-174v-406Zm0 406v-406 406Zm80 34v-80h120v-360H680v-80h200v520H680Z"/>',
@@ -56,16 +225,23 @@ document.addEventListener("DOMContentLoaded", () => {
     }).then(r => r.json());
 
     const previewFile = (input, showEl, hideEl, container, removeBtn, clearInput) => {
-        input.addEventListener('change', e => {
+        input.addEventListener('change', async e => {
             const file = e.target.files[0];
             if (!file) return;
-            const reader = new FileReader();
-            reader.onload = ev => {
-                showEl.src = ev.target.result; showEl.style.display = 'block';
-                hideEl.style.display = 'none'; container.style.display = 'block';
-                removeBtn.style.display = 'block'; clearInput.value = '';
-            };
-            reader.readAsDataURL(file);
+
+            const preparedFile = await prepareUploadFile(input, file);
+            if (!preparedFile) {
+                resetPreview(showEl);
+                container.style.display = 'none';
+                removeBtn.style.display = 'none';
+                return;
+            }
+
+            setPreviewFile(showEl, preparedFile);
+            resetPreview(hideEl);
+            container.style.display = 'block';
+            removeBtn.style.display = 'block';
+            clearInput.value = '';
         });
     };
 
@@ -110,7 +286,7 @@ document.addEventListener("DOMContentLoaded", () => {
         previewFile(els.postVideo, els.videoPreview, els.imagePreview, pc, els.removeMedia, els.postPhoto);
         els.removeMedia.addEventListener('click', () => {
             [els.postPhoto, els.postVideo].forEach(i => i.value = '');
-            [els.imagePreview, els.videoPreview].forEach(el => { el.src = ''; el.style.display = 'none'; });
+            [els.imagePreview, els.videoPreview].forEach(resetPreview);
             pc.style.display = 'none'; els.removeMedia.style.display = 'none';
         });
     };
@@ -559,7 +735,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (rmMedia) {
             rmMedia.addEventListener('click', () => {
                 [editPhoto, editVideo].forEach(i => i.value = '');
-                [editImgPrev, editVidPrev].forEach(el => { el.src = ''; el.style.display = 'none'; });
+                [editImgPrev, editVidPrev].forEach(resetPreview);
                 rmMedia.style.display = 'none';
                 const inp = document.createElement('input'); inp.type = 'hidden'; inp.name = 'remove_media'; inp.value = '1';
                 editForm.appendChild(inp);

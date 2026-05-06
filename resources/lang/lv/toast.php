@@ -22,6 +22,9 @@ return [
 
     'link_copied' => 'Saite nokopēta!',
     'link_copy_error' => 'Neizdevās nokopēt saiti',
+    'post_image_too_large' => 'Attēls ir pārāk liels. Izvēlieties mazāku foto.',
+    'post_image_prepare_error' => 'Neizdevās sagatavot attēlu. Mēģiniet citu foto.',
+    'post_video_too_large' => 'Video ir pārāk liels. Maksimālais izmērs ir 10 MB.',
 
     'login_success' => 'Laipni lūdzam atpakaļ!',
     'logout_success' => 'Jūs esat izgājis no sistēmas',

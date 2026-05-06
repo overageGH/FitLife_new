@@ -22,6 +22,9 @@ return [
 
     'link_copied' => 'Link copied to clipboard!',
     'link_copy_error' => 'Failed to copy link',
+    'post_image_too_large' => 'Image is too large. Choose a smaller photo.',
+    'post_image_prepare_error' => 'Failed to prepare image. Try another photo.',
+    'post_video_too_large' => 'Video is too large. Maximum size is 10 MB.',
 
     'login_success' => 'Welcome back!',
     'logout_success' => 'You have been logged out',
