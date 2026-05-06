@@ -44,4 +44,6 @@ return [
     'chats' => 'Čati',
     'groups' => 'Grupas',
     'notifications' => 'Paziņojumi',
+    'thesis_demo_badge' => 'Demo',
+    'thesis_demo_hint' => 'Šī nav īsta vietne. Tā ir izveidota kvalifikācijas darba aizstāvēšanai.',
 ];

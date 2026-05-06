@@ -44,4 +44,6 @@ return [
     'chats' => 'Чаты',
     'groups' => 'Группы',
     'notifications' => 'Уведомления',
+    'thesis_demo_badge' => 'Demo',
+    'thesis_demo_hint' => 'Это не настоящий сайт. Он создан для защиты квалификационной работы.',
 ];

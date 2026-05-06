@@ -28,7 +28,7 @@ return [
     'comment_deleted' => 'Komentārs dzēsts',
     'confirm_delete_comment' => 'Vai tiešām vēlaties dzēst šo komentāru?',
     'confirm_delete_post' => 'Vai tiešām vēlaties dzēst šo ierakstu?',
-    'whats_on_your_mind' => 'Par ko jūs domājat?',
+    'whats_on_your_mind' => 'Raksti šeit',
     'attach_photo' => 'Pievienot foto',
     'attach_video' => 'Pievienot video',
     'post_button' => 'Publicēt',

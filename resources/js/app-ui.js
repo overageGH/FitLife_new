@@ -67,6 +67,55 @@ function setupMobileMenu() {
     mobileMenuOverlay.addEventListener('click', closeMobileMenu);
 }
 
+function setupHeaderDemoBadge() {
+    const demoBadge = document.querySelector('.header-thesis-badge');
+
+    if (!demoBadge) {
+        return;
+    }
+
+    const syncExpandedState = (isOpen) => {
+        demoBadge.classList.toggle('is-open', isOpen);
+        demoBadge.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    };
+
+    syncExpandedState(false);
+
+    demoBadge.addEventListener('click', (event) => {
+        if (window.innerWidth > 640) {
+            return;
+        }
+
+        event.preventDefault();
+        event.stopPropagation();
+        syncExpandedState(!demoBadge.classList.contains('is-open'));
+    });
+
+    document.addEventListener('click', (event) => {
+        if (window.innerWidth > 640) {
+            syncExpandedState(false);
+            return;
+        }
+
+        if (!demoBadge.contains(event.target)) {
+            syncExpandedState(false);
+        }
+    });
+
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 640) {
+            syncExpandedState(false);
+        }
+    });
+
+    window.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            syncExpandedState(false);
+            demoBadge.blur();
+        }
+    });
+}
+
 function setupToastSystem() {
     const rawToastMessages = document.body?.dataset.toastMessages;
     window.toastMessages = rawToastMessages ? JSON.parse(rawToastMessages) : {};
@@ -204,6 +253,7 @@ function setupConfirmationModal() {
 
 document.addEventListener('DOMContentLoaded', () => {
     setupHeaderScroll();
+    setupHeaderDemoBadge();
     setupUserMenu();
     setupMobileMenu();
     setupToastSystem();

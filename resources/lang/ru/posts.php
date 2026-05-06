@@ -30,7 +30,7 @@ return [
     'comment_deleted' => 'Комментарий удалён',
     'confirm_delete_comment' => 'Вы уверены, что хотите удалить этот комментарий?',
     'confirm_delete_post' => 'Вы уверены, что хотите удалить этот пост?',
-    'whats_on_your_mind' => 'О чём вы думаете?',
+    'whats_on_your_mind' => 'Писать тут',
     'attach_photo' => 'Прикрепить фото',
     'attach_video' => 'Прикрепить видео',
     'post_button' => 'Опубликовать',

@@ -49,6 +49,9 @@ document.addEventListener('DOMContentLoaded', function() {
             this.style.height = 'auto';
             this.style.height = Math.min(this.scrollHeight, 120) + 'px';
         });
+
+        composerText.style.height = 'auto';
+        composerText.style.height = Math.min(composerText.scrollHeight, 120) + 'px';
     }
 
     // Emoji picker

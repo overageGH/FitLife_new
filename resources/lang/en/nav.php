@@ -44,4 +44,6 @@ return [
     'chats' => 'Chats',
     'groups' => 'Groups',
     'notifications' => 'Notifications',
+    'thesis_demo_badge' => 'Demo',
+    'thesis_demo_hint' => 'This is not a real website. It was created for qualification thesis defense.',
 ];

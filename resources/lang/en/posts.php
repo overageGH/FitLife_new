@@ -30,7 +30,7 @@ return [
     'comment_deleted' => 'Comment deleted successfully',
     'confirm_delete_comment' => 'Are you sure you want to delete this comment?',
     'confirm_delete_post' => 'Are you sure you want to delete this post?',
-    'whats_on_your_mind' => "What's on your mind?",
+    'whats_on_your_mind' => 'Write here',
     'attach_photo' => 'Attach photo',
     'attach_video' => 'Attach video',
     'post_button' => 'Post',

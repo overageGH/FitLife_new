@@ -262,7 +262,7 @@
 @endsection
 
 @section('styles')
-<link rel="stylesheet" href="{{ asset('css/posts-styles.css') }}">
+<link rel="stylesheet" href="{{ asset('css/posts-styles.css') }}?v={{ filemtime(public_path('css/posts-styles.css')) }}">
 @endsection
 
 @php
@@ -291,6 +291,6 @@
 window.postsComposerMessages = {{ \Illuminate\Support\Js::from($postsComposerMessages) }};
 window.postsConfirmMessages = Object.assign({}, window.postsConfirmMessages || {}, {{ \Illuminate\Support\Js::from($postsConfirmMessages) }});
 </script>
-<script src="{{ asset('js/posts.js') }}"></script>
-<script src="{{ asset('js/posts-composer.js') }}"></script>
+<script src="{{ asset('js/posts.js') }}?v={{ filemtime(public_path('js/posts.js')) }}"></script>
+<script src="{{ asset('js/posts-composer.js') }}?v={{ filemtime(public_path('js/posts-composer.js')) }}"></script>
 @endsection
